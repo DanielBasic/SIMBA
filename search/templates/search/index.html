@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href={% static "css/search_style.css" %}>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="side_bar_filters">
+      <input type="submit" value="Filtrar" form="filters">
+      {% for filter in applied_filters %}
+      <p>{{filter}}</p>
+      {% endfor %}
+      <form id="filters" action="{% url 'search' %}" method="GET">
+      {% for filter in response.available_filters %}
+        <h2>{{filter.name}}</h2>
+        
+          {% csrf_token %}
+          <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
+          <input type="hidden" name="applied_filters" value="{{applied_filters}}"/>
+          {% for value_of_filter in filter.values %}
+            {% if value_of_filter.id in applied_filters %}
+            <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}" checked/>
+            {% else %}
+            <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}"/>
+            {% endif %}
+            <label for="{{ value_of_filter.id }}">
+              <span>{{ value_of_filter.name }}</span> <span>({{ value_of_filter.results }})</span> <br>
+            </label>
+          {% endfor %}
+        
+      {% endfor %}
+    </form>
+    </div> 
+  </div>
+  <div class="contents_ad">
+    <form action="{% url 'search' %}" method="GET" class="search_bar_box">
+      {% csrf_token %} 
+      <input type="text" placeholder="Informe a palavra chave" name="keyWord">
+      <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    
+  </div>
+  <div class="catalog">
+    
+    {% for product in response.results %}
+    <form action="{% url 'search' %}" method="GET">
+      {% csrf_token %}
+    <input class="checkbox" id={{product.id}} type="checkbox" name="lists[new]" />
+    <label for={{product.id}}><span class="check">✓</span>
+    <div class="product">
+      
+      <div class="image">
+        <img src="{{product.thumbnail|slice:':-5'}}F.WEBP" alt="Imagem do produto">
+      </div>
+      <div class="details">
+        <h2>{{ product.title }}</h2>
+        <span class="seller_name">{{product.seller.nickname}}</span><br>
+        {% if product.original_price %}
+        <span class="original_price">R$ {{product.original_price}}</span><br>
+        {% endif %}
+        <span class="price">R$ {{product.price}}</span><br>
+        <span class="condition">{{ product.condition }}</span>
+
+        {% if product.shipping.free_shipping %}
+        <br>
+        <span class="free_shipping">Frete grátis</span>
+        {% endif %}
+        {% if product.shipping.logistic_type == "fulfillment" %}
+        <span class="free_shipping" style="line-height: 1.25">FULL</span>
+        {% endif %}
+      </div>
+    </div>
+    </label>
+  </form>
+    {% endfor %}
+    
+  </div>
+
+  
+</body>
+</html>

@@ -1,0 +1,100 @@
+import requests
+import random
+
+
+app_id = "1481157846018069"
+redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
+client_secret = "1G5RWQSbNZtz1HC1oioNFdIUnOPAs7GU"
+
+secure_random = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
+
+authorization_code = "TG-647222b83b397700019b8058-1095654007"
+state = "W3TH2Z"
+
+authorization_url = f"https://auth.mercadolivre.com.br/authorization?response_type=code&client_id={app_id}&redirect_uri={redirect_url}&state={secure_random}"
+def get_authorization(app_id, client_secret, authorization_code, redirect_url):
+    payload = f'grant_type=authorization_code&client_id={app_id}&client_secret={client_secret}&code={authorization_code}&redirect_uri={redirect_url}'
+
+    headers = {
+        'accept': 'application/json',
+        'content-type': 'application/x-www-form-urlencoded'
+    }
+
+    token_url = "https://api.mercadolibre.com/oauth/token"
+    response = requests.post(token_url, headers=headers, data=payload)
+    return response.json()
+
+token_infos = get_authorization(app_id, client_secret, authorization_code, redirect_url)
+
+def get_access_token(app_id, client_secret, refresh_token):
+    url = "https://api.mercadolibre.com/oauth/token"
+
+    payload = f'grant_type=refresh_token&client_id={app_id}&client_secret={client_secret}&refresh_token={refresh_token}'
+    headers = {
+        'accept': 'application/json',
+        'content-type': 'application/x-www-form-urlencoded'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    return response.json()
+
+refresh_token = "TG-647222cac299df0001605b9c-1095654007"
+
+access_token = get_access_token(app_id, client_secret, refresh_token)
+
+def getInfoFromAd(access_token, item_id):
+    url = f"https://api.mercadolibre.com/items/{item_id}"
+    payload = {}
+    headers = {
+        'Authorization': f'bearer {access_token}'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return response
+
+def addFilterIntoUrlSearchRequest(url, filters):
+    try:
+        if not filters or filters == {}:
+            return url
+        url_with_filters = url
+        for type_of_filter, value_of_filter in filters.items():
+            url_with_filters = url_with_filters + "&" + type_of_filter + "=" + value_of_filter
+        return url_with_filters
+    except TypeError:
+        raise
+
+def searchAdByKeyWord(access_token, key_word, filter=None):
+    url = f"https://api.mercadolibre.com/sites/MLB/search?q={key_word}"
+
+    url = addFilterIntoUrlSearchRequest(url, filter)
+
+    payload = {}
+    headers = {
+        'Authorization': f'bearer {access_token}'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return response
+
+def extract_filters_from_str_dict(text):
+    words = []
+    start = 0
+
+    while True:
+        start_quote = text.find("'", start)
+        if start_quote == -1:
+            break
+
+        end_quote = text.find("'", start_quote + 1)
+        if end_quote == -1:
+            break
+
+        word = text[start_quote + 1:end_quote]
+        words.append(word)
+
+        start = end_quote + 1
+
+    return words

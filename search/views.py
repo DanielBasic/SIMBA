@@ -1,0 +1,48 @@
+from api_MercadoLivre.getContent import (extract_filters_from_str_dict,get_access_token, searchAdByKeyWord)
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.messages import constants
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+
+
+def search(request):
+  if request.method == "GET":
+    app_id = "1481157846018069"
+    redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
+    client_secret = "1G5RWQSbNZtz1HC1oioNFdIUnOPAs7GU"
+    refresh_token = "TG-647222cac299df0001605b9c-1095654007"
+    access_token = get_access_token(app_id, client_secret, refresh_token)
+    
+    key_word = request.GET.get("keyWord")
+
+    def getListOfFilter():
+      list_of_filter = {}
+      for key, value in request.GET.items():
+          if key.startswith('filter_'):
+              filter, value_of_filter = value.split(':')
+              list_of_filter[filter] = value_of_filter
+      return list_of_filter
+    
+    
+    
+    filters = getListOfFilter()
+    applied_filters = request.GET.get("applied_filters")
+    if applied_filters:
+      applied_filters = extract_filters_from_str_dict(applied_filters)
+      applied_filters = {applied_filters[i]: applied_filters[i+1] for i in range(0, len(applied_filters), 2)}
+      filters.update(applied_filters)
+    if access_token:
+      response = searchAdByKeyWord(access_token, key_word, filters)
+      if response.status_code != 200:
+        raise Http404("Entrada incorreta")
+
+    return render(request, "search/index.html", {"response" : response.json(), "keyWord" : key_word, "applied_filters" : filters})
+
+  elif request.method == "POST":
+    keyWord = request.POST.get("keyWord")
+    if not keyWord:
+       keyWord = ""
+
+    return redirect(reverse("search")+ "?KeyWord=" + keyWord)
