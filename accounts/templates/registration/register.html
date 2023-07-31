@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Registe</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     {% load static %}
@@ -12,38 +12,26 @@
 </head>
 
 <body>
-<header class="navegacao">
-  <ul class= "menu">
-    <li><a href="{% url 'login' %}">  Página Inicial  </a></li>
-    <li><a href="{% url 'sobre' %}">Sobre</a></li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
-  </ul>
-</header>
 
 <sectiond class="area-login">
 
+    
     {% if messages %}
         {% for message in messages %}
           <div id="myAlert" style="position: fixed; top: 150px; right: 80px;"  class="alert {{ message.tags }}">{{ message }}</div>
       {% endfor %}
     {% endif %}
     
-
-    <div class="login">
-        <div>
-            <img src={% static "img/SIMBA.png" %}>
-        </div>
-        <form action="{% url 'login'%}" method="POST" class="form_login"> {% csrf_token %}
-            <input type="email" placeholder="Email" name="email" required>
-            <input type="password" placeholder="Senha" name="password" required>
-            <input type="submit" placeholder="Sign in" value="sign in">
+    <div class="col-md-4">
+        <h4>Criar uma conta</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-warning mt-3" type="submit">Registrar</button>
         </form>
-        <br>
-        <p>Não é membro? <a href="{% url 'signup' %}">Cadastre-se</a>
-          <br>
-          <br>
-        <a href="{% url 'password_reset' %}">Esqueci minha senha</a>
     </div>
+
+
 </section>
 </body>
 </html>

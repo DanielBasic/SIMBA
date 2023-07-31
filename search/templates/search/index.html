@@ -8,14 +8,27 @@
 {% load static %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href={% static "css/search_style.css" %}>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'js/search.js' %}"></script>
 </head>
 <body>
   <div class="wrapper">
     <div class="side_bar_filters">
       <input type="submit" value="Filtrar" form="filters">
-      {% for filter in applied_filters %}
-      <p>{{filter}}</p>
-      {% endfor %}
+      <br><br>
+      <form id="filter_to_exclude" action="{% url 'search' %}" method="get">
+        {% csrf_token %}
+        <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
+        <input type="hidden" name="applied_filters" value="{{applied_filters}}"/>
+        <input type="hidden" name="applied_filter_to_exclude" id="selected_filter_to_exclude" name="selected_filter_to_exclude" value="">
+        {% for filterId, filterName in applied_filters.items %}
+        <span>
+          <button type="submit" class="filter_to_exclude_button" value="{{filterId}}">{{filterName}} &#x2716</button>
+        </span>
+        {% endfor %}
+        
+      </form>
+      
       <form id="filters" action="{% url 'search' %}" method="GET">
       {% for filter in response.available_filters %}
         <h2>{{filter.name}}</h2>
