@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'search',
 ]
 
@@ -138,6 +139,3 @@ EMAIL_HOST_PASSWORD = 'pcasjrejggsmuqqv'
 
 
 
-LOGIN_URL = 'novo_login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'novo_login/'
