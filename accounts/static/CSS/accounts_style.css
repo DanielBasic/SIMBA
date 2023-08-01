@@ -16,6 +16,16 @@ h1{
     color: #cbd0f7;
 }
 
+ul li::marker{
+    color: #eee;
+    font-size: larger;
+}
+
+.helptext text{
+    color: #eee;
+    font-size: larger;
+}
+
 .menu{
     display: flex ;
 
