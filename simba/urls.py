@@ -7,6 +7,6 @@ from django.contrib.auth import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("accounts.urls")),
-    path("accounts/", include("django.contrib.auth.urls")), #esse para teste
     path("search/", include("search.urls")),
+    path("accounts/", include("django.contrib.auth.urls")), #esse para teste
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

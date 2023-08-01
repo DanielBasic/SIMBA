@@ -29,8 +29,6 @@
             <form action="{% url 'signup'%}" method="POST" class="formlogin">{% csrf_token %}
                 <input id="signup_input" type="text" placeholder="Nome" name="username" required>
                 <input id="signup_input" type="email" placeholder="Email" name="email" required>
-                <input type="text" placeholder="Primeiro nome" name="first_name" maxlength="150" id="id_first_name">
-                <input type="text" placeholder="Segundo nome"  name="last_name" maxlength="150" id="id_last_name">
                 <input id="signup_input" type="password" placeholder="Senha" name="password" required>
                 <input id="signup_input" type="password" placeholder="Confirmar senha" name="confirm_password"required>
                 <input type="submit" value="Sign In">

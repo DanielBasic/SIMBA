@@ -5,24 +5,25 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+
 def login(request):
   if request.method == "GET":
-    return render(request, "accounts/login.html")
+    return render(request, "registration/login.html")
   
   elif request.method == "POST":
     email = request.POST.get("email")
     password = request.POST.get("password")
-
     user = auth.authenticate(request, email=email, password=password)
 
     if not user:
       messages.add_message(request, constants.ERROR, "Email ou senha inválido")
-      return render(request, "accounts/login.html")
+      return render(request, "registration/login.html")
     
     messages.add_message(request, constants.SUCCESS,"Logado com sucesso")
     auth.login(request, user)
 
-    return redirect(reverse("search"))
+    return render(request, "search/index.html")
+    messages.add_message(request, constants.SUCCESS,"Logado com sucesso")
   
 
 
@@ -33,6 +34,7 @@ def login(request):
 def signup(request):
   if request.method == "GET":
     return render(request, "accounts/signup.html")
+  
   elif request.method == "POST":
     username = request.POST.get("username")
     email =  request.POST.get("email")
@@ -53,6 +55,7 @@ def signup(request):
     user = User.objects.create_user(username=username, email=email, password=password)
 
     messages.add_message(request, constants.SUCCESS, "Usuário cadastrado com sucesso")
+    
     return redirect(reverse("login"))
 
  
