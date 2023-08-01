@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -9,23 +9,23 @@
     <title>signup</title>
     {% load static %}
     <link rel="stylesheet" href={% static "css/accounts_style.css" %}>
-    
+    <script src="{% static 'js/accounts.js' %}"></script>
 </head>
 
 <body>
     {% if messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert" style="position: fixed; top: 80px; right: 20px;">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+        {% for message in messages %}
+          <div id="myAlert" style="position: fixed; top: 150px; right: 80px;"  class="alert {{ message.tags }}">{{ message }}            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
     {% endif %}
+
     <sectiond class="area-login">
         <div class="login">
             <div>
                 <img src={% static "img/SIMBA.png" %}>
             </div>
+            
             <form action="{% url 'signup'%}" method="POST" class="formlogin">{% csrf_token %}
                 <input id="signup_input" type="text" placeholder="Nome" name="username" required>
                 <input id="signup_input" type="email" placeholder="Email" name="email" required>

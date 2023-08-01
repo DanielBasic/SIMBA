@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -20,8 +20,9 @@
 
     {% if messages %}
         {% for message in messages %}
-          <div id="myAlert" style="position: fixed; top: 150px; right: 80px;"  class="alert {{ message.tags }}">{{ message }}</div>
-      {% endfor %}
+          <div id="myAlert" style="position: fixed; top: 150px; right: 80px;"  class="alert {{ message.tags }}">{{ message }}            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
     {% endif %}
     
 
