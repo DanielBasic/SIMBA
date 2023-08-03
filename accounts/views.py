@@ -26,11 +26,6 @@ def login(request):
     messages.add_message(request, constants.SUCCESS,"Logado com sucesso")
   
 
-
-
-
-
-
 def signup(request):
   if request.method == "GET":
     return render(request, "accounts/signup.html")
@@ -73,6 +68,8 @@ def sobre(request):
   if request.method == "GET":
     return render(request, "accounts/sobre.html")
   
+
+
 
 
   

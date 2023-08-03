@@ -15,8 +15,7 @@ def search(request):
     redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
     client_secret = "1G5RWQSbNZtz1HC1oioNFdIUnOPAs7GU"
     refresh_token = "TG-647222cac299df0001605b9c-1095654007"
-    access_token = get_access_token(app_id, client_secret, refresh_token)
-    
+    access_token = get_access_token(app_id, client_secret, refresh_token)   
     key_word = request.GET.get("keyWord")
 
     def getListOfFilter():
@@ -26,9 +25,7 @@ def search(request):
               filter, value_of_filter = value.split(':')
               list_of_filter[filter] = value_of_filter
       return list_of_filter
-    
-    
-    
+      
     filters = getListOfFilter()
     applied_filters = request.GET.get("applied_filters")
     if applied_filters:
@@ -42,9 +39,39 @@ def search(request):
 
     return render(request, "search/index.html", {"response" : response.json(), "keyWord" : key_word, "applied_filters" : filters})
 
+
+
   elif request.method == "POST":
     keyWord = request.POST.get("keyWord")
     if not keyWord:
        keyWord = ""
 
     return redirect(reverse("search")+ "?KeyWord=" + keyWord)
+  
+
+def add_product(request):
+  if request.method == 'POST':
+    product_id = request.POST.get('product_id')
+    product_thumbnail = request.POST.get('product_thumbnail')
+    product_title = request.POST.get('product_title')
+    product_original_price = request.POST.get('product_original_price')
+    product_price = request.POST.get('product_price')
+    product_condition = request.POST.get('product_condition')
+    product_free_shipping = request.POST.get('product_free_shipping')
+    product_logistic_type = request.POST.get('product_logistic_type')
+
+    
+    produto = Product.objects.create(
+      id=product_id,
+      thumbnail=product_thumbnail,
+      title=product_title,
+      original_price=product_original_price,
+      price=product_price,
+      condition=product_condition,
+      free_shipping=product_free_shipping,
+      logistic_type=product_logistic_type,
+    )
+
+    return HttpResponse("Produto adicionado ao banco de dados com sucesso.")
+  else:
+    return HttpResponse("Método de requisição inválido.")

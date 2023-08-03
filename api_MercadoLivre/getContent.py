@@ -12,6 +12,9 @@ authorization_code = "TG-647222b83b397700019b8058-1095654007"
 state = "W3TH2Z"
 
 authorization_url = f"https://auth.mercadolivre.com.br/authorization?response_type=code&client_id={app_id}&redirect_uri={redirect_url}&state={secure_random}"
+
+
+#OBTEM A AUTORIZAÇÃO
 def get_authorization(app_id, client_secret, authorization_code, redirect_url):
     payload = f'grant_type=authorization_code&client_id={app_id}&client_secret={client_secret}&code={authorization_code}&redirect_uri={redirect_url}'
 
@@ -26,6 +29,8 @@ def get_authorization(app_id, client_secret, authorization_code, redirect_url):
 
 token_infos = get_authorization(app_id, client_secret, authorization_code, redirect_url)
 
+
+# OBTEM O TOKEM DE ACESSO
 def get_access_token(app_id, client_secret, refresh_token):
     url = "https://api.mercadolibre.com/oauth/token"
 
@@ -43,6 +48,9 @@ refresh_token = "TG-647222cac299df0001605b9c-1095654007"
 
 access_token = get_access_token(app_id, client_secret, refresh_token)
 
+
+
+# OBETEM AS INFORMAÇÕES DO ANUNCIO
 def getInfoFromAd(access_token, item_id):
     url = f"https://api.mercadolibre.com/items/{item_id}"
     payload = {}
@@ -54,6 +62,9 @@ def getInfoFromAd(access_token, item_id):
 
     return response
 
+
+
+# ADICONA O FILTRO NAS SOLICITAÇÕES DE PESQUISA DA URL
 def addFilterIntoUrlSearchRequest(url, filters):
     try:
         if not filters or filters == {}:
@@ -65,6 +76,9 @@ def addFilterIntoUrlSearchRequest(url, filters):
     except TypeError:
         raise
 
+
+
+# PESQUISA DO ANUNCIO POR PALAVRA CHAVE
 def searchAdByKeyWord(access_token, key_word, filter=None):
     url = f"https://api.mercadolibre.com/sites/MLB/search?q={key_word}"
 
@@ -79,6 +93,8 @@ def searchAdByKeyWord(access_token, key_word, filter=None):
 
     return response
 
+
+# EXTRAI OS FILTROS
 def extract_filters_from_str_dict(text):
     words = []
     start = 0
