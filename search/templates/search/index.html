@@ -8,12 +8,49 @@
 {% load static %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href={% static "css/teste_search_style.css" %}>
+<link rel="stylesheet" href={% static "css/nav.css" %}>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script src="{% static 'js/search.js' %}"></script>
+<script src="{% static 'js/navbar.js' %}"></script>
+
 </head>
 <body>
  
-  
+  <header>
+    <nav>
+      <a class="logo" href="/">Simba</a>
+      <div class="mobile-menu">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+
+      <ul class="nav-list">
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Sobre</a></li>
+        <li><a href="#">Projetos</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+      
+    </nav>
+
+    <nav>
+      <div class="contents_ad">
+        <form action="{% url 'search' %}" method="GET" class="search_bar_box">
+          {% csrf_token %} 
+          <input type="text" placeholder="Informe a palavra chave" name="keyWord">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form> 
+      </div>
+    </nav>
+    
+  </header>
+  <br>
+
+
+
   <div class="wrapper">
     <div class="side_bar_filters">
       <input type="submit" value="Filtrar" form="filters">
@@ -39,8 +76,9 @@
           <input type="hidden" name="product_condition" value="{{ product.condition }}">
           <input type="hidden" name="product_free_shipping" value="{{ product.shipping.free_shipping }}">
           <input type="hidden" name="product_logistic_type" value="{{ product.shipping.logistic_type }}">
-          <!-- Adicione outros campos de input conforme necessário -->
+
           <button type="submit">Adicionar ao Banco de Dados</button>
+          
         </form>
 
       </form>
@@ -62,23 +100,14 @@
               <span>{{ value_of_filter.name }}</span> <span>({{ value_of_filter.results }})</span> <br>
             </label>
           {% endfor %}
-        
+          <br>
       {% endfor %}
     </form>
     </div> 
   </div>
 
-
-  <div class="contents_ad">
-    <form action="{% url 'search' %}" method="GET" class="search_bar_box">
-      {% csrf_token %} 
-      <input type="text" placeholder="Informe a palavra chave" name="keyWord">
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </form> 
-  </div>
-  
   <div class="catalog">
-    {% for product in response.results %}
+  {% for product in response.results %}
   <form action="{% url 'search' %}" method="GET">
   {% csrf_token %}
     <input class="checkbox" id={{product.id}} type="checkbox" name="lists[new]" />
@@ -108,9 +137,14 @@
     </div>
     </label>
   </form>
-    {% endfor %}
-    
-  </div>
+{% endfor %}
+</div>
+
+<div>
+  <p>rodape</p>
+</div>
+
+
 
   
 </body>

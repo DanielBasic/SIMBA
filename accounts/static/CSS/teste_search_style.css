@@ -1,24 +1,27 @@
 body{
-    background: rgba(0,0,0,.1);
+    background: #ecedec;
     height: 100vh;
     
     
 }
-.wrapper {
-    display: flex;
-  }
+
 
 .side_bar_filters { 
     width: 18%; /* Defina a largura desejada para a barra lateral de filtros */
     max-width: 300px;
     position: absolute;
-    left: 2px;
-    overflow: auto; /* Adicione rolagem vertical quando necessário */
+    left: 15px;
+    /*overflow: auto;*/ /* Adicione rolagem vertical quando necessário */
     max-height: 100vh; /* Limita a altura máxima para ocupar a altura total da janela */
 }
 
 .contents_ad {
-margin-left: 24vw; /* Deixe um espaço à esquerda para a barra lateral de filtros */
+
+    display: flex;
+    align-items: center; 
+    
+    
+
 }
 
 * {
@@ -31,19 +34,19 @@ form.search_bar_box input[type=text] {
     font-size: 17px;
     border: 1px solid grey;
     float: left;
-    width: 50%;
-    background: #f1f1f1;
+    width: 500px;
+    background: #ecedec;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     border-bottom-left-radius: 0.25rem;
     border-top-left-radius: 0.25rem;
-    cursor: pointer
+    cursor: pointer;
+    padding-left: 40px;
 }
 
 /* Style the submit button */
 form.search_bar_box button {
     float: left;
-    width: 8%;
     padding: 10px;
     background: #ff9900;
     color: white;
@@ -59,6 +62,7 @@ form.search_bar_box button {
 
 form.search_bar_box button:hover {
     background: #ffad33;
+    
 }
 
 /* Clear floats */
@@ -69,56 +73,65 @@ form.search_bar_box::after {
 }
 
 .side_bar_filters span {
-    font-size: 14px;
-    margin-left: 6px
+    font-size: 8px;
+    margin-left: 6px;
+    color: #666;
+
 }
 
 .side_bar_filters h2 {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.25;
     margin-bottom: 10px;
     margin-left: 10px;
+    left: 10px;
+
 }
 
 .catalog {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    column-gap: 10px;
     width: 80%;
-    margin-left: 20%; 
+    margin-left: 18%; 
+    justify-content: center;
     
 
 }
 
 .product {
-    background-color: white;
-    border: 1px solid #dda;
+    background-color: #fffefe;
+    border: 1px solid #dbdbdb;
     padding: 5px;
-    width: 260px;
-    height: 420px;
-    border-radius: 10px;
+    width: 300px;
+    height: 500px;
+    border-radius: 8px;
 }
 
 .product:hover{   
-    background: white;
     cursor: pointer;
-    box-shadow: 0 0 13px black;
+    box-shadow: 0 0 20px #6f6e6e;
+    transform: scale(1.01);
+
+
+    
 }
 
 .image {
     display: grid;
     gap: 5px;
-    border-bottom: 2px solid #ddd;
-    background: white;
+    background: #fff;
+    object-fit: contain;
+    object-position: center;
     
 }
 
 .image img {
-    width: 100%;
-    height: 200px;
+    height: 100%;
+    width: 284px;
+    height: 284px;
     border-radius: 1px;
-    
-
+    border-bottom: solid 2px #ddd;
 }
 
 .details {
@@ -128,12 +141,12 @@ form.search_bar_box::after {
 }
 
 .price {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 
 .details h2 {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 300;
   line-height: 1.35;
 }
@@ -168,7 +181,7 @@ form.search_bar_box::after {
     max-width: 568px;
     max-height: 568px;
     -webkit-font-smoothing: antialiased; 
-    margin-top:10px;
+    margin-top:15px;
     font-family:Arial,Helvetica,sans-serif;
     color:gray;
     text-align:center;
@@ -178,32 +191,46 @@ form.search_bar_box::after {
 
 input[type=checkbox] {
     display: none;
+    margin-left: 10px;
+}
+
+input[type=checkbox]:checked {
+    display: none;
+    margin-left: 10px;
+    color: red;
+   
 }
 
 input[type=radio] {
+    margin-left: 10px;
+    display: none;
     
 }
 
 
 input:checked + label {
-
-    color: black;
+    box-shadow: 0 0 20px #6f6e6e;
+    color: green;
     background-color: white;   
-    box-shadow: 0 0 10px black;
+    font-weight: bold;
 }
 
 input:checked + label:before {
     content: "\2713 ";
+
 }
 
 
 /* new stuff */
 .check {
     visibility: hidden;
+    
+    
 }
 
 input:checked + label .check {
     visibility: visible;
+    
 }
 
 input.checkbox:checked + label:before {
