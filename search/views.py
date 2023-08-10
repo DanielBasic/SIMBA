@@ -29,6 +29,7 @@ def search(request):
       
     filters = getListOfFilter()
     filter_to_exclude = request.GET.get('applied_filter_to_exclude')
+    print(filter_to_exclude)
     applied_filters = request.GET.get("applied_filters")
     if applied_filters:
       applied_filters = extract_filters_from_str_dict(applied_filters)

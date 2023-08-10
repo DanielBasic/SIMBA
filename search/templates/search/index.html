@@ -49,6 +49,8 @@
   </header>
   <br>
 
+
+
   <div class="wrapper">
     <div class="side_bar_filters">
       <input type="submit" value="Filtrar" form="filters">
@@ -63,8 +65,7 @@
           <button type="submit" class="filter_to_exclude_button" value="{{filterId}}">{{filterName}} &#x2716</button>
         </span>
         {% endfor %}   
-        </form>
-
+        
         <form action="{% url 'add_product' %}" method="POST">
           {% csrf_token %}
           <input type="hidden" name="product_id" value="{{ product.id }}">
@@ -75,8 +76,11 @@
           <input type="hidden" name="product_condition" value="{{ product.condition }}">
           <input type="hidden" name="product_free_shipping" value="{{ product.shipping.free_shipping }}">
           <input type="hidden" name="product_logistic_type" value="{{ product.shipping.logistic_type }}">
-          <input type="submit" method="POST" class="btn-principal" value="Adicionar ao Banc">
-        <br>
+
+          <button type="submit">Adicionar ao Banco de Dados</button>
+          
+        </form>
+
       </form>
       
       <form id="filters" action="{% url 'search' %}" method="GET">
