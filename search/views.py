@@ -7,8 +7,11 @@ from django.urls import reverse
 from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
                                          get_access_token, searchAdByKeyWord, remove_filters_from_filterList)
 
+from .models import Product
+
 
 def search(request):
+
   
   if request.method == "GET":
     app_id = "1481157846018069"
@@ -28,6 +31,7 @@ def search(request):
       
     filters = getListOfFilter()
     filter_to_exclude = request.GET.get('applied_filter_to_exclude')
+    print(filter_to_exclude)
     applied_filters = request.GET.get("applied_filters")
     if applied_filters:
       applied_filters = extract_filters_from_str_dict(applied_filters)
@@ -46,12 +50,15 @@ def search(request):
 
 
   elif request.method == "POST":
+
+
     keyWord = request.POST.get("keyWord")
     if not keyWord:
        keyWord = ""
 
     return redirect(reverse("search")+ "?KeyWord=" + keyWord)
   
+
 
 def add_product(request):
   if request.method == 'POST':
@@ -76,6 +83,13 @@ def add_product(request):
       logistic_type=product_logistic_type,
     )
 
-    return HttpResponse("Produto adicionado ao banco de dados com sucesso.")
+    produto.save()
+    messages.add_message(request, constants.SUCCESS, 'Evento cadastrado com sucesso')
+    return redirect(reverse('search'))
+                    
   else:
     return HttpResponse("Método de requisição inválido.")
+  
+def gerenciar_agrupamento(request):
+  if request.method == "GET":
+    return redirect(reverse('gerenciar_agrupamento'))
