@@ -17,14 +17,13 @@ def login(request):
 
     if not user:
       messages.add_message(request, constants.ERROR, "Email ou senha inválido")
-      return render(request, "registration/login.html")
+      return redirect(reverse("login"))
     
     messages.add_message(request, constants.SUCCESS,"Logado com sucesso")
     auth.login(request, user)
 
-    return render(request, "search/index.html")
-    messages.add_message(request, constants.SUCCESS,"Logado com sucesso")
-  
+    return redirect(reverse("search"))
+    
 
 def signup(request):
   if request.method == "GET":

@@ -114,3 +114,30 @@ def extract_filters_from_str_dict(text):
         start = end_quote + 1
 
     return words
+
+def find_start_end_indexes(string, substring):
+    start_index = None
+    end_index = None
+
+    for i in range(len(string)):
+        if string[i:i + len(substring)] == substring:
+            if start_index is None:
+                start_index = i
+            end_index = i + len(substring) - 1
+
+    return start_index, end_index
+
+def remove_filter_from_url(url, filter):
+    start_index, end_index = find_start_end_indexes(url, filter)
+
+    if start_index is None:
+        return url
+
+    new_string = url[:start_index] + url[end_index + 1:]
+    return new_string
+
+def remove_filters_from_filterList(filters, filter_type):
+    for n, filter in enumerate(filters):
+        if filter == filter_type:
+            filters.pop(n), filters.pop(n)
+    return filters
