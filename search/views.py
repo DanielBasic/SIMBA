@@ -9,7 +9,6 @@ from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
 
 
 def search(request):
-
   
   if request.method == "GET":
     app_id = "1481157846018069"
