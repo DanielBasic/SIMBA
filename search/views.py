@@ -4,9 +4,8 @@ from django.contrib.messages import constants
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-
 from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
-                                         get_access_token, searchAdByKeyWord)
+                                         get_access_token, searchAdByKeyWord, remove_filters_from_filterList)
 
 from .models import Product
 
@@ -29,11 +28,15 @@ def search(request):
       return list_of_filter
       
     filters = getListOfFilter()
+    filter_to_exclude = request.GET.get('applied_filter_to_exclude')
     applied_filters = request.GET.get("applied_filters")
     if applied_filters:
       applied_filters = extract_filters_from_str_dict(applied_filters)
+      if filter_to_exclude:
+        applied_filters = remove_filters_from_filterList(applied_filters, filter_to_exclude)
       applied_filters = {applied_filters[i]: applied_filters[i+1] for i in range(0, len(applied_filters), 2)}
       filters.update(applied_filters)
+      
     if access_token:
       response = searchAdByKeyWord(access_token, key_word, filters)
       if response.status_code != 200:
