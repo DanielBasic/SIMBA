@@ -67,16 +67,16 @@ def getInfoFromAd(access_token, item_id):
 # ADICONA O FILTRO NAS SOLICITAÇÕES DE PESQUISA DA URL
 def addFilterIntoUrlSearchRequest(url, filters):
     try:
-        if not filters or filters == {}:
+        if not filters:
             return url
         url_with_filters = url
-        for type_of_filter, value_of_filter in filters.items():
+        for filter in filters:
+            type_of_filter = filter['filter']
+            value_of_filter = filter['value_of_filter']
             url_with_filters = url_with_filters + "&" + type_of_filter + "=" + value_of_filter
         return url_with_filters
     except TypeError:
         raise
-
-
 
 # PESQUISA DO ANUNCIO POR PALAVRA CHAVE
 def searchAdByKeyWord(access_token, key_word, filter=None):
@@ -139,5 +139,19 @@ def remove_filter_from_url(url, filter):
 def remove_filters_from_filterList(filters, filter_type):
     for n, filter in enumerate(filters):
         if filter == filter_type:
-            filters.pop(n), filters.pop(n)
+            print(f'filter to pop: {filters}')
+            print(filter_type)
+            for i in range(6):
+                print(filters[n - 3])
+                filters.pop(n - 3)
     return filters
+
+def tranform_strFilters_list_into_dictFilters_list(values_of_filters):
+    filters_list = []
+    print(len(values_of_filters))
+    for value_filter in range(0, len(values_of_filters), 6):
+        filters_list.append({'filter' : values_of_filters[value_filter + 1],
+                              'value_of_filter' : values_of_filters[value_filter + 3],
+                              'filter_name' : values_of_filters[value_filter + 5]})
+
+    return filters_list

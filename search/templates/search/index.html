@@ -63,9 +63,9 @@
         <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
         <input type="hidden" name="applied_filters" value="{{applied_filters}}"/>
         <input type="hidden" name="applied_filter_to_exclude" id="selected_filter_to_exclude" name="selected_filter_to_exclude" value="">
-        {% for filterId, filterName in applied_filters.items %}
+        {% for filter in applied_filters %}
         <span>
-          <button type="submit" class="filter_to_exclude_button" value="{{filterId}}">{{filterName}} &#x2716</button>
+          <button type="button" class="filter_to_exclude_button" value="{{filter.value_of_filter}}">{{ filter.filter_name }} : {{filter.value_of_filter}}  &#x2716</button>
         </span>
         {% endfor %}   
       </form>
@@ -93,11 +93,7 @@
           <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
           <input type="hidden" name="applied_filters" value="{{applied_filters}}"/>
           {% for value_of_filter in filter.values %}
-            {% if value_of_filter.id in applied_filters %}
-            <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}" checked/>
-            {% else %}
-            <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}"/>
-            {% endif %}
+            <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}:{{ filter.name }}"/>
             <label for="{{ value_of_filter.id }}">
               <span>{{ value_of_filter.name }}</span> <span>({{ value_of_filter.results }})</span> <br>
             </label>

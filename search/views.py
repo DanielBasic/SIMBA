@@ -5,12 +5,16 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
-                                         get_access_token, searchAdByKeyWord, remove_filters_from_filterList)
+                                         get_access_token, searchAdByKeyWord,
+                                           remove_filters_from_filterList,
+                                           tranform_strFilters_list_into_dictFilters_list)
 
 from .models import Product
 
 
 def search(request):
+
+  
   if request.method == "GET":
     app_id = "1481157846018069"
     redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
@@ -19,31 +23,35 @@ def search(request):
     access_token = get_access_token(app_id, client_secret, refresh_token)   
     key_word = request.GET.get("keyWord")
 
-    def getListOfFilter():
-      list_of_filter = {}
+    def getListOfFilters():
+      list_of_filters = []
       for key, value in request.GET.items():
           if key.startswith('filter_'):
-              filter, value_of_filter = value.split(':')
-              list_of_filter[filter] = value_of_filter
-      return list_of_filter
+              filter, value_of_filter, filter_name = value.split(':')
+              list_of_filters.append({'filter' : filter, 'value_of_filter': 
+                                     value_of_filter, 'filter_name' : filter_name})
+      return list_of_filters
+    
       
-    filters = getListOfFilter()
+    filters_to_apply = getListOfFilters()
     filter_to_exclude = request.GET.get('applied_filter_to_exclude')
-    print(filter_to_exclude)
     applied_filters = request.GET.get("applied_filters")
-    if applied_filters:
+    print(applied_filters)
+    if applied_filters and applied_filters != '[]':
       applied_filters = extract_filters_from_str_dict(applied_filters)
+      print(f'applied filters: {applied_filters}')
       if filter_to_exclude:
         applied_filters = remove_filters_from_filterList(applied_filters, filter_to_exclude)
-      applied_filters = {applied_filters[i]: applied_filters[i+1] for i in range(0, len(applied_filters), 2)}
-      filters.update(applied_filters)
+      applied_filters = tranform_strFilters_list_into_dictFilters_list(applied_filters)
+      print(f'filters_to_apply: {filters_to_apply}, applied_filters: {applied_filters}')
+      applied_filters = [filters_to_apply.append(filter) for filter in applied_filters]
       
     if access_token:
-      response = searchAdByKeyWord(access_token, key_word, filters)
+      response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
       if response.status_code != 200:
         raise Http404("Entrada incorreta")
 
-    return render(request, "search/index.html", {"response" : response.json(), "keyWord" : key_word, "applied_filters" : filters})
+    return render(request, "search/index.html", {"response" : response.json(), "keyWord" : key_word, "applied_filters" : filters_to_apply})
 
 
 
