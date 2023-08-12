@@ -8,5 +8,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("accounts.urls")),
     path("search/", include("search.urls")),
+    path("groupings/", include("groupings.urls")),
     path("accounts/", include("django.contrib.auth.urls")), #esse para teste
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

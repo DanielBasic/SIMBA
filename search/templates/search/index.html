@@ -32,6 +32,9 @@
         <li><a href="#">Sobre</a></li>
         <li><a href="#">Projetos</a></li>
         <li><a href="#">Contato</a></li>
+        {% if request.user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Sair</a></li>
+        {% endif %}
       </ul>
       
     </nav>
@@ -65,22 +68,21 @@
           <button type="submit" class="filter_to_exclude_button" value="{{filterId}}">{{filterName}} &#x2716</button>
         </span>
         {% endfor %}   
+      </form>
+      <form action="{% url 'add_product' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input type="hidden" name="product_thumbnail" value="{{ product.thumbnail }}">
+        <input type="hidden" name="product_title" value="{{ product.title }}">
+        <input type="hidden" name="product_original_price" value="{{ product.original_price }}">
+        <input type="hidden" name="product_price" value="{{ product.price }}">
+        <input type="hidden" name="product_condition" value="{{ product.condition }}">
+        <input type="hidden" name="product_free_shipping" value="{{ product.shipping.free_shipping }}">
+        <input type="hidden" name="product_logistic_type" value="{{ product.shipping.logistic_type }}">
+
+       
+        <input type="submit" value="Adicionar ao Banco de Dados" form="" >
         
-        <form action="{% url 'add_product' %}" method="POST">
-          {% csrf_token %}
-          <input type="hidden" name="product_id" value="{{ product.id }}">
-          <input type="hidden" name="product_thumbnail" value="{{ product.thumbnail }}">
-          <input type="hidden" name="product_title" value="{{ product.title }}">
-          <input type="hidden" name="product_original_price" value="{{ product.original_price }}">
-          <input type="hidden" name="product_price" value="{{ product.price }}">
-          <input type="hidden" name="product_condition" value="{{ product.condition }}">
-          <input type="hidden" name="product_free_shipping" value="{{ product.shipping.free_shipping }}">
-          <input type="hidden" name="product_logistic_type" value="{{ product.shipping.logistic_type }}">
-
-          <button type="submit">Adicionar ao Banco de Dados</button>
-          
-        </form>
-
       </form>
       
       <form id="filters" action="{% url 'search' %}" method="GET">

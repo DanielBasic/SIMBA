@@ -88,6 +88,3 @@ def add_product(request):
   else:
     return HttpResponse("Método de requisição inválido.")
   
-def gerenciar_agrupamento(request):
-  if request.method == "GET":
-    return redirect(reverse('gerenciar_agrupamento'))

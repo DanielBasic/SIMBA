@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento.css" %}>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a class="logo" href="/">Simba</a>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            <ul class="nav-list">
+                {% if request.user.is_authenticated %}
+                    <li><a href="#">Início</a></li>
+                {% endif %}
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Projetos</a></li>
+                <li><a href="#">Contato</a></li>          
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Sair</a></li>
+                {% endif %}
+            </ul> 
+        </nav>      
+    </header>
+    <nav>
+        <h1> {{request.user.username}} Seus Agrupamentos</h1>
+    </nav>
+    
+
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Título</th>
+          <th>Início</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="logo.png" alt="Logo"></td>
+          <td>Cadeiras</td>
+          <td>2023-08-11</td>
+          <td>Esta é uma descrição de exemplo.</td>
+        </tr>
+        <tr>
+          <td><img src="logo.png" alt="Logo"></td>
+          <td>Cameras</td>
+          <td>2023-08-12</td>
+          <td>Esta é outra descrição de exemplo.</td>
+          <tr>
+            <td><img src="logo.png" alt="Logo"></td>
+            <td>Carros</td>
+            <td>2023-08-11</td>
+            <td>Esta é uma descrição de exemplo.</td>
+          </tr>
+          <tr>
+            <td><img src="logo.png" alt="Logo"></td>
+            <td>Chinelo</td>
+            <td>2023-08-12</td>
+            <td>Esta é outra descrição de exemplo.</td>
+          </tr>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

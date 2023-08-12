@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamentos.css" %}>
+    <link rel="stylesheet" href={% static "groupings/css/criar_agrupamentos.css" %}>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a class="logo" href="/">Simba</a>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            <ul class="nav-list">
+                {% if request.user.is_authenticated %}
+                    <li><a href="#">Início</a></li>
+                {% endif %}
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Projetos</a></li>
+                <li><a href="#">Contato</a></li>          
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Sair</a></li>
+                {% endif %}
+            </ul> 
+        </nav>      
+    </header>
+
+   
+    
+
+    
+    <div class="area_formulario_agrupamento">
+        
+
+
+        <form method="post" class="form_group">
+
+            <div>
+       
+                <h1> NOVO AGRUPAMENTO </h1>
+           
+            </div>
+            
+            {% csrf_token %}
+
+
+            
+            <input type="text" id="logo" name="logo" placeholder="Logo URL">
+        
+
+
+            <input type="text" id="title" name="title" placeholder="Título">
+        
+            
+
+            <input type="text" id="start_date" name="start_date" placeholder="Data de Início">
+        
+           
+
+            <textarea id="description" name="description" placeholder="Descrição"></textarea>
+        
+            <button type="submit">Criar Agrupamento</button>
+
+        </form>
+    </div>
+      
+
+
+    
+
+
+       
+</html>
