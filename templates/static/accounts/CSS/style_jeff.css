@@ -9,7 +9,6 @@ body {
   height: 100vh;
 }
 
-
 .navegacao{
   display: flex;
 }
@@ -25,7 +24,6 @@ body {
   justify-content: center;
 
 }
-
 
 
 .form.login{
