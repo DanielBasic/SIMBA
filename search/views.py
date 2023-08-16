@@ -5,16 +5,15 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
-                                         get_access_token, searchAdByKeyWord,
+                                         get_access_token,
                                            remove_filters_from_filterList,
-                                           tranform_strFilters_list_into_dictFilters_list)
+                                           tranform_strFilters_list_into_dictFilters_list,
+                                           get_availabe_filters,get_all_products)
 
 from .models import Product
 
 
 def search(request):
-
-  
   if request.method == "GET":
     app_id = "1481157846018069"
     redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
@@ -29,11 +28,15 @@ def search(request):
           if key.startswith('filter_'):
               filter, value_of_filter, filter_name = value.split(':')
               list_of_filters.append({'filter' : filter, 'value_of_filter': 
-                                     value_of_filter, 'filter_name' : filter_name})
+                                      value_of_filter, 'filter_name' : filter_name})
       return list_of_filters
     
       
     filters_to_apply = getListOfFilters()
+
+    
+
+
     filter_to_exclude = request.GET.get('applied_filter_to_exclude')
     applied_filters = request.GET.get("applied_filters")
     print(applied_filters)
@@ -45,19 +48,15 @@ def search(request):
       applied_filters = tranform_strFilters_list_into_dictFilters_list(applied_filters)
       print(f'filters_to_apply: {filters_to_apply}, applied_filters: {applied_filters}')
       applied_filters = [filters_to_apply.append(filter) for filter in applied_filters]
-      
+    
     if access_token:
-      response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
-      if response.status_code != 200:
-        raise Http404("Entrada incorreta")
+      available_filters = get_availabe_filters(access_token, key_word, filters_to_apply)
+      all_products = get_all_products(access_token, key_word, filters_to_apply)
+      print(available_filters, all_products)  
 
-    return render(request, "search/index.html", {"response" : response.json(), "keyWord" : key_word, "applied_filters" : filters_to_apply})
-
-
+    return render(request, "search/index.html", {"available_filters" : available_filters, "products" : all_products, "keyWord" : key_word, "applied_filters" : filters_to_apply})
 
   elif request.method == "POST":
-
-
     keyWord = request.POST.get("keyWord")
     if not keyWord:
        keyWord = ""
@@ -95,4 +94,6 @@ def add_product(request):
                     
   else:
     return HttpResponse("Método de requisição inválido.")
+  
+
   

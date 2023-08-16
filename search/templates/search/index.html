@@ -86,7 +86,7 @@
       </form>
       
       <form id="filters" action="{% url 'search' %}" method="GET">
-      {% for filter in response.available_filters %}
+      {% for filter in available_filters %}
         <h2>{{filter.name}}</h2>
         
           {% csrf_token %}
@@ -105,7 +105,8 @@
   </div>
 
   <div class="catalog">
-  {% for product in response.results %}
+
+  {% for product in products %}
   <form action="{% url 'search' %}" method="GET">
   {% csrf_token %}
     <input class="checkbox" id={{product.id}} type="checkbox" name="lists[new]" />
@@ -138,13 +139,20 @@
 {% endfor %}
 </div>
 
-<div>
-  <p>rodape</p>
+<div class="pagination">
+  <span class="step-links">
+      {% if page.has_previous %}
+          <a href="?page={{ page.previous_page_number }}">Anterior</a>
+      {% endif %}
+      <span class="current-page">
+          Page {{ page.number }} of {{ page.paginator.num_pages }}.
+      </span>
+      {% if page.has_next %}
+          <a href="?page={{ page.next_page_number }}">Próximo</a>
+      {% endif %}
+  </span>
 </div>
 
-
-
-  
 </body>
 </html>
 

@@ -1,6 +1,7 @@
 import requests
 import random
-
+from django.http import Http404
+import json
 
 app_id = "1481157846018069"
 redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
@@ -67,7 +68,7 @@ def getInfoFromAd(access_token, item_id):
 # ADICONA O FILTRO NAS SOLICITAÇÕES DE PESQUISA DA URL
 def addFilterIntoUrlSearchRequest(url, filters):
     try:
-        if not filters:
+        if not filters or filters == []:
             return url
         url_with_filters = url
         for filter in filters:
@@ -155,3 +156,37 @@ def tranform_strFilters_list_into_dictFilters_list(values_of_filters):
                               'filter_name' : values_of_filters[value_filter + 5]})
 
     return filters_list
+
+
+def get_availabe_filters(access_token, key_word, filters_to_apply):
+    if access_token:
+        response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
+        if response.status_code != 200:
+            raise Http404("Entrada incorreta")
+        else:
+            available_filters = response.json()["available_filters"]
+            
+            return available_filters
+            
+def get_all_products(access_token, key_word, filters_to_apply):
+    page = 1  
+    products = []  
+
+    while True:
+        offset = {"filter" : "offset", "value_of_filter" : str((page -1) * 50)}
+        filters_to_apply.append(offset)
+        response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
+        data = response.json()
+
+        if response.status_code == 200:
+            if "results" in data:
+                products.extend(data["results"])
+                filters_to_apply.pop()
+                if len(data["results"]) < 50:
+                    break
+        else:
+            break
+
+        page += 1
+
+    return products
