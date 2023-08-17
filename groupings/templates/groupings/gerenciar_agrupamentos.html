@@ -6,6 +6,7 @@
     <title>Document</title>
     {% load static %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento.css" %}>
+    
 </head>
 <body>
 
@@ -33,8 +34,9 @@
     <nav>
         <h1> {{request.user.username}} Seus Agrupamentos</h1>
     </nav>
-    
 
+    <table class="styled-table">
+    <tbody>
     <table class="styled-table">
       <thead>
         <tr>
@@ -42,34 +44,31 @@
           <th>Título</th>
           <th>Início</th>
           <th>Descrição</th>
+          <th>criador</th>
         </tr>
       </thead>
+    
       <tbody>
-        <tr>
-          <td><img src="logo.png" alt="Logo"></td>
-          <td>Cadeiras</td>
-          <td>2023-08-11</td>
-          <td>Esta é uma descrição de exemplo.</td>
-        </tr>
-        <tr>
-          <td><img src="logo.png" alt="Logo"></td>
-          <td>Cameras</td>
-          <td>2023-08-12</td>
-          <td>Esta é outra descrição de exemplo.</td>
-          <tr>
-            <td><img src="logo.png" alt="Logo"></td>
-            <td>Carros</td>
-            <td>2023-08-11</td>
-            <td>Esta é uma descrição de exemplo.</td>
+
+        <tbody>
+          
+            {% for agrupamento in agrupamentos  %}
+              
+              <tr>
+                 
+                <td>{{agrupamento.logo}}</td>
+                <td>{{agrupamento.title}}</td>
+                <td>{{agrupamento.start_date}}</td>
+                <td>{{agrupamento.description}}</td>
+                <td>{{agrupamento.criador}}</td>
+               
+              </tr>
+            {% endfor %}
           </tr>
-          <tr>
-            <td><img src="logo.png" alt="Logo"></td>
-            <td>Chinelo</td>
-            <td>2023-08-12</td>
-            <td>Esta é outra descrição de exemplo.</td>
-          </tr>
-        </tr>
       </tbody>
+
     </table>
+    <script src="{% static 'accounts/js/accounts.js' %}"></script>
+    <script src="{% static 'accounts/js/navbar.js' %}"></script>
   </body>
 </html>

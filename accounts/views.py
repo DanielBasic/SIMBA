@@ -13,6 +13,7 @@ def login(request):
   elif request.method == "POST":
     email = request.POST.get("email")
     password = request.POST.get("password")
+    
     user = auth.authenticate(request, email=email, password=password)
 
     if not user:
