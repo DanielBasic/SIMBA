@@ -31,14 +31,14 @@
             </ul> 
         </nav>      
     </header>
+    <main>
     <nav>
         <h1> {{request.user.username}} Seus Agrupamentos</h1>
     </nav>
 
-    <table class="styled-table">
     <tbody>
     <table class="styled-table">
-      <thead>
+      <thead class="styled-thead">
         <tr>
           <th>Logo</th>
           <th>Título</th>
@@ -46,29 +46,27 @@
           <th>Descrição</th>
           <th>criador</th>
         </tr>
-      </thead>
-    
+      </thead>  
       <tbody>
-
-        <tbody>
-          
-            {% for agrupamento in agrupamentos  %}
-              
-              <tr>
-                 
+        <tbody>        
+            {% for agrupamento in agrupamentos  %}         
+              <tr>   
                 <td>{{agrupamento.logo}}</td>
                 <td>{{agrupamento.title}}</td>
                 <td>{{agrupamento.start_date}}</td>
                 <td>{{agrupamento.description}}</td>
-                <td>{{agrupamento.criador}}</td>
-               
+                <td>{{agrupamento.criador}}</td>      
               </tr>
             {% endfor %}
           </tr>
       </tbody>
-
     </table>
-    <script src="{% static 'accounts/js/accounts.js' %}"></script>
-    <script src="{% static 'accounts/js/navbar.js' %}"></script>
-  </body>
+    <footer>
+      <p>Rodape</p>
+    </footer>
+  </main>
+<script src="{% static 'accounts/js/accounts.js' %}"></script>
+<script src="{% static 'accounts/js/navbar.js' %}"></script>
+    
+</body>
 </html>

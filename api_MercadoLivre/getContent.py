@@ -1,7 +1,8 @@
-import requests
-import random
-from django.http import Http404
 import json
+import random
+
+import requests
+from django.http import Http404
 
 app_id = "1481157846018069"
 redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
@@ -13,6 +14,7 @@ authorization_code = "TG-647222b83b397700019b8058-1095654007"
 state = "W3TH2Z"
 
 authorization_url = f"https://auth.mercadolivre.com.br/authorization?response_type=code&client_id={app_id}&redirect_uri={redirect_url}&state={secure_random}"
+
 
 
 #OBTEM A AUTORIZAÇÃO
@@ -169,24 +171,8 @@ def get_availabe_filters(access_token, key_word, filters_to_apply):
             return available_filters
             
 def get_all_products(access_token, key_word, filters_to_apply):
-    page = 1  
-    products = []  
+    response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
 
-    while True:
-        offset = {"filter" : "offset", "value_of_filter" : str((page -1) * 50)}
-        filters_to_apply.append(offset)
-        response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
-        data = response.json()
-
-        if response.status_code == 200:
-            if "results" in data:
-                products.extend(data["results"])
-                filters_to_apply.pop()
-                if len(data["results"]) < 50:
-                    break
-        else:
-            break
-
-        page += 1
-
-    return products
+    if response.status_code == 200:
+        products = response.json()['results']
+        return products

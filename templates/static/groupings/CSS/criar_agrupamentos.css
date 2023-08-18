@@ -1,12 +1,11 @@
 body {
-    background-color: #111;
     color: #fff;
-
     background-color: #1b1f27;
     font-family: Arial, Arial, Helvetica, sans-serif;
     overflow: hidden;
   }
-* {
+
+*{
   margin: 0;
   padding: 0;
 }
@@ -21,8 +20,13 @@ a:hover {
   opacity: 0.7;
 }
 
+h1{
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
 .logo {
-  font-size: 24px;
+  font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 4px;
 }
@@ -146,20 +150,26 @@ nav {
     flex-direction: column;
     align-items: center;
     background-color: #181920;
-    width: 355px;
+    width: 370px;
     height: auto;
-    padding: 35px;
+    padding: 25px;
     border-radius: 10px;
+    box-shadow: 0 0 5px whitesmoke;
     
 }
 
-.form_group form {
+.area_formulario_agrupamento form:hover {
+
+  box-shadow: 0 0 10px whitesmoke;
+}
+
+.form_grupo form {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.form_group input {
+.form_grupo input {
     margin-top: 10px;
     background-color: #252a34;
     color: #cbd0f7;
@@ -171,17 +181,17 @@ nav {
     padding-left: 10px;
 }
 
-.form_group input:hover{
+.form_grupo input:hover{
     box-shadow: 0 0 5px whitesmoke;
     background-color: #2d2e33 ;;
 
 }
 
 .login input:last-child {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
-.form_group textarea {
+.form_grupo textarea {
     margin-top: 10px;
     background-color: #252a34;
     color: #cbd0f7;
@@ -197,7 +207,12 @@ nav {
     min-height: 100px;
 }
 
-.form_group label{
+.form_grupo textarea:hover{
+  box-shadow: 0 0 5px whitesmoke;
+  background-color: #2d2e33 ;;
+}
+
+.form_grupo label{
     font-size: 16px;
     margin: 10px;
     text-align: center;
@@ -218,6 +233,10 @@ form [type="submit"] {
     height: 45px;
     width: 300px;
     border: none;
+}
+
+form [type="submit"]:hover{
+  box-shadow: 0 0 5px whitesmoke;
 }
 
 
