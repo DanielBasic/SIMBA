@@ -1,7 +1,8 @@
-import requests
-import random
-from django.http import Http404
 import json
+import random
+
+import requests
+from django.http import Http404
 
 app_id = "1481157846018069"
 redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
@@ -13,6 +14,7 @@ authorization_code = "TG-647222b83b397700019b8058-1095654007"
 state = "W3TH2Z"
 
 authorization_url = f"https://auth.mercadolivre.com.br/authorization?response_type=code&client_id={app_id}&redirect_uri={redirect_url}&state={secure_random}"
+
 
 
 #OBTEM A AUTORIZAÇÃO
@@ -173,6 +175,7 @@ def get_all_products(access_token, key_word, filters_to_apply):
 
     if response.status_code == 200:
         products = response.json()['results']
+<<<<<<< HEAD
         return products
     
 
@@ -180,3 +183,6 @@ def get_filter_to_offset(current_page, number_of_pages):
     if current_page <= number_of_pages and current_page > 1:
         return {'filter' : 'offset', 'value_of_filter' : str((current_page - 1) * 50), 'filter_name' : 'off_set'}
     return None
+=======
+        return products
+>>>>>>> da91dca31916153e7048f808017f36d96912d259

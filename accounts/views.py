@@ -13,6 +13,7 @@ def login(request):
   elif request.method == "POST":
     email = request.POST.get("email")
     password = request.POST.get("password")
+    
     user = auth.authenticate(request, email=email, password=password)
 
     if not user:
@@ -57,8 +58,7 @@ def signup(request):
 
 def logout(request):
   auth.logout(request)
-  messages.success(request, 'Logout efetuado com sucesso!')
-  return redirect('login')
+  return redirect('logi')
     
 
 

@@ -1,14 +1,16 @@
 body {
     background-color: #111;
     color: #fff;
-
     background-color: #1b1f27;
     font-family: Arial, Arial, Helvetica, sans-serif;
-    overflow: hidden;
+  
   }
 * {
   margin: 0;
   padding: 0;
+}
+main{
+ 
 }
 
 a {
@@ -29,6 +31,26 @@ a:hover {
 
 .h1{
   text-align: center;
+}
+
+/* Estilos para a barra de rolagem */
+::-webkit-scrollbar {
+  width: 10px; /* Largura da barra de rolagem */
+}
+
+/* Cor de fundo da barra de rolagem */
+::-webkit-scrollbar-track {
+  background-color: #1a1a1a; /* Cor de fundo escura */
+}
+
+/* Cor do indicador da barra de rolagem */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Cor do indicador escura */
+}
+
+/* Cor do indicador da barra de rolagem quando hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Cor do indicador escura quando hover */
 }
 
 nav {
@@ -65,7 +87,7 @@ nav {
 
 @media (max-width: 999px) {
   body {
-    overflow-x: hidden;
+    
   }
   .nav-list {
     position: absolute;
@@ -124,10 +146,18 @@ nav {
 .styled-table {
   width: 80%;
   margin: 25px auto;
+  height: 75%;
   /*border-collapse: collapse;*/
   background-color: #222;
   border: 1px solid #444;
   border-radius: 8px;
+  /* display: flex; */
+  overflow-y:scroll ;
+  /* flex-direction: column; */
+  /* justify-content: center ; */
+ 
+
+  
 }
 
 .styled-table th, .styled-table td {
@@ -177,3 +207,10 @@ nav {
   border-bottom-right-radius: 5px;
 }
   
+footer{
+  position: auto;
+  bottom:0px; 
+  height: 30px;
+  background-color: #111;
+
+}
