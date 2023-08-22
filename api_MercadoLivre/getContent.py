@@ -175,7 +175,6 @@ def get_all_products(access_token, key_word, filters_to_apply):
 
     if response.status_code == 200:
         products = response.json()['results']
-<<<<<<< HEAD
         return products
     
 
@@ -183,6 +182,3 @@ def get_filter_to_offset(current_page, number_of_pages):
     if current_page <= number_of_pages and current_page > 1:
         return {'filter' : 'offset', 'value_of_filter' : str((current_page - 1) * 50), 'filter_name' : 'off_set'}
     return None
-=======
-        return products
->>>>>>> da91dca31916153e7048f808017f36d96912d259
