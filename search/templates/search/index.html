@@ -107,7 +107,6 @@
   </div>
 
   <div class="catalog">
-
   {% for product in products %}
   <form action="{% url 'search' %}" method="GET">
   {% csrf_token %}
@@ -140,20 +139,25 @@
   </form>
 {% endfor %}
 </div>
+<form action="{% url 'search' %}" method="get">
+  <div class="pagination">
+    <span class="step-links">
+        {% if pagination.has_previous %}
+            <a class="pagination-link" href="action_page=set_previous_page&current_page={{pagination.current_page}}">&laquo; Anterior</a>
+        {% endif %}
 
-<div class="pagination">
-  <span class="step-links">
-      {% if page.has_previous %}
-          <a href="?page={{ page.previous_page_number }}">Anterior</a>
-      {% endif %}
-      <span class="current-page">
-          Page {{ page.number }} of {{ page.paginator.num_pages }}.
-      </span>
-      {% if page.has_next %}
-          <a href="?page={{ page.next_page_number }}">Próximo</a>
-      {% endif %}
-  </span>
-</div>
+        <span class="current">
+          <input type="hidden" name="current_page" value="{{ pagination.current_page }}">
+            Página {{ pagination.current_page }} de {{ pagination.number_of_pages }}.
+        </span>
+
+        {% if pagination.has_next %}
+            <a class="pagination-link" href="action_page=set_next_page&current_page={{ pagination.current_page}}">próxima &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+</form>
+
 
 
 
