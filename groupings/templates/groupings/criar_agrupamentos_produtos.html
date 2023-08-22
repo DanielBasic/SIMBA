@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+{% load static %} 
+<link rel="stylesheet" href={% static "groupings/css/criar_agrupamentos_produtos.css" %}> 
+</head>
+<body>
+    <main>
+        {% if messages %}
+            {% for message in messages %}
+                <div id="myAlert" style="position: fixed; top: 150px; right: 90px;"  class="alert{{ message.tags }}"> 
+                    {{ message }}     
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <header>
+            <nav>
+                <a class="logo" href="/">Simba</a>
+                <div class="mobile-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+                <ul class="nav-list">
+                    {% if request.user.is_authenticated %}
+                        <li><a href="#">Início</a></li>
+                    {% endif %}
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Projetos</a></li>
+                    <li><a href="#">Contato</a></li>          
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}">Sair</a></li>
+                    {% endif %}
+                </ul> 
+            </nav>      
+        </header>
+   
+        <div class="area_formulario_agrupamento">
+  
+            <form method="post" class="form_grupo" action=" {% url 'criar_agrupamentos_produtos' %}" > {% csrf_token %}
+
+                <div>     
+                    <h1> NOVO AGRUPAMENTO </h1>
+                </div>  
+
+                <input type="text" id="logo" name="logo" placeholder="Logo URL">
+
+                <input type="text" id="title" name="title" placeholder="Título">
+
+                <input type="text" id="start_date" name="start_date" placeholder="Data de Início">
+
+                <textarea id="description" name="description" placeholder="Descrição"></textarea>
+            
+                <button type="submit">Criar Agrupamento</button>
+
+            </form>
+        </div>
+    </main>
+    <script src="{% static 'accounts/js/accounts.js' %}"></script>
+    <script src="{% static 'accounts/js/navbar.js' %}"></script>
+</body>  
+</html>

@@ -20,7 +20,7 @@ def login(request):
       messages.add_message(request, constants.ERROR, "Email ou senha inválido")
       return redirect(reverse("login"))
     
-    messages.add_message(request, constants.SUCCESS,"Logado com sucesso")
+    
     auth.login(request, user)
 
     return redirect(reverse("search"))
@@ -51,25 +51,13 @@ def signup(request):
 
     messages.add_message(request, constants.SUCCESS, "Usuário cadastrado com sucesso")
     
-    return redirect(reverse("login"))
-
- 
-  
+    return redirect(reverse("login")) 
 
 def logout(request):
   auth.logout(request)
-  return redirect('logi')
+  return redirect(reverse("login"))
     
-
-
 
 def sobre(request):
   if request.method == "GET":
     return render(request, "accounts/sobre.html")
-  
-
-
-
-
-  
-

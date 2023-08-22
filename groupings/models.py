@@ -13,5 +13,17 @@ class Agrupamento(models.Model):
     def __str__(self):
         return self.title
     
+
+
+class Agrupamento_seller(models.Model):
+    criador = models.ForeignKey(User,  on_delete=models.CASCADE )
+    logo = models.CharField(max_length=15)
+    name = models.CharField(max_length=15)
+    start_date = models.CharField(max_length=15)
+    description = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.title
+    
     
 
