@@ -169,24 +169,14 @@ def get_availabe_filters(access_token, key_word, filters_to_apply):
             return available_filters
             
 def get_all_products(access_token, key_word, filters_to_apply):
-    page = 1  
-    products = []  
+    response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
 
-    while True:
-        offset = {"filter" : "offset", "value_of_filter" : str((page -1) * 50)}
-        filters_to_apply.append(offset)
-        response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
-        data = response.json()
+    if response.status_code == 200:
+        products = response.json()['results']
+        return products
+    
 
-        if response.status_code == 200:
-            if "results" in data:
-                products.extend(data["results"])
-                filters_to_apply.pop()
-                if len(data["results"]) < 50:
-                    break
-        else:
-            break
-
-        page += 1
-
-    return products
+def get_filter_to_offset(current_page, number_of_pages):
+    if current_page <= number_of_pages and current_page > 1:
+        return {'filter' : 'offset', 'value_of_filter' : str((current_page - 1) * 50), 'filter_name' : 'off_set'}
+    return None

@@ -8,9 +8,12 @@ from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
                                          get_access_token,
                                            remove_filters_from_filterList,
                                            tranform_strFilters_list_into_dictFilters_list,
-                                           get_availabe_filters,get_all_products)
+                                           get_availabe_filters,get_all_products,
+                                           searchAdByKeyWord,
+                                           get_filter_to_offset)
 
 from .models import Product
+from utils_objects import Pagination
 
 
 def search(request):
@@ -33,33 +36,59 @@ def search(request):
     
       
     filters_to_apply = getListOfFilters()
-
-    
-
-
     filter_to_exclude = request.GET.get('applied_filter_to_exclude')
     applied_filters = request.GET.get("applied_filters")
-    print(applied_filters)
+
     if applied_filters and applied_filters != '[]':
       applied_filters = extract_filters_from_str_dict(applied_filters)
       print(f'applied filters: {applied_filters}')
       if filter_to_exclude:
         applied_filters = remove_filters_from_filterList(applied_filters, filter_to_exclude)
       applied_filters = tranform_strFilters_list_into_dictFilters_list(applied_filters)
-      print(f'filters_to_apply: {filters_to_apply}, applied_filters: {applied_filters}')
-      applied_filters = [filters_to_apply.append(filter) for filter in applied_filters]
+      for filter in applied_filters:
+        filters_to_apply.append(filter)
     
+    number_of_pages = 1
+    if access_token:
+      response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
+      if response:
+        response = response.json()
+        quantity_of_results = response['paging']['primary_results']
+        number_of_pages = quantity_of_results // 50 + (1 if quantity_of_results % 50 != 0 else 0)
+    action_page = request.GET.get('action_page')
+    current_page = 1
+    pagination_action = None
+    if action_page:
+        pagination_action = action_page
+    page = request.GET.get('current_page')
+    if page:
+      if page.isnumeric():
+        current_page = int(page)
+    pagination = Pagination(number_of_pages=number_of_pages, current_page=current_page)
+    if pagination_action:
+      if pagination_action == 'set_next_page':
+        pagination.set_next_page()
+
+      elif pagination_action == 'set_previous_page':
+        pagination.set_previous_page()
+    offset = get_filter_to_offset(pagination.current_page, pagination.number_of_pages)
+
+    if offset:
+      filters_to_apply.append(offset)
     if access_token:
       available_filters = get_availabe_filters(access_token, key_word, filters_to_apply)
       all_products = get_all_products(access_token, key_word, filters_to_apply)
-      print(available_filters, all_products)  
+    if offset:
+      filters_to_apply.pop()
 
-    return render(request, "search/index.html", {"available_filters" : available_filters, "products" : all_products, "keyWord" : key_word, "applied_filters" : filters_to_apply})
+
+    return render(request, "search/index.html", {"pagination" : pagination,"available_filters" : available_filters, "products" : all_products, "keyWord" : key_word, "applied_filters" : filters_to_apply})
 
   elif request.method == "POST":
     keyWord = request.POST.get("keyWord")
     if not keyWord:
        keyWord = ""
+    
 
     return redirect(reverse("search")+ "?KeyWord=" + keyWord)
   
