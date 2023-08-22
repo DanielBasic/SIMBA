@@ -237,6 +237,8 @@ form [type="submit"] {
 
 form [type="submit"]:hover{
   box-shadow: 0 0 5px whitesmoke;
+  font-size: bold;
+  font-size: 18.5px;
 }
 
 

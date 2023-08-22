@@ -28,8 +28,8 @@
       </div>
 
       <ul class="nav-list">
-        <li><a href="{% url 'gerenciar_agrupamentos' %}">Gerenciar Agrupamento</a></li>
-        <li><a href="{% url 'criar_agrupamentos' %}">Criar Agupamento</a></li>
+        <li><a href="{% url 'gerenciar_agrupamentos_produtos' %}">Gerenciar Agrupamento</a></li>
+        <li><a href="{% url 'criar_agrupamentos_produtos' %}">Criar Agupamento</a></li>
         <li><a href="{% url 'search' %}">search</a></li>
         <li><a href="#">Contato</a></li>
         {% if request.user.is_authenticated %}
@@ -69,6 +69,7 @@
         </span>
         {% endfor %}   
       </form>
+      <br>
       <form action="{% url 'add_product' %}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="product_id" value="{{ product.id }}">
@@ -83,8 +84,9 @@
        
         <input type="submit" value="Adicionar ao Banco de Dados" form="" >
         
+        
       </form>
-      
+      <br>
       <form id="filters" action="{% url 'search' %}" method="GET">
       {% for filter in available_filters %}
         <h2>{{filter.name}}</h2>
@@ -152,6 +154,8 @@
       {% endif %}
   </span>
 </div>
+
+
 
 </body>
 </html>
