@@ -101,12 +101,20 @@
     </form>
     </div> 
   </div>
+  <span class="get_all_products">
+    <input type="checkbox" name="select-all-products" id="select-all-products"> Selecionar todos
+  </span>
+  <form action="{% url 'search' %}" method="GET">
 
   <div class="catalog">
+    <span class="set_products">
+      <button type="submit" style="display: none;" id="set_products">Monitorar Anúncios</button>
+    </span>
+  
   {% for product in products %}
-  <form action="{% url 'search' %}" method="GET">
+  
   {% csrf_token %}
-    <input class="checkbox" id={{product.id}} type="checkbox" name="lists[new]" />
+    <input class="checkbox_product" id={{product.id}} type="checkbox" name="lists[new]" />
     <label for={{product.id}}>
     <div class="product">
       <span class="check">✓</span>
@@ -132,9 +140,12 @@
       </div>
     </div>
     </label>
-  </form>
+  
 {% endfor %}
+
 </div>
+</form>
+
 <form action="{% url 'search' %}" method="get">
   <div class="pagination">
     <span class="step-links">
@@ -170,6 +181,10 @@
     });
   });
 </script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 71abd54f0e1c456015338116182fe65943ba6869
 
 
 </body>
