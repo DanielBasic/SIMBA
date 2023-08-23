@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% load static %}
-    <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento.css" %}>
+    <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
+    <link rel="stylesheet" href={% static "groupings/css/criar_agrupamento_produtos.css" %}>
     
 </head>
 <body>
-
+  <main>
     <header>
         <nav>
             <a class="logo" href="/">Simba</a>
@@ -31,11 +32,32 @@
             </ul> 
         </nav>      
     </header>
-    <main>
-    <nav>
-        <h1> {{request.user.username}} Seus Agrupamentos</h1>
-    </nav>
+    
+  <button id="openModal">Novo Agrupamento</button> 
+    <div class="area_formulario_agrupamento"  >
+        <div class="modal" id="myModal"  >
 
+            <form method="post" class="modal-content" action=" {% url 'criar_agrupamentos_produtos' %}" > {% csrf_token %}
+                <span id="closeModal" style="float: right; cursor: pointer;">&times;</span>
+                <div>     
+                    <h1> NOVO Seller </h1>
+                </div>  
+
+                <input type="text" id="logo" name="logo" placeholder="Logo URL">
+
+                <input type="text" id="name" name="title" placeholder="Título">
+
+                <input type="text" id="start_date" name="start_date" placeholder="Data de Início">
+
+                <textarea id="description" name="description" placeholder="Descrição"></textarea>
+            
+                <button type="submit">Criar Seller</button>
+
+            </form>
+        </div>
+    </div>
+    
+    <div>
     <tbody>
     <table class="styled-table">
       <thead class="styled-thead">
@@ -61,12 +83,31 @@
           </tr>
       </tbody>
     </table>
-    <footer>
-      <p>Rodape</p>
-    </footer>
-  </main>
+  </div>
+
+</main>    
+
 <script src="{% static 'accounts/js/accounts.js' %}"></script>
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
+<script>
+    const modal = document.getElementById("myModal");
+    const openModalBtn = document.getElementById("openModal");
+    const closeModalBtn = document.getElementById("closeModal");
+
+    openModalBtn.onclick = function () {
+        modal.style.display = "block";
+    };
+
+    closeModalBtn.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+</script>
     
 </body>
 </html>

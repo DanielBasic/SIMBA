@@ -262,3 +262,9 @@ input.checkbox:checked + label:before {
     content: "";
 }
 
+.pagination{
+    font-size: 16px;
+    border: 1px solid #f40c0c;
+    text-align: center;
+}
+
