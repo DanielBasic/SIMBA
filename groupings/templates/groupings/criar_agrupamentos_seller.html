@@ -42,13 +42,16 @@
                 </ul> 
             </nav>      
         </header>
+
+        
         <!-- Botão para abrir o modal -->
 <button id="openModal">Abrir Modal</button>
    
         <div class="area_formulario_agrupamento"  >
             <div class="modal" id="myModal"  >
+
                 <form method="post" class="modal-content" action=" {% url 'criar_agrupamentos_produtos' %}" > {% csrf_token %}
-                    <span id="closeModal" style="float: right; cursor: pointer;">&times;</span>
+                    <span id="closeModal" style="float: right; cursor: pointer; color:red;">&times;</span>
                     <div>     
                         <h1> NOVO Seller </h1>
                     </div>  
@@ -66,6 +69,7 @@
                 </form>
             </div>
         </div>
+
     </main>
     <script src="{% static 'accounts/js/accounts.js' %}"></script>
     <script src="{% static 'accounts/js/navbar.js' %}"></script>

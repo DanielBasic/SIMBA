@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href={% static "search/CSS/search_style.css" %}>
 <link rel="stylesheet" href={% static "accounts/css/nav.css" %}>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
@@ -67,36 +68,23 @@
         </span>
         {% endfor %}   
       </form>
-      <form action="{% url 'add_product' %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="product_id" value="{{ product.id }}">
-        <input type="hidden" name="product_thumbnail" value="{{ product.thumbnail }}">
-        <input type="hidden" name="product_title" value="{{ product.title }}">
-        <input type="hidden" name="product_original_price" value="{{ product.original_price }}">
-        <input type="hidden" name="product_price" value="{{ product.price }}">
-        <input type="hidden" name="product_condition" value="{{ product.condition }}">
-        <input type="hidden" name="product_free_shipping" value="{{ product.shipping.free_shipping }}">
-        <input type="hidden" name="product_logistic_type" value="{{ product.shipping.logistic_type }}">
 
-       
-        <input type="submit" value="Adicionar ao Banco de Dados" form="" >
-        
-      </form>
-      
+      <br>
       <form id="filters" action="{% url 'search' %}" method="GET">
-      {% for filter in available_filters %}
-        <h2>{{filter.name}}</h2>
+        {% for filter in available_filters %}
+        <h2>{{ filter.name }}</h2>
         
-          {% csrf_token %}
-          <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
-          <input type="hidden" name="applied_filters" value="{{applied_filters}}"/>
-          {% for value_of_filter in filter.values %}
-            <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}:{{ filter.name }}"/>
-            <label for="{{ value_of_filter.id }}">
-              <span>{{ value_of_filter.name }}</span> <span>({{ value_of_filter.results }})</span> <br>
-            </label>
-          {% endfor %}
-          <br>
+        {% csrf_token %}
+        <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
+        <input type="hidden" name="applied_filters" value="{{ applied_filters }}"/>
+        {% for value_of_filter in filter.values %}
+          <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}:{{ filter.name }}" class="hidden-radio"/>
+          <label for="{{ value_of_filter.id }}" class="hidden-label">
+            <span>{{ value_of_filter.name }}</span> <span>({{ value_of_filter.results }})</span> <br>
+          </label>
+        {% endfor %}
+        <button class="show-more-filters">Ver mais</button>
+        <br>
       {% endfor %}
     </form>
     </div> 
@@ -108,7 +96,7 @@
 
   <div class="catalog">
     <span class="set_products">
-      <button type="submit" style="display: none;" id="set_products">Monitorar Anúncios</button>
+      <button type="submit" style="display: none;" id="set_products"> . Monitorar Anúncios . </button>
     </span>
   
   {% for product in products %}
@@ -150,7 +138,7 @@
   <div class="pagination">
     <span class="step-links">
         {% if pagination.has_previous %}
-            <a class="pagination-link" href="action_page=set_previous_page&current_page={{pagination.current_page}}">&laquo; Anterior</a>
+            <a class="pagination-link previous" href="action_page=set_previous_page&current_page={{pagination.current_page}}">&laquo; Anterior</a>
         {% endif %}
 
         <span class="current">
@@ -159,34 +147,16 @@
         </span>
 
         {% if pagination.has_next %}
-            <a class="pagination-link" href="action_page=set_next_page&current_page={{ pagination.current_page}}">próxima &raquo;</a>
+            <a class="pagination-link next" href="action_page=set_next_page&current_page={{ pagination.current_page}}">próxima &raquo;</a>
         {% endif %}
     </span>
   </div>
 </form>
 
-<script>
-  document.querySelectorAll(".pagination-link").forEach(function(link) {
-    link.addEventListener("click", function(event) {
-      event.preventDefault();
-      
-      var currentURL = window.location.href;
-      var newHref = this.getAttribute("href");
-      
-      if (currentURL.indexOf("?") !== -1) {
-          window.location.href = currentURL + "&" + newHref;
-      } else {
-          window.location.href = currentURL + "?" + newHref;
-      }
-    });
-  });
-</script>
-<<<<<<< HEAD
-=======
+<script src="{% static 'search/js/search.js' %}"></script>
+<script src="{% static 'accounts/js/navbar.js' %}"></script>
 
->>>>>>> 71abd54f0e1c456015338116182fe65943ba6869
-
+<br>
 
 </body>
 </html>
-
