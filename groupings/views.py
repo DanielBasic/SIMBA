@@ -5,7 +5,7 @@ from django.contrib.messages import constants
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from .models import Agrupamento
+from .models import Group_by_ad
 
 # Create your views here.
 
@@ -19,7 +19,7 @@ def criar_agrupamentos_produtos(request):
     start_date  = request.POST.get("start_date")
     description  = request.POST.get("description")
 
-    agrupamento = Agrupamento(
+    agrupamento = Group_by_ad(
       criador=request.user,
       logo = logo,
       title = title,
@@ -37,7 +37,7 @@ def criar_agrupamentos_produtos(request):
 @login_required
 def gerenciar_agrupamentos_produtos(request):
   if request.method == "GET":
-    grupos = Agrupamento.objects.filter(criador=request.user)
+    grupos = Group_by_ad.objects.filter(criador=request.user)
     return render(request, "groupings/gerenciar_agrupamentos_produtos.html", {'agrupamentos':grupos })
 
 
@@ -47,7 +47,7 @@ def deletar_agrupamentos(request):
 
 def gerenciar_agrupamentos_seller(request):
   if request.method == "GET":
-    grupos = Agrupamento.objects.filter(criador=request.user)
+    grupos = Group_by_ad.objects.filter(criador=request.user)
     return render(request, "groupings/gerenciar_agrupamentos_seller.html", {'agrupamentos':grupos })
 
 
