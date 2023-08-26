@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% load static %}
-    <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento.css" %}>
+    <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     
 </head>
 <body>
-
+  <main>
     <header>
         <nav>
             <a class="logo" href="/">Simba</a>
@@ -30,13 +30,52 @@
                 {% endif %}
             </ul> 
         </nav>      
-    </header>
-    <main>
-    <nav>
-        <h1> {{request.user.username}} Seus Agrupamentos</h1>
-    </nav>
+</header>
 
-    <tbody>
+
+
+  <!-- Botão para abrir o modal -->  
+    <div class="container-new-modal">
+        <button id="openModal" class="new-modal">Novo Agrupamento</button>
+    </div>
+
+    <div class="modal" id="myModal"  >
+
+    <div class="area_formulario_agrupamento"  >
+
+        <div class="form_group">
+
+            <form method="post" class="modal-content" action=" {% url 'criar_agrupamentos_produtos' %}" > {% csrf_token %}
+                    
+                <div class="container-close-modal">
+                    <span id="closeModal" class="close_modal"  >&times;</span> 
+                </div>
+
+                <div> 
+                       
+                    <h3>Novo Agrupamento Produto</h3>
+                </div>  
+
+                <input type="text" class="input_group" id="logo" name="logo" placeholder="Logo URL">
+
+                <input type="text" class="input_group" id="name" name="title" placeholder="Título">
+
+                <input type="text" class="input_group" id="start_date" name="start_date" placeholder="Data de Início">
+
+                <textarea id="description" class="input_group_text"  name="description" placeholder="Descrição"></textarea>
+            
+                <button type="submit">Criar </button>
+
+            </form>
+        </div>
+    </div>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar...">
+        <button id="searchButton">Buscar</button>
+    </div> 
+<tbody>
     <table class="styled-table">
       <thead class="styled-thead">
         <tr>
@@ -47,7 +86,7 @@
           <th>criador</th>
         </tr>
       </thead>  
-      <tbody>
+    </tbody>
         <tbody>        
             {% for agrupamento in agrupamentos  %}         
               <tr>   
@@ -55,18 +94,68 @@
                 <td>{{agrupamento.title}}</td>
                 <td>{{agrupamento.start_date}}</td>
                 <td>{{agrupamento.description}}</td>
-                <td>{{agrupamento.criador}}</td>      
+                <td>{{agrupamento.criador}}</td>    
+                
               </tr>
             {% endfor %}
           </tr>
+
       </tbody>
     </table>
-    <footer>
-      <p>Rodape</p>
-    </footer>
-  </main>
+
+</main>   
+
+
+
 <script src="{% static 'accounts/js/accounts.js' %}"></script>
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
+<script>
+    const modal = document.getElementById("myModal");
+    const openModalBtn = document.getElementById("openModal");
+    const closeModalBtn = document.getElementById("closeModal");
+
+    openModalBtn.onclick = function () {
+        modal.style.display = "block";
+    };
+
+    closeModalBtn.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+</script>
+
+{% comment %} script parta filtrar resultados {% endcomment %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("searchInput");
+        const searchButton = document.getElementById("searchButton");
+        const tableBody = document.getElementById("tableBody");
+        const rows = tableBody.getElementsByTagName("tr");
+    
+        searchButton.addEventListener("click", performSearch);
+        searchInput.addEventListener("input", performSearch);
+    
+        function performSearch() {
+            const searchText = searchInput.value.toLowerCase();
+    
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const titleCell = row.querySelector("td:nth-child(2)"); // Assuming title is the second column
+                if (titleCell) {
+                    const title = titleCell.innerHTML.toLowerCase();
+                    const shouldDisplay = title.includes(searchText);
+                    row.style.display = shouldDisplay ? "" : "none";
+                }
+            }
+        }
+    });
+    
+</script>
     
 </body>
 </html>

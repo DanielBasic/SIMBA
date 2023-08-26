@@ -12,8 +12,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script src="{% static 'search/js/search.js' %}"></script>
-<script src="{% static 'js/navbar.js' %}"></script>
+
 
 </head>
 <body>
@@ -70,10 +69,11 @@
         {% endfor %}   
       </form>
 
+
       <br>
       <form id="filters" action="{% url 'search' %}" method="GET">
-      {% for filter in available_filters %}
-        <h2>{{filter.name}}</h2>
+        {% for filter in available_filters %}
+        <h2>{{ filter.name }}</h2>
         
           {% csrf_token %}
           <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
@@ -146,7 +146,7 @@
   <div class="pagination">
     <span class="step-links">
         {% if pagination.has_previous %}
-            <a class="pagination-link" href="action_page=set_previous_page&current_page={{pagination.current_page}}">&laquo; Anterior</a>
+            <a class="pagination-link previous" href="action_page=set_previous_page&current_page={{pagination.current_page}}">&laquo; Anterior</a>
         {% endif %}
 
         <span class="current">
@@ -155,7 +155,7 @@
         </span>
 
         {% if pagination.has_next %}
-            <a class="pagination-link" href="action_page=set_next_page&current_page={{ pagination.current_page}}">próxima &raquo;</a>
+            <a class="pagination-link next" href="action_page=set_next_page&current_page={{ pagination.current_page}}">próxima &raquo;</a>
         {% endif %}
     </span>
   </div>
@@ -184,4 +184,3 @@
 
 </body>
 </html>
-

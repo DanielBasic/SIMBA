@@ -30,7 +30,7 @@ def criar_agrupamentos_produtos(request):
 
     messages.add_message(request, constants.SUCCESS,'Evento cadastrado com sucesso')
                             
-    return redirect(reverse('criar_agrupamentos_produtos'))
+    return redirect(reverse('gerenciar_agrupamentos_produtos'))
   
 
     
@@ -52,5 +52,24 @@ def gerenciar_agrupamentos_seller(request):
 
 
 def criar_agrupamentos_seller(request):
-  pass
+  if request.method == "GET":
+    return render(request, "groupings/criar_agrupamentos_seller.html")
+  elif request.method == "POST":
+    logo = request.POST.get("logo")
+    name  = request.POST.get("title")
+    start_date  = request.POST.get("start_date")
+    description  = request.POST.get("description")
+    agrupamento_seler = Agrupamento_seller(
+      criador=request.user,
+      logo = logo,
+      name = name,
+      start_date = start_date,
+      description = description, 
+    )
+    agrupamento_seler.save()
+
+    messages.add_message(request, constants.SUCCESS,'Evento cadastrado com sucesso')
+                            
+    return redirect(reverse('criar_agrupamentos_produtos'))
+
 

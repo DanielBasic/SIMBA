@@ -3,6 +3,7 @@ body {
     color: #fff;
     background-color: #1b1f27;
     font-family: Arial, Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
   
   }
 * {
@@ -52,7 +53,7 @@ a:hover {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555; /* Cor do indicador escura quando hover */
 }
-
+/* barra de navegação */
 nav {
   display: flex;
   justify-content: space-around;
@@ -84,6 +85,60 @@ nav {
   margin: 8px;
   transition: 0.3s;
 }
+
+
+/* modal para o agrupamento    */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.area_formulario_agrupamento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  align-items: center;
+      
+  }
+
+.modal_content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para o botão de fechar */
+.container-close-modal {
+  margin: auto;
+  cursor: pointer;
+  height: 30px;
+  width: 350px;
+  float: right;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+
+.close_modal{
+  font-size: 25px;
+  color:red;
+  text-transform: uppercase;
+  font-weight: bold;
+  
+}
+
+.close_modal:hover{
+  font-size: 27px;
+}
+
+
 
 @media (max-width: 999px) {
   body {
@@ -142,6 +197,36 @@ nav {
  /*    ESTILO TABELA      */ 
   /*    ESTILO TABELA      */ 
    /*    ESTILO TABELA      */ 
+.container-new-modal{
+  width: 80%;
+  margin: 25px auto;
+  height: 75%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+
+.new-modal{
+  border: solid 2px teal;
+  height: 30px;
+  width: 120px;
+  border-radius: 4px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.search-input{
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  padding: 5px 10px;
+  cursor: pointer;
+  }
 
 .styled-table {
   width: 80%;
@@ -156,7 +241,6 @@ nav {
   /* flex-direction: column; */
   /* justify-content: center ; */
  
-
   
 }
 
@@ -181,10 +265,10 @@ nav {
 
 .styled-table tr:nth-child(odd):hover {
   background-color: #520202;
-  scale: 1.01;
+  /* scale: 1.01; */
+  
   
 }
-
 
 
 .styled-table tr:nth-child(even) {
@@ -192,7 +276,8 @@ nav {
 }
 .styled-table tr:nth-child(even):hover {
   background-color: #823131;
-  scale: 1.01;
+  /* scale: 1.01; */
+  
 }
 
 .styled-table th:first-child,
@@ -206,11 +291,147 @@ nav {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-  
-footer{
-  position: auto;
-  bottom:0px; 
-  height: 30px;
-  background-color: #111;
+
+
+
+
+ /*    ESTILO FORMULARIO      */ 
+   /*    ESTILO FORMULARIO      */ 
+
+
+.area_formulario_agrupamento form {   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #181920;
+    width: 370px;
+    height: auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px whitesmoke;
+    
+}
+
+.area_formulario_agrupamento form:hover {
+
+  box-shadow: 0 0 10px whitesmoke;
+}
+
+.form_grup form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form_grup input {
+    margin-top: 10px;
+    background-color: #252a34;
+    color: #cbd0f7;
+    border: none;
+    height: 40px;
+    width: 350px;
+    outline: none;
+    border-radius: 6px;
+    padding-left: 10px;
+}
+
+.form_grup input:hover{
+    box-shadow: 0 0 5px whitesmoke;
+    background-color: #2d2e33 ;;
 
 }
+
+.input_group{
+  margin-top: 10px;
+  background-color: #252a34;
+  color: #cbd0f7;
+  border: none;
+  height: 40px;
+  width: 350px;
+  outline: none;
+  border-radius: 6px;
+  padding-left: 10px;
+}
+
+.input_group:hover{
+  box-shadow: 0 0 5px whitesmoke;
+  background-color: #2d2e33 ;;
+
+}
+
+.input_group_text{
+    margin-top: 10px;
+    background-color: #252a34;
+    color: #cbd0f7;
+    border: none;
+    height: 45px;
+    width: 350px;
+    outline: none;
+    border-radius: 6px;
+    padding-left: 10px;
+    max-width: 350px;
+    min-width: 350px;
+    max-height: 100px;
+    min-height: 100px;
+}
+
+.input_group_text:hover{
+  box-shadow: 0 0 5px whitesmoke;
+  background-color: #2d2e33 ;;
+
+}
+
+.login input:last-child {
+    margin-top: 20px;
+}
+
+.form_grup textarea {
+    margin-top: 10px;
+    background-color: #252a34;
+    color: #cbd0f7;
+    border: none;
+    height: 45px;
+    width: 350px;
+    outline: none;
+    border-radius: 6px;
+    padding-left: 10px;
+    max-width: 350px;
+    min-width: 350px;
+    max-height: 100px;
+    min-height: 100px;
+}
+
+.form_grup textarea:hover{
+  box-shadow: 0 0 5px whitesmoke;
+  background-color: #2d2e33 ;;
+}
+
+.form_grup label{
+    font-size: 16px;
+    margin: 10px;
+    text-align: center;
+    
+}
+
+form [type="submit"] {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    display: block;
+    background-color: #ffad33;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: bold;
+    color: #eee;
+    border-radius: 8px;
+    height: 45px;
+    width: 300px;
+    border: none;
+}
+
+form [type="submit"]:hover{
+  box-shadow: 0 0 5px whitesmoke;
+  font-size: bold;
+  font-size: 18.5px;
+}
+
