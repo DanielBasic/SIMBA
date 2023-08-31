@@ -19,14 +19,14 @@ def criar_agrupamentos_produtos(request):
     start_date  = request.POST.get("start_date")
     description  = request.POST.get("description")
 
-    agrupamento = Group_by_ad(
-      criador=request.user,
-      logo = logo,
-      title = title,
-      start_date = start_date,
-      description = description, 
-    )
-    agrupamento.save()
+    # agrupamento = Group_by_ad(
+    #   criador=request.user,
+    #   logo = logo,
+    #   title = title,
+    #   start_date = start_date,
+    #   description = description, 
+    # )
+    # agrupamento.save()
 
     messages.add_message(request, constants.SUCCESS,'Evento cadastrado com sucesso')
                             
@@ -37,7 +37,7 @@ def criar_agrupamentos_produtos(request):
 @login_required
 def gerenciar_agrupamentos_produtos(request):
   if request.method == "GET":
-    grupos = Group_by_ad.objects.filter(criador=request.user)
+    grupos = Group_by_ad.objects.filter(user=request.user)
     return render(request, "groupings/gerenciar_agrupamentos_produtos.html", {'agrupamentos':grupos })
 
 
@@ -47,7 +47,7 @@ def deletar_agrupamentos(request):
 
 def gerenciar_agrupamentos_seller(request):
   if request.method == "GET":
-    grupos = Group_by_ad.objects.filter(criador=request.user)
+    grupos = Group_by_ad.objects.filter(user=request.user)
     return render(request, "groupings/gerenciar_agrupamentos_seller.html", {'agrupamentos':grupos })
 
 
@@ -59,14 +59,14 @@ def criar_agrupamentos_seller(request):
     name  = request.POST.get("title")
     start_date  = request.POST.get("start_date")
     description  = request.POST.get("description")
-    agrupamento_seler = Agrupamento_seller(
-      criador=request.user,
-      logo = logo,
-      name = name,
-      start_date = start_date,
-      description = description, 
-    )
-    agrupamento_seler.save()
+    # agrupamento_seler = Agrupamento_seller(
+    #   criador=request.user,
+    #   logo = logo,
+    #   name = name,
+    #   start_date = start_date,
+    #   description = description, 
+    # )
+    # agrupamento_seler.save()
 
     messages.add_message(request, constants.SUCCESS,'Evento cadastrado com sucesso')
                             

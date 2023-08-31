@@ -99,9 +99,9 @@ def search(request):
 
 
 @login_required
-def track_products(request):
+def add_products_group_by(request):
   if request.method == "POST":
-    products_list = request.POST.get('lists[new]')
+    products_list = request.POST.get('products_info')
     print(f'product lists: {products_list}')
 
     return redirect(reverse("search"))
