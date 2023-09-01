@@ -2,7 +2,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.models import User
 from django.contrib.messages import constants
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
 
@@ -11,14 +11,18 @@ def login(request):
     return render(request, "registration/login.html")
   
   elif request.method == "POST":
-    email = request.POST.get("email")
+    email_nickname = request.POST.get("email-username")
     password = request.POST.get("password")
-    
-    user = auth.authenticate(request, email=email, password=password)
+    user = auth.authenticate(request, username=email_nickname, password=password)
 
     if not user:
-      messages.add_message(request, constants.ERROR, "Email ou senha inválido")
-      return redirect(reverse("login"))
+      user_by_nickname = User.objects.filter(email=email_nickname)
+      user_by_nickname = user_by_nickname.first()
+      if user_by_nickname:
+        user = auth.authenticate(request, username=user_by_nickname.username, password=password)
+      if not user:
+        messages.add_message(request, constants.ERROR, "Email ou senha inválido")
+        return redirect(reverse("login"))
     
     
     auth.login(request, user)
@@ -40,14 +44,16 @@ def signup(request):
       messages.add_message(request, constants.ERROR, "As senhas não conferem")
       return render(request, "accounts/signup.html")
     
-    user = User.objects.filter(email=email)
+    email_exists = User.objects.filter(email=email)
+    username_exists = User.objects.filter(username=username)
     
-    if user.exists():
+    if email_exists or username_exists:
       messages.add_message(request, constants.ERROR,
-                          "E-mail já cadastrado")
+                          "E-mail ou Nome já cadastrado")
       return render(request, "accounts/signup.html")
 
     user = User.objects.create_user(username=username, email=email, password=password)
+    user.save()
 
     messages.add_message(request, constants.SUCCESS, "Usuário cadastrado com sucesso")
     

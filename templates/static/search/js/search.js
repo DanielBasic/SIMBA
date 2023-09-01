@@ -68,13 +68,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
   openBtn.addEventListener("click", function() {
     modal.style.display = "block";
-    creationGroup_content.style.display = 'none';
-    set_products_button.style.display = "none";
-    groupByAd_content.style.display = 'block';
-    openCreationGroup.style.display = 'block';
-    creationGroup_content.style.display = 'none';
-    goBackToGroups.style.display = 'none';
-    
+    console.log(listOfGroupByAd);
+    if (listOfGroupByAd !== 'None') {
+      creationGroup_content.style.display = 'none';
+      groupByAd_content.style.display = 'block';
+      openCreationGroup.style.display = 'block';
+      creationGroup_content.style.display = 'none';
+      goBackToGroups.style.display = 'none';
+    } else {
+        // Handle the case when listOfGroupByAd is null
+        creationGroup_content.style.display = 'block';
+        groupByAd_content.style.display = 'none';
+        openCreationGroup.style.display = 'none';
+        creationGroup_content.style.display = 'block';
+        goBackToGroups.style.display = 'none';
+        set_products_button.style.display = "none";
+    }
   });
   
   modal.querySelector(".close").addEventListener("click", function() {

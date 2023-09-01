@@ -10,7 +10,7 @@ from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
                                            tranform_strFilters_list_into_dictFilters_list,
                                            get_availabe_filters,get_all_products,
                                            searchAdByKeyWord,
-                                           get_filter_to_offset)
+                                           get_filter_to_offset, str_to_dict)
 from groupings.forms import GroupByAd_form
 from groupings.models import Group_by_ad
 
@@ -85,7 +85,8 @@ def search(request):
     current_user = request.user
     groupByAd_form = GroupByAd_form()
     all_GroupByAd = Group_by_ad.objects.filter(user=current_user)
-
+    if len(all_GroupByAd) == 0:
+      all_GroupByAd = None
 
     return render(request, "search/index.html", {"pagination" : pagination,"available_filters" : available_filters, "products" : all_products, "keyWord" : key_word, "applied_filters" : filters_to_apply, 'all_GroupByAd' : all_GroupByAd, 'groupByAd_form' : groupByAd_form})
 
@@ -101,10 +102,11 @@ def search(request):
 @login_required
 def add_products_group_by(request):
   if request.method == "POST":
-    products_list = request.POST.get('products_info')
-    print(f'product lists: {products_list}')
-
-    return redirect(reverse("search"))
+    form_image_title = GroupByAd_form(request.POST, request.FILES)
+    products = request.POST.getlist('products_info')
+    products = [str_to_dict(product) for product in products]
+    if form_image_title.is_valid:
+      pass
    
 @login_required
 def add_product(request):

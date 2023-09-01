@@ -50,7 +50,7 @@
             <img src={% static "accounts/images/SIMBA.png" %}>
         </div>
         <form action="{% url 'login'%}" method="POST" class="form_login"> {% csrf_token %}
-            <input type="email" placeholder="Email" name="email" required>
+            <input type="text" placeholder="Email ou Nome" name="email-username" required>
             <input type="password" placeholder="Senha" name="password" required>
             <input type="submit" placeholder="Sign in" value="sign in">
         </form>

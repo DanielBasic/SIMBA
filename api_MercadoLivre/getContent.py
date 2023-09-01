@@ -182,3 +182,17 @@ def get_filter_to_offset(current_page, number_of_pages):
     if current_page <= number_of_pages and current_page > 1:
         return {'filter' : 'offset', 'value_of_filter' : str((current_page - 1) * 50), 'filter_name' : 'off_set'}
     return None
+
+def str_to_dict(input_string):
+    try:
+        if isinstance(input_string, str):
+            content = input_string.split('|')
+            dict_converted = {}
+            for key_value in content:
+                key, value = key_value.split(':')
+                dict_converted[key] = value
+            return dict_converted
+        else:
+            return None
+    except ValueError as e:
+        print(f'Error: {e}')

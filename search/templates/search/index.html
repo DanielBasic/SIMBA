@@ -95,11 +95,11 @@
 <span class="get_all_products">
   <input type="checkbox" name="select-all-products" id="select-all-products"> Selecionar todos
 </span>
-<form action="{% url 'add_products_group_by' %}" method="post" id="addProductsIntoGroup"></form>
+<form action="{% url 'add_products_group_by' %}" method="post" id="addProductsIntoGroup" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="catalog">
   {% for product in products %}
-    <input class="checkbox_product" id={{product.id}} type="checkbox" name="products_info" value="'id' : {{product.id}}, 'price' : {{product.price}}" />
+    <input class="checkbox_product" id={{product.id}} type="checkbox" name="products_info" value="id:{{product.id}}|price:{{product.price}}" />
     <label for={{product.id}}>
     <div class="product">
       <span class="check">✓</span>
@@ -132,27 +132,33 @@
     {% endfor %}
   </div>
   <div id="addProductsToGroup_modal" class="addProductsToGroup_modal">
+    <script>
+      var listOfGroupByAd = '{{ all_GroupByAd }}';
+    </script>
     <div id="addProductsToGroup_modal-content" class="addProductsToGroup_modal-content">
       <span class="close">&times;</span>
       <div class="userGroupByAd" id="userGroupByAd">
-        {% for gorup in all_GroupByAd %}
-          <div class="groupByAd">
-            <img src="" alt="">
-            <span>
-              <h2>{{ group.title }}</h2>
-            </span>
-          </div>
-        {% endfor %}
+        {% if all_GroupByAd %}
+          {% for gorup in all_GroupByAd %}
+            <div class="groupByAd">
+              <img src="" alt="">
+              <span>
+                <h2>{{ group.title }}</h2>
+              </span>
+            </div>
+          {% endfor %}
+        {% endif %}
       </div>
 
       <span id="openCreationGroup">&#43</span>
       <span class="material-symbols-outlined" id="goBackToGroups">undo</span>
 
       <span class="createNewGroup" id="createNewGroup">
+        <h1 id="title-create-new-group"> Crie um novo agrupamento </h1>
         {{groupByAd_form.as_p}}
       </span>
       
-      <input type="submit" id="add-products-into_group" form="addProductsIntoGroup">
+      <button type="submit" id="add-products-into_group"> Monitorar </button>
     </div>
   </div>
 

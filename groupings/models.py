@@ -12,17 +12,21 @@ class Group_by_ad(models.Model):
     title = models.CharField(max_length=60)
     created_at = models.DateTimeField(default=timezone.now)
     is_tracking_activated = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.id
 
 
-class Agrupamento_seller(models.Model):
-    criador = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True)
+class Group_by_seller(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True)
     logo = models.CharField(max_length=15)
-    name = models.CharField(max_length=15)
-    start_date = models.CharField(max_length=15)
-    description = models.CharField(max_length=15)
+    store_name = models.CharField(max_length=15)
+    created_at = models.DateTimeField(default=timezone.now)
+    is_tracking_activated = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.title
+        return self.id
     
     
 

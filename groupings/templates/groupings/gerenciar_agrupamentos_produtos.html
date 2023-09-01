@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Agrupamentos</title>
     {% load static %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     
@@ -32,9 +32,6 @@
         </nav>      
 </header>
 
-
-
-  <!-- Botão para abrir o modal -->  
     <div class="container-new-modal">
         <button id="openModal" class="new-modal">Novo Agrupamento</button>
     </div>
@@ -52,7 +49,7 @@
                 </div>
 
                 <div> 
-                       
+                    
                     <h3>Novo Agrupamento Produto</h3>
                 </div>  
 
@@ -106,56 +103,8 @@
 </main>   
 
 
-
-<script src="{% static 'accounts/js/accounts.js' %}"></script>
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
-<script>
-    const modal = document.getElementById("myModal");
-    const openModalBtn = document.getElementById("openModal");
-    const closeModalBtn = document.getElementById("closeModal");
-
-    openModalBtn.onclick = function () {
-        modal.style.display = "block";
-    };
-
-    closeModalBtn.onclick = function () {
-        modal.style.display = "none";
-    };
-
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    };
-</script>
-
-{% comment %} script parta filtrar resultados {% endcomment %}
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.getElementById("searchInput");
-        const searchButton = document.getElementById("searchButton");
-        const tableBody = document.getElementById("tableBody");
-        const rows = tableBody.getElementsByTagName("tr");
-    
-        searchButton.addEventListener("click", performSearch);
-        searchInput.addEventListener("input", performSearch);
-    
-        function performSearch() {
-            const searchText = searchInput.value.toLowerCase();
-    
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                const titleCell = row.querySelector("td:nth-child(2)"); // Assuming title is the second column
-                if (titleCell) {
-                    const title = titleCell.innerHTML.toLowerCase();
-                    const shouldDisplay = title.includes(searchText);
-                    row.style.display = shouldDisplay ? "" : "none";
-                }
-            }
-        }
-    });
-    
-</script>
+<script src="{% static 'groupings/js/group_by_ad.js' %}"></script>
     
 </body>
 </html>
