@@ -4,6 +4,18 @@ from django.contrib.messages import constants
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+<<<<<<< HEAD
+=======
+from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
+                                         get_access_token,
+                                           remove_filters_from_filterList,
+                                           tranform_strFilters_list_into_dictFilters_list,
+                                           get_availabe_filters,get_all_products,
+                                           searchAdByKeyWord,
+                                           get_filter_to_offset)
+from groupings.forms import GroupByAd_form
+from groupings.models import Group_by_ad
+>>>>>>> 0756234d2b9661617960bf49e3dea4f4f70531cb
 
 from api_MercadoLivre.getContent import (
     extract_filters_from_str_dict, get_access_token, get_all_products,
@@ -13,9 +25,12 @@ from groupings.forms import GroupByAd_form
 from groupings.models import Group_by_ad
 from utils_objects import Pagination
 
+<<<<<<< HEAD
 from .models import Product
 
 
+=======
+>>>>>>> 0756234d2b9661617960bf49e3dea4f4f70531cb
 @login_required
 def search(request):
   if request.method == "GET":
@@ -100,11 +115,15 @@ def search(request):
 @login_required
 def add_products_group_by(request):
   if request.method == "POST":
+<<<<<<< HEAD
     products_list = request.POST.getlist('products_info')
     groupByAd_form = GroupByAd_form(request.POST, request.FILES)
     print(f"errors: {groupByAd_form.errors}")
     if groupByAd_form.is_valid():
       print(groupByAd_form.cleaned_data)
+=======
+    products_list = request.POST.get('products_info')
+>>>>>>> 0756234d2b9661617960bf49e3dea4f4f70531cb
     print(f'product lists: {products_list}')
 
     return redirect(reverse("search"))

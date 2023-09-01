@@ -95,7 +95,11 @@
 <span class="get_all_products">
   <input type="checkbox" name="select-all-products" id="select-all-products"> Selecionar todos
 </span>
+<<<<<<< HEAD
 <form action="{% url 'add_products_group_by' %}" method="post" id="addProductsIntoGroup" enctype='multipart/form-data'>
+=======
+<form action="{% url 'add_products_group_by' %}" method="post" id="addProductsIntoGroup"></form>
+>>>>>>> 0756234d2b9661617960bf49e3dea4f4f70531cb
   {% csrf_token %}
   <div class="catalog">
   {% for product in products %}
@@ -152,7 +156,11 @@
         {{groupByAd_form.as_p}}
       </span>
       
+<<<<<<< HEAD
       <button type="submit" id="add-products-into_group">Enviar</button>
+=======
+      <input type="submit" id="add-products-into_group" form="addProductsIntoGroup">
+>>>>>>> 0756234d2b9661617960bf49e3dea4f4f70531cb
     </div>
   </div>
 

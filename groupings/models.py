@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.db import models
 from django.utils import timezone
 
@@ -12,10 +13,13 @@ class Group_by_ad(models.Model):
     title = models.CharField(max_length=60)
     created_at = models.DateTimeField(default=timezone.now)
     is_tracking_activated = models.BooleanField(default=True)
+<<<<<<< HEAD
 
     def __str__(self):
         return self.title
     
+=======
+>>>>>>> 0756234d2b9661617960bf49e3dea4f4f70531cb
 
 
 class Agrupamento_seller(models.Model):
