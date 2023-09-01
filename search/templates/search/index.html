@@ -10,8 +10,9 @@
 <link rel="stylesheet" href={% static "search/CSS/search_style.css" %}>
 <link rel="stylesheet" href={% static "accounts/css/nav.css" %}>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=wSw2IXrUZI8QMMpV5x1VdpTjjEi2k3sqdq5cDabiOH9d-4R15XAf-gxMHdzf5lQYGzo3sZk10h-38oqodu_MSC9JF2XtuAM2C_IOVUePtusVAlROP16IJbXethHXiPqtvMZjAiuIBfJId2ohzARp0w" charset="UTF-8"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Arrow go back -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 
 </head>
@@ -69,40 +70,36 @@
         {% endfor %}   
       </form>
 
+
       <br>
       <form id="filters" action="{% url 'search' %}" method="GET">
         {% for filter in available_filters %}
         <h2>{{ filter.name }}</h2>
         
-        {% csrf_token %}
-        <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
-        <input type="hidden" name="applied_filters" value="{{ applied_filters }}"/>
-        {% for value_of_filter in filter.values %}
-          <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}:{{ filter.name }}" class="hidden-radio"/>
-          <label for="{{ value_of_filter.id }}" class="hidden-label">
-            <span>{{ value_of_filter.name }}</span> <span>({{ value_of_filter.results }})</span> <br>
-          </label>
-        {% endfor %}
-        <button class="show-more-filters">Ver mais</button>
-        <br>
+          {% csrf_token %}
+          <input type="hidden" name="keyWord" value="{{ keyWord }}"/>
+          <input type="hidden" name="applied_filters" value="{{applied_filters}}"/>
+          {% for value_of_filter in filter.values %}
+            <input type="radio" id="{{ value_of_filter.id }}" name="filter_{{ filter.id }}" value="{{ filter.id }}:{{ value_of_filter.id }}:{{ filter.name }}" class="hidden-radio"/>
+            <label for="{{ value_of_filter.id }}" class="hidden-label">
+              <span>{{ value_of_filter.name }}</span> <span>({{ value_of_filter.results }})</span> <br>
+            </label>
+          {% endfor %}
+          <br>
+
       {% endfor %}
     </form>
     </div> 
   </div>
-  <span class="get_all_products">
-    <input type="checkbox" name="select-all-products" id="select-all-products"> Selecionar todos
-  </span>
-  <form action="{% url 'search' %}" method="GET">
 
-  <div class="catalog">
-    <span class="set_products">
-      <button type="submit" style="display: none;" id="set_products"> . Monitorar Anúncios . </button>
-    </span>
-  
-  {% for product in products %}
-  
+<span class="get_all_products">
+  <input type="checkbox" name="select-all-products" id="select-all-products"> Selecionar todos
+</span>
+<form action="{% url 'add_products_group_by' %}" method="post" id="addProductsIntoGroup" enctype='multipart/form-data'>
   {% csrf_token %}
-    <input class="checkbox_product" id={{product.id}} type="checkbox" name="lists[new]" />
+  <div class="catalog">
+  {% for product in products %}
+    <input class="checkbox_product" id={{product.id}} type="checkbox" name="products_info" value="'id' : {{product.id}}, 'price' : {{product.price}}" />
     <label for={{product.id}}>
     <div class="product">
       <span class="check">✓</span>
@@ -128,11 +125,37 @@
       </div>
     </div>
     </label>
+    <span class="set_products">
+      <button type="button" style="display: none;" id="set_products">Monitorar Anúncios</button>
+    </span>
   
-{% endfor %}
+    {% endfor %}
+  </div>
+  <div id="addProductsToGroup_modal" class="addProductsToGroup_modal">
+    <div id="addProductsToGroup_modal-content" class="addProductsToGroup_modal-content">
+      <span class="close">&times;</span>
+      <div class="userGroupByAd" id="userGroupByAd">
+        {% for gorup in all_GroupByAd %}
+          <div class="groupByAd">
+            <img src="" alt="">
+            <span>
+              <h2>{{ group.title }}</h2>
+            </span>
+          </div>
+        {% endfor %}
+      </div>
 
+      <span id="openCreationGroup">&#43</span>
+      <span class="material-symbols-outlined" id="goBackToGroups">undo</span>
 
-</div>
+      <span class="createNewGroup" id="createNewGroup">
+        {{groupByAd_form.as_p}}
+      </span>
+      
+      <button type="submit" id="add-products-into_group">Enviar</button>
+    </div>
+  </div>
+
 </form>
 
 <form action="{% url 'search' %}" method="get">
@@ -154,10 +177,28 @@
   </div>
 </form>
 
+<script>
+  document.querySelectorAll(".pagination-link").forEach(function(link) {
+    link.addEventListener("click", function(event) {
+      event.preventDefault();
+      
+      var currentURL = window.location.href;
+      var newHref = this.getAttribute("href");
+      
+      if (currentURL.indexOf("?") !== -1) {
+          window.location.href = currentURL + "&" + newHref;
+      } else {
+          window.location.href = currentURL + "?" + newHref;
+      }
+    });
+  });
+</script>
+
+
 <script src="{% static 'search/js/search.js' %}"></script>
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
 
-<br>
+
 
 </body>
 </html>
