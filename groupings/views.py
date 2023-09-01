@@ -71,5 +71,3 @@ def criar_agrupamentos_seller(request):
     messages.add_message(request, constants.SUCCESS,'Evento cadastrado com sucesso')
                             
     return redirect(reverse('criar_agrupamentos_produtos'))
-
-

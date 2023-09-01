@@ -14,8 +14,17 @@ from api_MercadoLivre.getContent import (extract_filters_from_str_dict,
 from groupings.forms import GroupByAd_form
 from groupings.models import Group_by_ad
 
-from .models import Product
+
+from api_MercadoLivre.getContent import (
+    extract_filters_from_str_dict, get_access_token, get_all_products,
+    get_availabe_filters, get_filter_to_offset, remove_filters_from_filterList,
+    searchAdByKeyWord, tranform_strFilters_list_into_dictFilters_list)
+from groupings.forms import GroupByAd_form
+from groupings.models import Group_by_ad
 from utils_objects import Pagination
+
+from .models import Product
+
 
 @login_required
 def search(request):
