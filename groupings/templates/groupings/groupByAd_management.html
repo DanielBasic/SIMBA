@@ -9,6 +9,15 @@
     
 </head>
 <body>
+    {% if messages %}
+    <div class="messages">
+        <ul class="messages-list">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
   <main>
     <header>
         <nav>
@@ -37,30 +46,18 @@
     </div>
 
     <div class="modal" id="myModal"  >
-
     <div class="area_formulario_agrupamento"  >
-
         <div class="form_group">
-
-            <form method="post" class="modal-content" action=" {% url 'criar_agrupamentos_produtos' %}" > {% csrf_token %}
-                    
+            <form method="post" class="modal-content" action=" {% url 'create_new_groupByAd' %}" enctype="multipart/form-data"> {% csrf_token %}    
                 <div class="container-close-modal">
                     <span id="closeModal" class="close_modal"  >&times;</span> 
                 </div>
-
                 <div> 
-                    
                     <h3>Novo Agrupamento Produto</h3>
                 </div>  
+                
+                {{ groupByAd_form.as_p }}
 
-                <input type="text" class="input_group" id="logo" name="logo" placeholder="Logo URL">
-
-                <input type="text" class="input_group" id="name" name="title" placeholder="Título">
-
-                <input type="text" class="input_group" id="start_date" name="start_date" placeholder="Data de Início">
-
-                <textarea id="description" class="input_group_text"  name="description" placeholder="Descrição"></textarea>
-            
                 <button type="submit">Criar </button>
 
             </form>

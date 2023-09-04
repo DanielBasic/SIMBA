@@ -1,30 +1,33 @@
-body{
+body {
     background: #ecedec;
     height: 100vh;
-    
-    
+
+
 }
 
 
-.side_bar_filters { 
-    width: 18%; /* Defina a largura desejada para a barra lateral de filtros */
+.side_bar_filters {
+    width: 18%;
+    /* Defina a largura desejada para a barra lateral de filtros */
     max-width: 300px;
     position: absolute;
     left: 15px;
-    /*overflow: auto;*/ /* Adicione rolagem vertical quando necessário */
-    max-height: 100vh; /* Limita a altura máxima para ocupar a altura total da janela */
+    /*overflow: auto;*/
+    /* Adicione rolagem vertical quando necessário */
+    max-height: 100vh;
+    /* Limita a altura máxima para ocupar a altura total da janela */
 }
 
 .contents_ad {
 
     display: flex;
-    align-items: center; 
-    
+    align-items: center;
+
 
 }
 
 * {
-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* Style the search field */
@@ -43,7 +46,7 @@ form.search_bar_box input[type=text] {
     padding-left: 40px;
 }
 
-@media (max-width: 999px){
+@media (max-width: 999px) {
     form.search_bar_box input[type=text] {
         width: 500px;
     }
@@ -57,7 +60,8 @@ form.search_bar_box button {
     color: white;
     font-size: 17px;
     border: 1px solid grey;
-    border-left: none; /* Prevent double borders */
+    border-left: none;
+    /* Prevent double borders */
     cursor: pointer;
     border-bottom-right-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
@@ -67,7 +71,7 @@ form.search_bar_box button {
 
 form.search_bar_box button:hover {
     background: #ffad33;
-    
+
 }
 
 /* Clear floats */
@@ -98,9 +102,9 @@ form.search_bar_box::after {
     flex-wrap: wrap;
     column-gap: 10px;
     width: 80%;
-    margin-left: 18%; 
+    margin-left: 18%;
     justify-content: center;
-    
+
 
 }
 
@@ -113,13 +117,13 @@ form.search_bar_box::after {
     border-radius: 8px;
 }
 
-.product:hover{   
+.product:hover {
     cursor: pointer;
     box-shadow: 0 0 20px #6f6e6e;
     transform: scale(1.01);
 
 
-    
+
 }
 
 .image {
@@ -128,7 +132,7 @@ form.search_bar_box::after {
     background: #fff;
     object-fit: contain;
     object-position: center;
-    
+
 }
 
 .image img {
@@ -146,50 +150,50 @@ form.search_bar_box::after {
 }
 
 .price {
-  font-size: 14px;
-  font-weight: bold;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .details h2 {
-  font-size: 10px;
-  font-weight: 300;
-  line-height: 1.35;
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 1.35;
 }
 
 .original_price {
-  color: #999;
-  font-size: 12px;
-  text-decoration: line-through;
+    color: #999;
+    font-size: 12px;
+    text-decoration: line-through;
 }
 
 .free_shipping {
-  color: #00a650;
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.35;
+    color: #00a650;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.35;
 }
 
 .seller_name {
-  color: #666;
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 1;
+    color: #666;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1;
 }
 
 .condition {
-  margin-top: 10px;
-  margin-right: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
 .catalog label {
-    display:block;
+    display: block;
     max-width: 568px;
     max-height: 568px;
-    -webkit-font-smoothing: antialiased; 
-    margin-top:15px;
-    font-family:Arial,Helvetica,sans-serif;
-    color:gray;
-    text-align:center;
+    -webkit-font-smoothing: antialiased;
+    margin-top: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: gray;
+    text-align: center;
     border-radius: 10px;
 }
 
@@ -205,17 +209,17 @@ input[type=checkbox]:checked.checkbox_product {
     margin-left: 10px;
     color: red;
     cursor: pointer;
-   
+
 }
 
 input[type=radio] {
     margin-left: 10px;
     display: none;
     cursor: pointer;
-    
+
 }
 
-input[type=submit]{
+input[type=submit] {
     border: solid 1px black;
     height: 25px;
     width: auto;
@@ -231,16 +235,16 @@ input[type=submit]{
 
 
 
-input:checked + label {
+input:checked+label {
     box-shadow: 0 0 20px #6f6e6e;
     color: green;
-    background-color: white;   
+    background-color: white;
     font-weight: bold;
 }
 
-input:checked + label:before {
+input:checked+label:before {
     border-radius: 2px;
-    color:red;
+    color: red;
 
 
 }
@@ -252,12 +256,12 @@ input:checked + label:before {
 
 }
 
-input:checked + label .check {
+input:checked+label .check {
     visibility: visible;
-    
+
 }
 
-input.checkbox:checked + label:before {
+input.checkbox:checked+label:before {
     content: "";
 }
 
@@ -266,11 +270,11 @@ input.checkbox:checked + label:before {
     flex-wrap: wrap;
     column-gap: 10px;
     width: 80%;
-    margin-left: 18%; 
+    margin-left: 18%;
     justify-content: center;
     border-radius: solid 4px black;
-    
-    
+
+
 }
 
 #set_products {
@@ -278,15 +282,15 @@ input.checkbox:checked + label:before {
     top: 18%;
     right: 20px;
     color: #fff;
-    z-index: 999;  
+    z-index: 999;
     cursor: pointer;
     text-transform: uppercase;
     font-size: 10px;
     background-color: #ffad33;
     height: 25px;
     border-radius: px;
-    
-    
+
+
 }
 
 
@@ -297,24 +301,24 @@ input.checkbox:checked + label:before {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-  }
-  
+}
+
 .pagination-link {
-text-decoration: none;
-padding: 5px 10px;
-border: 1px solid #ccc;
-border-radius: 3px;
-color: #333;
-margin: 0 5px;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #333;
+    margin: 0 5px;
 }
 
 .pagination-link:hover {
-background-color: #f4f4f4;
+    background-color: #f4f4f4;
 }
 
 .current {
-margin: 0 5px;
-font-weight: bold;
+    margin: 0 5px;
+    font-weight: bold;
 }
 
 /* Styling for the Previous and Next links */
@@ -336,8 +340,8 @@ font-weight: bold;
 
 /* Styling for disabled links */
 .pagination-link.disabled {
-cursor: not-allowed;
-opacity: 0.5;
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 
@@ -350,34 +354,71 @@ opacity: 0.5;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .addProductsToGroup_modal-content {
+}
+
+.addProductsToGroup_modal-content {
     background-color: white;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 60%;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  .close {
+}
+
+.close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-  }
-  
-  #openCreationGroup {
+}
+
+#openCreationGroup {
     color: #ffad33;
     float: left;
     font-size: 50px;
     font-weight: bold;
     cursor: pointer;
-  }
+}
 
-  #goBackToGroups {
+#goBackToGroups {
     display: None;
     cursor: pointer;
-  }
+}
+
+.userGroupByAd img {
+    width: 150px;
+    height: 150px;
+}
+
+
+.radio-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.radio-container {
+    display: flex;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.radio-container input[type="radio"] {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.radio-container:hover .checkmark {
+    background-color: #000;
+}
+
+.radio-container input[type="radio"]:checked+.checkmark {
+    background-color: #000;
+}

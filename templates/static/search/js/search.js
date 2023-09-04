@@ -57,6 +57,22 @@ $(document).ready(function() {
   });
 });
 
+function removeRequiredAttribute(elementId) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.removeAttribute('required');
+  }
+}
+
+
+function addRequiredAttribute(elementId) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.setAttribute('required', 'required');
+  }
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
   const modal = document.getElementById("addProductsToGroup_modal");
   const openBtn = document.getElementById("set_products");
@@ -65,24 +81,37 @@ document.addEventListener("DOMContentLoaded", function() {
   const groupByAd_content = document.getElementById('userGroupByAd');
   const creationGroup_content = document.getElementById('createNewGroup');
   const goBackToGroups = document.getElementById('goBackToGroups');
+  var imageInput = "image_field";
+  var titleInput = 'title_field';
+  const addProductsIntoGroup = document.getElementById('addProductsIntoGroup');
+  const groupByAd = document.getElementById("groupByAd")
 
   openBtn.addEventListener("click", function() {
     modal.style.display = "block";
     console.log(listOfGroupByAd);
+    set_products_button.style.display = "none";
+    
+
     if (listOfGroupByAd !== 'None') {
       creationGroup_content.style.display = 'none';
       groupByAd_content.style.display = 'block';
       openCreationGroup.style.display = 'block';
       creationGroup_content.style.display = 'none';
       goBackToGroups.style.display = 'none';
+      removeRequiredAttribute("image_field");
+      removeRequiredAttribute("title_field");
+      addRequiredAttribute("groupByAd");
+      addProductsIntoGroup.action = addProductsIntoGroup.getAttribute('add_products_into_GroupByAd')
     } else {
-        // Handle the case when listOfGroupByAd is null
         creationGroup_content.style.display = 'block';
         groupByAd_content.style.display = 'none';
         openCreationGroup.style.display = 'none';
         creationGroup_content.style.display = 'block';
         goBackToGroups.style.display = 'none';
-        set_products_button.style.display = "none";
+        addProductsIntoGroup.action = addProductsIntoGroup.getAttribute('create_new_GroupByAd_addProductsInIt')
+        addRequiredAttribute("image_field");
+        addRequiredAttribute("title_field");
+        removeRequiredAttribute("groupByAd");
     }
   });
   
@@ -96,6 +125,10 @@ document.addEventListener("DOMContentLoaded", function() {
     creationGroup_content.style.display = 'block';
     goBackToGroups.style.display = 'block';
     openCreationGroup.style.display = 'none';
+    addRequiredAttribute("image_field");
+    addRequiredAttribute("title_field");
+    removeRequiredAttribute("groupByAd");
+    addProductsIntoGroup.action = addProductsIntoGroup.getAttribute('create_new_GroupByAd_addProductsInIt')
   });
 
   goBackToGroups.addEventListener('click', function(){
@@ -103,6 +136,10 @@ document.addEventListener("DOMContentLoaded", function() {
     creationGroup_content.style.display = 'none';
     goBackToGroups.style.display = 'none';
     openCreationGroup.style.display = 'block';
+    removeRequiredAttribute("image_field");
+    removeRequiredAttribute("title_field");
+    addRequiredAttribute("groupByAd");
+    addProductsIntoGroup.action = addProductsIntoGroup.getAttribute('add_products_into_GroupByAd')
   });
 });
 
@@ -120,5 +157,18 @@ document.querySelectorAll(".pagination-link").forEach(function(link) {
     } else {
         window.location.href = currentURL + "?" + newHref;
     }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const radioContainers = document.querySelectorAll(".radio-container");
+
+  radioContainers.forEach(function (container) {
+    container.addEventListener("click", function () {
+      const radio = container.querySelector('input[type="radio"]');
+      if (radio) {
+        radio.checked = true;
+      }
+    });
   });
 });

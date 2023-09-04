@@ -15,7 +15,7 @@ class Group_by_ad(models.Model):
     is_tracking_activated = models.BooleanField(default=True)
     
     def __str__(self):
-        return self.id
+        return self.title
 
 
 class Group_by_seller(models.Model):
@@ -26,8 +26,7 @@ class Group_by_seller(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     is_tracking_activated = models.BooleanField(default=True)
 
-    def __str__(self):
-        return self.id
+
     
     
 
