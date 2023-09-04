@@ -41,3 +41,18 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const groupDetailsCells = document.querySelectorAll(".group-details");
+  
+    groupDetailsCells.forEach(cell => {
+      cell.addEventListener("click", function(event) {
+        const groupId = this.getAttribute("group_id"); // Use this to access the clicked element
+        const form = document.querySelector(`form[group_id="${groupId}"]`); // Use backticks for template literals
+  
+        if (form) {
+          form.submit();
+        }
+      });
+    });
+  });

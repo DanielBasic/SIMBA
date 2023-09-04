@@ -107,16 +107,6 @@ def search(request):
 
     return redirect(reverse("search")+ "?KeyWord=" + keyWord)
 
-
-@login_required
-def add_products_group_by(request):
-  if request.method == "POST":
-    form_image_title = GroupByAd_form(request.POST, request.FILES)
-    products = request.POST.getlist('products_info')
-    products = [str_to_dict(product) for product in products]
-    if form_image_title.is_valid:
-      pass
-   
 @login_required
 def add_product(request):
   if request.method == 'POST':

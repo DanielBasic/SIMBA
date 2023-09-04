@@ -69,31 +69,32 @@
         <input type="text" id="searchInput" placeholder="Buscar...">
         <button id="searchButton">Buscar</button>
     </div> 
-<tbody>
-    <table class="styled-table">
-      <thead class="styled-thead">
-        <tr>
-          <th>Logo</th>
-          <th>Título</th>
-          <th>Início</th>
-          <th>Descrição</th>
-          <th>criador</th>
-        </tr>
-      </thead>  
-    </tbody>
-        <tbody>        
-            {% for agrupamento in agrupamentos  %}         
-              <tr>   
-                <td>{{agrupamento.logo}}</td>
-                <td>{{agrupamento.title}}</td>
-                <td>{{agrupamento.start_date}}</td>
-                <td>{{agrupamento.description}}</td>
-                <td>{{agrupamento.criador}}</td>    
-                
+    <tbody>
+        <table class="styled-table">
+          <thead class="styled-thead">
+            <tr>
+              <th>Produto</th>
+              <th>Vendas brutas</th>
+              <th>Unidades Vendidas</th>
+              <th>Média Preço</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for group in groupByAd_all %}
+            <form action="{% url 'groupByAd_details' %}" method="get" class="redirectToGroupDetails_form" group_id="{{group.id}}">
+              <tr>
+                <td class="group-details" group_id="{{group.id}}">
+                  <input type="hidden" name="group_id" value="{{group.id}}">
+                  <img src="{{group.image.url}}" alt="{{group.title}}" width="75px" height="75px">
+                  <br>
+                  <p>{{group.title}}</p>
+                </td>
               </tr>
-            {% endfor %}
-          </tr>
-
+            </form>
+          {% endfor %}
+            
+          </tbody>
+        </table>
       </tbody>
     </table>
 

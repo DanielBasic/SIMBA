@@ -52,16 +52,25 @@ def add_products_into_GroupByAd(request):
       products = request.POST.getlist("products_info")
       products = [str_to_dict(product) for product in products]
       group = Group_by_ad.objects.filter(id=int(groupByAd_id)).first()
-      
+      current_user = request.user
+      user_products = Product.objects.filter(user=current_user)
+
+
       if products and group:
+        productsAlreadyIntoTheGroup = []
         for product in products:
           id, price, seller = product['id'], product['price'].replace(',', '.'), product["sellerId"]
-          product_object = Product(id=id,
-                                    price=price,
-                                          seller=seller)
-          product_object.save()
-          product_object.user.add(request.user)
-          product_object.group.add(group)
+          db_product = user_products.filter(Q(id=id) & Q(group=group)).first()
+          if db_product:
+            productsAlreadyIntoTheGroup.append(id)
+          else:
+            product_object = Product(id=id,
+                                      price=price,
+                                            seller=seller)
+            product_object.save()
+            product_object.user.add(current_user)
+            product_object.group.add(group)
+      messages.info(request, f'Não foi possível adicionar os seguinte produtos, pois eles já estão adicionados nesse agrupamento: {productsAlreadyIntoTheGroup}')
 
       return redirect(f"/groupings/group/?group_id={group.id}")
     except ValueError as e:
@@ -78,10 +87,18 @@ def create_new_GroupByAd_addProductsInIt(request):
       form_image_title = GroupByAd_form(request.POST, request.FILES)
       products = request.POST.getlist('products_info')
       products = [str_to_dict(product) for product in products]
+      current_user = request.user
+      users_group = Group_by_ad.objects.filter(user=request.user)
+      group = None
+
       if form_image_title.is_valid():
         title, image = form_image_title.cleaned_data['title'], form_image_title.cleaned_data['image']
-        group = Group_by_ad(title=title, image=image, user=request.user)
-        group.save()
+        group_exist = users_group.filter(title=title).first()
+        if group_exist:
+          messages.error(request, f'O grupo com título {title} já existe.')
+        else:
+          group = Group_by_ad(title=title, image=image, user=current_user)
+          group.save()
 
       if products and group:
         for product in products:
@@ -90,10 +107,12 @@ def create_new_GroupByAd_addProductsInIt(request):
                                     price=price,
                                           seller=seller)
           product_object.save()
-          product_object.user.add(request.user)
+          product_object.user.add(current_user)
           product_object.group.add(group)
+        return redirect(f"/groupings/group/?group_id={group.id}")
+      
+      return redirect(reverse('search'))
 
-      return redirect(f"/groupings/group/?group_id={group.id}")
     except ValueError as e:
       print(f"Error at 'create_new_GroupByAd_addProductsInIt' create: {e}")
       return redirect(reverse("search"))
