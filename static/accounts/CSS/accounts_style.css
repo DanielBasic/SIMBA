@@ -1,0 +1,134 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;  
+  
+}
+
+body{
+    background-color: #1b1f27;
+    font-family: Arial, Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+h1{
+    h1{
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+}
+
+ul li::marker{
+    color: #eee;
+    font-size: larger;
+}
+
+.helptext text{
+    color: #eee;
+    font-size: larger;
+}
+
+.menu{
+    display: flex ;
+
+}
+
+.area-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-items: center;
+    height: 90vh;
+}
+
+.login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #181920;
+    width: 360px;
+    height: auto;  
+    padding: 10px;  /*espacamento interno*/
+    border-radius: 10px;
+}
+
+.signup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #181920;
+    width: 355px;
+    height: 350px;  
+    padding: 35px;  /*espacamento interno*/
+    border-radius: 10px;
+}
+
+.login form{
+    display: flex;
+    flex-direction: column;
+    width: 100%
+}
+
+.login input{
+    margin-top: 10px; /**/  /**/ /**/
+    background-color: #252a34 ;
+    color: #cbd0f7;
+    border: none;
+    height: 45px;
+    outline: none;
+    border-radius: 6px;
+    padding-left: 10px;
+
+}
+
+.login input:last-child{
+    margin-top: 30px;
+
+}
+
+.login img{
+    width: 100px;  /*largura*/
+    height: auto; /*autura*/
+}
+
+input::placeholder{
+    color: #cbd0f7;
+    font-size: 14px;
+    
+}
+
+input:hover{
+    box-shadow: 0 0 5px whitesmoke;
+    background-color: #2d2e33 ;;
+}
+
+input:hover:last-child{
+    background-color: #f2970e;
+
+}
+
+form [type="submit"]{
+    display: block;
+    background-color: #ffad33;
+    font-size: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight:  800px;
+    color: #eee;
+    
+}
+
+p{
+    color: #cbd0f7;
+    margin-top: 10px;
+}
+
+a{
+    color:#eee;
+    text-decoration: none;
+    margin-left: 10px;
+}
+

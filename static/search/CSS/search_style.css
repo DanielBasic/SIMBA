@@ -1,0 +1,424 @@
+body {
+    background: #ecedec;
+    height: 100vh;
+
+
+}
+
+
+.side_bar_filters {
+    width: 18%;
+    /* Defina a largura desejada para a barra lateral de filtros */
+    max-width: 300px;
+    position: absolute;
+    left: 15px;
+    /*overflow: auto;*/
+    /* Adicione rolagem vertical quando necessário */
+    max-height: 100vh;
+    /* Limita a altura máxima para ocupar a altura total da janela */
+}
+
+.contents_ad {
+
+    display: flex;
+    align-items: center;
+
+
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Style the search field */
+form.search_bar_box input[type=text] {
+    padding: 8px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 900px;
+    background: #ecedec;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+    cursor: pointer;
+    padding-left: 40px;
+}
+
+@media (max-width: 999px) {
+    form.search_bar_box input[type=text] {
+        width: 500px;
+    }
+}
+
+/* Style the submit button */
+form.search_bar_box button {
+    float: left;
+    padding: 8px;
+    background: #ff9900;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    /* Prevent double borders */
+    cursor: pointer;
+    border-bottom-right-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+form.search_bar_box button:hover {
+    background: #ffad33;
+
+}
+
+/* Clear floats */
+form.search_bar_box::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.side_bar_filters span {
+    font-size: 10px;
+    margin-left: 6px;
+    color: #666;
+
+}
+
+.side_bar_filters h2 {
+    font-size: 12px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    left: 10px;
+
+}
+
+.catalog {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    width: 80%;
+    margin-left: 18%;
+    justify-content: center;
+
+
+}
+
+.product {
+    background-color: #fffefe;
+    border: 1px solid #dbdbdb;
+    padding: 5px;
+    width: 300px;
+    height: 500px;
+    border-radius: 8px;
+}
+
+.product:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px #6f6e6e;
+    transform: scale(1.01);
+
+
+
+}
+
+.image {
+    display: grid;
+    gap: 5px;
+    background: #fff;
+    object-fit: contain;
+    object-position: center;
+
+}
+
+.image img {
+    height: 100%;
+    width: 284px;
+    height: 284px;
+    border-radius: 1px;
+    border-bottom: solid 2px #ddd;
+}
+
+.details {
+    padding-top: 10px;
+    text-align: center;
+
+}
+
+.price {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.details h2 {
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 1.35;
+}
+
+.original_price {
+    color: #999;
+    font-size: 12px;
+    text-decoration: line-through;
+}
+
+.free_shipping {
+    color: #00a650;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.35;
+}
+
+.seller_name {
+    color: #666;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.condition {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.catalog label {
+    display: block;
+    max-width: 568px;
+    max-height: 568px;
+    -webkit-font-smoothing: antialiased;
+    margin-top: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: gray;
+    text-align: center;
+    border-radius: 10px;
+}
+
+
+input[type=checkbox].checkbox_product {
+    display: none;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+input[type=checkbox]:checked.checkbox_product {
+    display: none;
+    margin-left: 10px;
+    color: red;
+    cursor: pointer;
+
+}
+
+input[type=radio] {
+    margin-left: 10px;
+    display: none;
+    cursor: pointer;
+
+}
+
+input[type=submit] {
+    border: solid 1px black;
+    height: 25px;
+    width: auto;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: #ffad33;
+    font-size: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #eee;
+}
+
+
+
+
+input:checked+label {
+    box-shadow: 0 0 20px #6f6e6e;
+    color: green;
+    background-color: white;
+    font-weight: bold;
+}
+
+input:checked+label:before {
+    border-radius: 2px;
+    color: red;
+
+
+}
+
+
+/* new stuff */
+.check {
+    visibility: hidden;
+
+}
+
+input:checked+label .check {
+    visibility: visible;
+
+}
+
+input.checkbox:checked+label:before {
+    content: "";
+}
+
+.get_all_products {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    width: 80%;
+    margin-left: 18%;
+    justify-content: center;
+    border-radius: solid 4px black;
+
+
+}
+
+#set_products {
+    position: fixed;
+    top: 18%;
+    right: 20px;
+    color: #fff;
+    z-index: 999;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 10px;
+    background-color: #ffad33;
+    height: 25px;
+    border-radius: px;
+
+
+}
+
+
+/* CSS paginação */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination-link {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #333;
+    margin: 0 5px;
+}
+
+.pagination-link:hover {
+    background-color: #f4f4f4;
+}
+
+.current {
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+/* Styling for the Previous and Next links */
+.pagination-link.previous,
+.pagination-link.next {
+    border-color: #3498db;
+    color: #fff;
+    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 150ms ease-in-out;
+    text-transform: uppercase;
+}
+
+.pagination-link.previous:hover,
+.pagination-link.next:hover {
+    box-shadow: 0 0 20px 0 #3498db inset, 0 0 20px 3px #3498db;
+    background-color: #5b5959;
+}
+
+/* Styling for disabled links */
+.pagination-link.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+
+.addProductsToGroup_modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.addProductsToGroup_modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#openCreationGroup {
+    color: #ffad33;
+    float: left;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#goBackToGroups {
+    display: None;
+    cursor: pointer;
+}
+
+.userGroupByAd img {
+    width: 150px;
+    height: 150px;
+}
+
+
+.radio-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.radio-container {
+    display: flex;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.radio-container input[type="radio"] {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.radio-container:hover .checkmark {
+    background-color: #000;
+}
+
+.radio-container input[type="radio"]:checked+.checkmark {
+    background-color: #000;
+}

@@ -1,7 +1,18 @@
+
 import os
 from pathlib import Path
 
 from django.contrib.messages import constants
+
+
+
+
+#Celery config
+CELERY_BROKER_URL = 'pyamqp://guest@localhost:8000//'  # RabbitMQ broker URL
+CELERY_RESULT_BACKEND = 'rpc://'
+
+# Specify the location of the Celery configuration file
+CELERY_CONFIG = 'simba.celery'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

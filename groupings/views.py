@@ -6,12 +6,15 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from .forms import GroupByAd_form
 from api_MercadoLivre.getContent import str_to_dict
-from product.models import Product
 from django.db.models import Q
+from django.core.files.base import ContentFile
 
+from product.models import Product
 from .models import Group_by_ad
 
-# Create your views here.
+from .helpers.image_helpers import get_image
+import os
+
 
 @login_required
 def create_new_groupByAd(request):
@@ -50,6 +53,7 @@ def add_products_into_GroupByAd(request):
     try:
       groupByAd_id = request.POST.get("groupByAd_id")
       products = request.POST.getlist("products_info")
+      print(f'products: {products}')
       products = [str_to_dict(product) for product in products]
       group = Group_by_ad.objects.filter(id=int(groupByAd_id)).first()
       current_user = request.user
@@ -58,15 +62,21 @@ def add_products_into_GroupByAd(request):
 
       if products and group:
         productsAlreadyIntoTheGroup = []
+        print(f"products: {products}")
         for product in products:
-          id, price, seller = product['id'], product['price'].replace(',', '.'), product["sellerId"]
+          id, title, price, seller, image_url = product['id'], product['title'], product['price'].replace(',', '.'), product["sellerId"], product["image"]
           db_product = user_products.filter(Q(id=id) & Q(group=group)).first()
           if db_product:
             productsAlreadyIntoTheGroup.append(id)
           else:
+            image = get_image(image_url)
+            filename = os.path.basename(image_url)
             product_object = Product(id=id,
-                                      price=price,
-                                            seller=seller)
+                                    price=price,
+                                    seller=seller,
+                                    title=title,
+                                    image=f'products_images/{filename}')
+            product_object.image.save(os.path.basename(image_url), ContentFile(image.content))
             product_object.save()
             product_object.user.add(current_user)
             product_object.group.add(group)
@@ -127,6 +137,8 @@ def groupByAd_details(request):
       products = Product.objects.filter(Q(user=user) & Q(group=group))
     else:
       raise TypeError("The group_id must be a int type")
+    
+
     return render(request, "groupings/groupByAd_details.html", {'products' : products})
 
 

@@ -189,7 +189,7 @@ def str_to_dict(input_string):
             content = input_string.split('|')
             dict_converted = {}
             for key_value in content:
-                key, value = key_value.split(':')
+                key, value = key_value.split('=')
                 dict_converted[key] = value
             return dict_converted
         else:

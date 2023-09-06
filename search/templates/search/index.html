@@ -105,7 +105,7 @@
   {% csrf_token %}
   <div class="catalog">
   {% for product in products %}
-    <input class="checkbox_product" id={{product.id}} type="checkbox" name="products_info" value="id:{{product.id}}|price:{{product.price}}|sellerId:{{product.seller.id}}" />
+    <input class="checkbox_product" id={{product.id}} type="checkbox" name="products_info" value="id={{product.id}}|title={{product.title}}|price={{product.price}}|sellerId={{product.seller.id}}|image={{product.thumbnail|slice:':-5'}}F.WEBP"/>
     <label for={{product.id}}>
     <div class="product">
       <span class="check">✓</span>
