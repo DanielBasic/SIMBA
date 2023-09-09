@@ -169,6 +169,8 @@ def get_availabe_filters(access_token, key_word, filters_to_apply):
             available_filters = response.json()["available_filters"]
             
             return available_filters
+        
+        
             
 def get_all_products(access_token, key_word, filters_to_apply):
     response = searchAdByKeyWord(access_token, key_word, filters_to_apply)
