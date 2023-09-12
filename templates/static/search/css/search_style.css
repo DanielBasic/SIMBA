@@ -30,6 +30,11 @@ body {
     box-sizing: border-box;
 }
 
+h1{
+    font-size: 20px;
+    margin 20px
+}
+
 /* Style the search field */
 form.search_bar_box input[type=text] {
     padding: 8px;
@@ -345,6 +350,9 @@ input.checkbox:checked+label:before {
 }
 
 
+
+/* MODAL ESCOLHA DE PRODUTOS */
+
 .addProductsToGroup_modal {
     display: none;
     position: fixed;
@@ -354,23 +362,26 @@ input.checkbox:checked+label:before {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
 }
 
 .addProductsToGroup_modal-content {
-    background-color: white;
-    margin: 15% auto;
+    background-color: rgb(236, 228, 228);
+    margin: 2% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
+    width: 50%;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+
 }
 
 .close {
-    color: #aaa;
+    color: #dd1515;
     float: right;
-    font-size: 28px;
+    font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+    text-transform: capitalize;
 }
 
 #openCreationGroup {
@@ -387,8 +398,8 @@ input.checkbox:checked+label:before {
 }
 
 .userGroupByAd img {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
 }
 
 
@@ -396,11 +407,14 @@ input.checkbox:checked+label:before {
     display: flex;
     flex-direction: row;
 }
-
+.radio-group:hover {
+    scale: 1.01;
+}
 .radio-container {
     display: flex;
     cursor: pointer;
-    padding: 5px;
+    padding: 2px;
+    align-items: center;
 }
 
 .radio-container input[type="radio"] {
@@ -412,11 +426,22 @@ input.checkbox:checked+label:before {
     height: 20px;
     border: 2px solid #000;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 10px; 
+    text-decoration: none;
+    border: solid 2px red;
+
+}
+
+.title_GroupByAd{
+    color: #010503;
+    margin-left: 100px;
+    text-transform: uppercase;
+    
 }
 
 .radio-container:hover .checkmark {
     background-color: #000;
+    border: solid 2px red;
 }
 
 .radio-container input[type="radio"]:checked+.checkmark {

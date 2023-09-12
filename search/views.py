@@ -96,7 +96,7 @@ def search(request):
     all_GroupByAd = Group_by_ad.objects.filter(user=current_user)
     if len(all_GroupByAd) == 0:
       all_GroupByAd = None
-
+    print("pass")
     return render(request, "search/index.html", {"pagination" : pagination,"available_filters" : available_filters, "products" : all_products, "keyWord" : key_word, "applied_filters" : filters_to_apply, 'all_GroupByAd' : all_GroupByAd, 'groupByAd_form' : groupByAd_form})
 
   elif request.method == "POST":
