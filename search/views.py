@@ -138,5 +138,20 @@ def add_product(request):
   else:
     return HttpResponse("Método de requisição inválido.")
   
+from .forms import async_form
+def teste_async(request ):
+  if request.method == "GET":
+    form = async_form
+    return render(request, "search/async.html", {"form": form})
+  if request.method == "POST":
+    form = async_form(request.POST)
+    form.func_async()
+    return render(request, "search/async.html", {"sucess": form})
+
+  
+
+
+
+  
 
   

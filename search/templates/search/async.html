@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1></h1>
+
+    {% if form %}
+    <form method="POST" action="{% url 'async' %}">{%csrf_token%}
+        {{form.as_p}}
+        <button type="submit">ENVIAR</button>
+    </form>
+    {% else %}
+        <h1>Success</h1>
+    {% endif %}
+</head>
+<body>
+    
+</body>
+</html>
