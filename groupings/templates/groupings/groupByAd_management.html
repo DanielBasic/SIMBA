@@ -56,7 +56,16 @@
                     <h3>Novo Agrupamento Produto</h3>
                 </div>  
                 
-                {{ groupByAd_form.as_p }}
+                <div class="form-new-group">
+                  <div class="item-image">
+                    <p>Imagem:{{groupByAd_form.image}}</p>
+                  </div>
+                 
+                  <div class="item-titulo">
+                   <p>Titulo:  {{groupByAd_form.title}}</p>
+                  </div>
+               
+                </div>
 
                 <button type="submit">Criar </button>
 
@@ -65,10 +74,10 @@
     </div>
     </div>
     
-    <div class="search-container">
+    <!-- <div class="search-container">
         <input type="text" id="searchInput" placeholder="Buscar...">
         <button id="searchButton">Buscar</button>
-    </div> 
+    </div>  -->
     <tbody>
         <table class="styled-table">
           <thead class="styled-thead">

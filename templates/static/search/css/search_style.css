@@ -57,6 +57,10 @@ form.search_bar_box input[type=text] {
     }
 }
 
+.select-all-products{
+    visibility: hidden;
+}
+
 /* Style the submit button */
 form.search_bar_box button {
     float: left;
@@ -224,10 +228,10 @@ input[type=radio] {
 
 }
 
-input[type=submit] {
+/* input[type=submit] {
     border: solid 1px black;
     height: 25px;
-    width: auto;
+    width: 50p;
     border-radius: 4px;
     padding: 5px;
     background-color: #ffad33;
@@ -235,7 +239,7 @@ input[type=submit] {
     text-transform: uppercase;
     cursor: pointer;
     color: #eee;
-}
+} */
 
 
 
@@ -245,6 +249,7 @@ input:checked+label {
     color: green;
     background-color: white;
     font-weight: bold;
+    cursor: pointer;
 }
 
 input:checked+label:before {
@@ -270,6 +275,11 @@ input.checkbox:checked+label:before {
     content: "";
 }
 
+.container_get_all_products{
+    display: flex;
+   
+}
+
 .get_all_products {
     display: flex;
     flex-wrap: wrap;
@@ -278,7 +288,8 @@ input.checkbox:checked+label:before {
     margin-left: 18%;
     justify-content: center;
     border-radius: solid 4px black;
-
+    text-decoration: none;
+    
 
 }
 
@@ -286,14 +297,17 @@ input.checkbox:checked+label:before {
     position: fixed;
     top: 18%;
     right: 20px;
-    color: #fff;
+    color: black;
     z-index: 999;
     cursor: pointer;
     text-transform: uppercase;
-    font-size: 10px;
-    background-color: #ffad33;
-    height: 25px;
-    border-radius: px;
+    font-size: 14px;
+    /* height: 30px; */
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    /* margin-bottom: 7px; */
+    background-color:  #ff9900;
 
 
 }
@@ -366,7 +380,7 @@ input.checkbox:checked+label:before {
 }
 
 .addProductsToGroup_modal-content {
-    background-color: rgb(236, 228, 228);
+    background-color: #ecedec;
     margin: 2% auto;
     padding: 20px;
     border: 1px solid #888;
@@ -375,10 +389,48 @@ input.checkbox:checked+label:before {
 
 }
 
+.container-bottoms{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 10px;
+
+}
+
+.container-add-products-into-group{
+    
+    width: 100%;
+    right: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+
+    
+
+}
+
+/* .add-products-into-group{
+    margin: 2px;
+   
+
+} */
+
+.add-products-into-group{
+    margin: 8px;
+    width: 200px;
+    right: 30px;
+    padding: 8px;
+    cursor: pointer;
+    
+
+}
+
+
+
 .close {
     color: #dd1515;
     float: right;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     cursor: pointer;
     text-transform: capitalize;
@@ -386,14 +438,14 @@ input.checkbox:checked+label:before {
 
 #openCreationGroup {
     color: #ffad33;
-    float: left;
-    font-size: 50px;
+    /* float: left; */
+    font-size: 30px;
     font-weight: bold;
     cursor: pointer;
 }
 
 #goBackToGroups {
-    display: None;
+    /* display: None; */
     cursor: pointer;
 }
 
@@ -408,7 +460,7 @@ input.checkbox:checked+label:before {
     flex-direction: row;
 }
 .radio-group:hover {
-    scale: 1.01;
+    box-shadow: #000;
 }
 .radio-container {
     display: flex;
@@ -421,6 +473,7 @@ input.checkbox:checked+label:before {
     display: none;
 }
 
+
 .checkmark {
     width: 20px;
     height: 20px;
@@ -428,22 +481,59 @@ input.checkbox:checked+label:before {
     border-radius: 50%;
     margin-right: 10px; 
     text-decoration: none;
-    border: solid 2px red;
-
+    margin: solid 2px red;
 }
 
+
 .title_GroupByAd{
+    margin-left: 30px;
     color: #010503;
-    margin-left: 100px;
     text-transform: uppercase;
+    font-size: 10px;
     
 }
 
 .radio-container:hover .checkmark {
     background-color: #000;
-    border: solid 2px red;
 }
+
 
 .radio-container input[type="radio"]:checked+.checkmark {
     background-color: #000;
 }
+
+.title-new-group{
+    margin: 10px;
+}
+
+.form-new-group{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-new-group p{
+    font-size: 15px;
+}
+
+.item-image{
+    column-gap: 10px;
+}
+
+.item-titulo{
+    column-gap: 10px;
+}
+
+.item-titulo input{
+    border: solid 2px #282e2b ;
+    color: black;
+    width: 300px;
+    height: 30px;
+    border-radius: 6px;
+}
+
+/* .class-p{
+    margin-bottom: 10px;
+} */
+
