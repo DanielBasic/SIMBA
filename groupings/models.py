@@ -9,7 +9,7 @@ from django.utils import timezone
 class Group_by_ad(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(upload_to="group_by_ad_images/", default="group_by_ad_images/default.png")
+    image = models.ImageField(upload_to="group_by_ad_images/", default="group_by_ad_images/default.png", null=True)
     title = models.CharField(max_length=60)
     created_at = models.DateTimeField(default=timezone.now)
     is_tracking_activated = models.BooleanField(default=True)

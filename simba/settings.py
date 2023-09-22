@@ -1,18 +1,12 @@
 
 import os
 from pathlib import Path
-
 from django.contrib.messages import constants
+from decouple import config
 
 
-
-
-#Celery config
-CELERY_BROKER_URL = 'pyamqp://guest@localhost:8000//'  # RabbitMQ broker URL
-CELERY_RESULT_BACKEND = 'rpc://'
-
-# Specify the location of the Celery configuration file
-CELERY_CONFIG = 'simba.celery'
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--*$wgs30dp!831biex84_*=ys_((lo&us!1#sm67tbg5(=7gmu'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',  
     'search',
     'groupings',
-    'product'
+    'product',
+    'dashboard'
 ]
 
 MIDDLEWARE = [
@@ -125,7 +120,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (css, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'

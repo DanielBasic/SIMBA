@@ -47,27 +47,24 @@ def get_access_token(app_id, client_secret, refresh_token):
 
     return response.json()
 
-refresh_token = "TG-647222cac299df0001605b9c-1095654007"
 
-access_token = get_access_token(app_id, client_secret, refresh_token)
-
-
-
-# OBETEM AS INFORMAÇÕES DO ANUNCIO
-def getInfoFromAd(access_token, item_id):
-    url = f"https://api.mercadolibre.com/items/{item_id}"
+def getInfoFromProduct(access_token, product_id):
+    url = f"https://api.mercadolibre.com/items/{product_id}"
     payload = {}
     headers = {
-        'Authorization': f'bearer {access_token}'
+        'Authorization': f'beirearer {access_token}'
     }
 
     response = requests.request("GET", url, headers=headers, data=payload)
 
-    return response
+    if response.status_code > 200:
+        return None
+
+    return response.json()
 
 
 
-# ADICONA O FILTRO NAS SOLICITAÇÕES DE PESQUISA DA URL
+
 def addFilterIntoUrlSearchRequest(url, filters):
     try:
         if not filters or filters == []:
@@ -81,7 +78,7 @@ def addFilterIntoUrlSearchRequest(url, filters):
     except TypeError:
         raise
 
-# PESQUISA DO ANUNCIO POR PALAVRA CHAVE
+
 def searchAdByKeyWord(access_token, key_word, filter=None):
     url = f"https://api.mercadolibre.com/sites/MLB/search?q={key_word}"
 

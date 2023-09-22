@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
       openCreationGroup.style.display = 'block';
       creationGroup_content.style.display = 'none';
       goBackToGroups.style.display = 'none';
-      removeRequiredAttribute("image_field");
+      
       removeRequiredAttribute("title_field");
       addRequiredAttribute("groupByAd");
       addProductsIntoGroup.action = addProductsIntoGroup.getAttribute('add_products_into_GroupByAd')
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
         creationGroup_content.style.display = 'block';
         goBackToGroups.style.display = 'none';
         addProductsIntoGroup.action = addProductsIntoGroup.getAttribute('create_new_GroupByAd_addProductsInIt')
-        addRequiredAttribute("image_field");
+        
         addRequiredAttribute("title_field");
         removeRequiredAttribute("groupByAd");
     }
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
     creationGroup_content.style.display = 'block';
     goBackToGroups.style.display = 'block';
     openCreationGroup.style.display = 'none';
-    addRequiredAttribute("image_field");
+    
     addRequiredAttribute("title_field");
     removeRequiredAttribute("groupByAd");
     addProductsIntoGroup.action = addProductsIntoGroup.getAttribute('create_new_GroupByAd_addProductsInIt')
@@ -136,7 +136,6 @@ document.addEventListener("DOMContentLoaded", function() {
     creationGroup_content.style.display = 'none';
     goBackToGroups.style.display = 'none';
     openCreationGroup.style.display = 'block';
-    removeRequiredAttribute("image_field");
     removeRequiredAttribute("title_field");
     addRequiredAttribute("groupByAd");
     addProductsIntoGroup.action = addProductsIntoGroup.getAttribute('add_products_into_GroupByAd')

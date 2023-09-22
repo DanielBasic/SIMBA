@@ -4927,11 +4927,11 @@ S2.define('select2/defaults',[
         options.dropdownCss != null ||
         options.adaptDropdownCssClass != null
       ) {
-        var DropdownCSS = require(options.amdBase + 'compat/dropdownCss');
+        var Dropdowncss = require(options.amdBase + 'compat/dropdownCss');
 
         options.dropdownAdapter = Utils.Decorate(
           options.dropdownAdapter,
-          DropdownCSS
+          Dropdowncss
         );
       }
 
@@ -4975,11 +4975,11 @@ S2.define('select2/defaults',[
         options.containerCss != null ||
         options.adaptContainerCssClass != null
       ) {
-        var ContainerCSS = require(options.amdBase + 'compat/containerCss');
+        var Containercss = require(options.amdBase + 'compat/containerCss');
 
         options.selectionAdapter = Utils.Decorate(
           options.selectionAdapter,
-          ContainerCSS
+          Containercss
         );
       }
 
@@ -6069,14 +6069,14 @@ S2.define('select2/compat/containerCss',[
   'jquery',
   './utils'
 ], function ($, CompatUtils) {
-  // No-op CSS adapter that discards all classes by default
+  // No-op css adapter that discards all classes by default
   function _containerAdapter (clazz) {
     return null;
   }
 
-  function ContainerCSS () { }
+  function Containercss () { }
 
-  ContainerCSS.prototype.render = function (decorated) {
+  Containercss.prototype.render = function (decorated) {
     var $container = decorated.call(this);
 
     var containerCssClass = this.options.get('containerCssClass') || '';
@@ -6119,21 +6119,21 @@ S2.define('select2/compat/containerCss',[
     return $container;
   };
 
-  return ContainerCSS;
+  return Containercss;
 });
 
 S2.define('select2/compat/dropdownCss',[
   'jquery',
   './utils'
 ], function ($, CompatUtils) {
-  // No-op CSS adapter that discards all classes by default
+  // No-op css adapter that discards all classes by default
   function _dropdownAdapter (clazz) {
     return null;
   }
 
-  function DropdownCSS () { }
+  function Dropdowncss () { }
 
-  DropdownCSS.prototype.render = function (decorated) {
+  Dropdowncss.prototype.render = function (decorated) {
     var $dropdown = decorated.call(this);
 
     var dropdownCssClass = this.options.get('dropdownCssClass') || '';
@@ -6176,7 +6176,7 @@ S2.define('select2/compat/dropdownCss',[
     return $dropdown;
   };
 
-  return DropdownCSS;
+  return Dropdowncss;
 });
 
 S2.define('select2/compat/initSelection',[

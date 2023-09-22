@@ -22,6 +22,7 @@ from api_MercadoLivre.getContent import (
 from groupings.forms import GroupByAd_form
 from groupings.models import Group_by_ad
 from utils_objects import Pagination
+from decouple import config
 
 from .models import Product
 
@@ -29,10 +30,9 @@ from .models import Product
 @login_required
 def search(request):
   if request.method == "GET":
-    app_id = "1481157846018069"
-    redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
-    client_secret = "1G5RWQSbNZtz1HC1oioNFdIUnOPAs7GU"
-    refresh_token = "TG-647222cac299df0001605b9c-1095654007"
+    app_id = config('APP_ID')
+    client_secret = config('CLIENT_SECRET')
+    refresh_token = config('REFRESH_TOKEN')
     access_token = get_access_token(app_id, client_secret, refresh_token)   
     key_word = request.GET.get("keyWord")
 

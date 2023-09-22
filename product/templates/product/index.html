@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrupamento</title>
+    {% load static %}
+    <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
+    
+</head>
+<body>
+    {% if messages %}
+    <div class="messages">
+        <ul class="messages-list">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+  <main>
+    <header>
+        <nav>
+            <a class="logo" href="/">Simba</a>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            <ul class="nav-list">
+                {% if request.user.is_authenticated %}
+                    <li><a href="#">Início</a></li>
+                {% endif %}
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Projetos</a></li>
+                <li><a href="#">Contato</a></li>          
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Sair</a></li>
+                {% endif %}
+            </ul> 
+        </nav>      
+</header>
+
+<div id="main_picture">
+    <img src="{{product.pictures.0.secure_url}}" alt="Thumbnail foto" class="main_picture" width="700" height="500">
+</div>
+
+
+<div class="side_informations">
+
+</div>
+
+<div class="complementaries_informations">
+    <span class="title">{{product.title}}</span>
+    <span class="original_price">R$: {{product.original_price}}</span>
+    <span class="price">R$: {{product.price}}</span>
+    <span class="quantities"> 
+        <p>Quantidade inicial de estoque: {{product.initial_quantity}}</p>
+        <p>Quantidade disponível: {{product.available_quantity}}</p>
+        <p>Vendas: {{product.sold_quantity}}
+        </p>
+    </span>
+    <span class="date_created">{{product.date_created}}</span>
+</div>
+
+<p>{{product}}</p>
+
+</main>   
+
+
+<script src="{% static 'accounts/js/navbar.js' %}"></script>
+<script src="{% static 'groupings/js/group_by_ad.js' %}"></script>
+    
+</body>
+</html>

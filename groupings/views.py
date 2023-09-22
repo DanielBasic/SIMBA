@@ -112,10 +112,16 @@ def create_new_GroupByAd_addProductsInIt(request):
 
       if products and group:
         for product in products:
-          id, price, seller = product['id'], product['price'].replace(',', '.'), product["sellerId"]
+          id, title, price, seller, image_url = product['id'], product['title'], product['price'].replace(',', '.'), product["sellerId"], product["image"]
+          image = get_image(image_url)
+          filename = os.path.basename(image_url)
           product_object = Product(id=id,
-                                    price=price,
-                                          seller=seller)
+                                  price=price,
+                                  seller=seller,
+                                  title=title,
+                                  image=f'products_images/{filename}')
+          product_object.image.save(os.path.basename(image_url), ContentFile(image.content))
+          product_object.save()
           product_object.save()
           product_object.user.add(current_user)
           product_object.group.add(group)

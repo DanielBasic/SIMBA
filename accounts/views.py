@@ -4,7 +4,7 @@ from django.contrib.messages import constants
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
-
+import logging
 
 def login(request):
   if request.method == "GET":
@@ -13,22 +13,59 @@ def login(request):
   elif request.method == "POST":
     email_nickname = request.POST.get("email-username")
     password = request.POST.get("password")
-    user = auth.authenticate(request, username=email_nickname, password=password)
-
+    user_by_email = auth.authenticate(request, username=email_nickname, password=password)
+    user = user_by_email
+    print('entrou')
     if not user:
       user_by_nickname = User.objects.filter(email=email_nickname)
       user_by_nickname = user_by_nickname.first()
       if user_by_nickname:
         user = auth.authenticate(request, username=user_by_nickname.username, password=password)
+
       if not user:
         messages.add_message(request, constants.ERROR, "Email ou senha inválido")
         return redirect(reverse("login"))
-    
     
     auth.login(request, user)
 
     return redirect(reverse("search"))
     
+import json
+from django.http import JsonResponse
+from django.views import View
+
+
+class UsernameValidationView(View):
+  def post(self, request):
+    data = json.loads(request.body)
+    username = data['field_input']
+    
+    if User.objects.filter(username=username).exists():
+      return JsonResponse({"field_error" : "Este apelido já está sendo usado, escolha outro"}, status=409)
+    
+    return JsonResponse({'field_valid' : True})
+  
+class EmailValidationView(View):
+  def post(self, request):
+    data = json.loads(request.body)
+    email = data['field_input']
+    
+    if User.objects.filter(email=email).exists():
+      return JsonResponse({"field_error" : "Este e-mail já está cadastrado, escolha outro"}, status=409)
+    
+    return JsonResponse({'field_valid' : True})
+
+class PasswordValidationView(View):
+  def post(self, request):
+    data = json.loads(request.body)
+    password = data['field_input']
+    confirm_password = data['confirm_field_input']
+    
+    if password != confirm_password:
+      return JsonResponse({"field_error" : "As senhas não conferem"}, status=400)
+    
+    return JsonResponse({'field_valid' : True})
+
 
 def signup(request):
   if request.method == "GET":

@@ -9,7 +9,9 @@ urlpatterns = [
     path("", include("accounts.urls")),
     path("search/", include("search.urls")),
     path("groupings/", include("groupings.urls")),
-    path("accounts/", include("django.contrib.auth.urls")), #esse para teste
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("product/", include("product.urls")),
+    path("dashboard/", include("dashboard.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

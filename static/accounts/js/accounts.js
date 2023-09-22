@@ -6,3 +6,5 @@ if (alertElement) {
     }, 3000);
 }
 });
+
+
