@@ -482,3 +482,8 @@ form [type="submit"]:hover{
   height: 40px;
   border-radius: 6px;
 }
+
+group-details{
+  display: flex;
+  flex-direction: column;
+}
