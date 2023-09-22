@@ -20,25 +20,25 @@
     {% endif %}
   <main>
     <header>
-        <nav>
-            <a class="logo" href="/">Simba</a>
-            <div class="mobile-menu">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-            <ul class="nav-list">
-                {% if request.user.is_authenticated %}
-                    <li><a href="#">Início</a></li>
-                {% endif %}
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Projetos</a></li>
-                <li><a href="#">Contato</a></li>          
-                {% if request.user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Sair</a></li>
-                {% endif %}
-            </ul> 
-        </nav>      
+      <nav>
+        <a class="logo" href="/">Simba</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+  
+        <ul class="nav-list">
+          <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
+          <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li>
+          <li><a href="{% url 'search' %}">search</a></li>
+          <li><a href="#">Contato</a></li>
+          {% if request.user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Sair</a></li>
+          {% endif %}
+        </ul>
+        
+      </nav>     
 </header>
 
     <div class="container-new-modal">
@@ -56,7 +56,16 @@
                     <h3>Novo Agrupamento Produto</h3>
                 </div>  
                 
-                {{ groupByAd_form.as_p }}
+                <div class="form-new-group">
+                  <div class="item-image">
+                    <p>Imagem:{{groupByAd_form.image}}</p>
+                  </div>
+                 
+                  <div class="item-titulo">
+                   <p>Titulo:  {{groupByAd_form.title}}</p>
+                  </div>
+               
+                </div>
 
                 <button type="submit">Criar </button>
 
@@ -65,10 +74,10 @@
     </div>
     </div>
     
-    <div class="search-container">
+    <!-- <div class="search-container">
         <input type="text" id="searchInput" placeholder="Buscar...">
         <button id="searchButton">Buscar</button>
-    </div> 
+    </div>  -->
     <tbody>
         <table class="styled-table">
           <thead class="styled-thead">

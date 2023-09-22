@@ -53,6 +53,12 @@ ul li::marker{
     height: auto;  
     padding: 10px;  /*espacamento interno*/
     border-radius: 10px;
+    box-shadow: 0 0 5px whitesmoke;
+}
+
+.login:hover{
+    box-shadow: 0 0 10px whitesmoke;
+
 }
 
 .signup{

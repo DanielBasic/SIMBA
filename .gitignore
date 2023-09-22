@@ -3,3 +3,4 @@ dump.rdb
 /myenv
 /venv
 .env
+/__pycache__
