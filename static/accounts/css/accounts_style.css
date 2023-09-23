@@ -53,6 +53,12 @@ ul li::marker{
     height: auto;  
     padding: 10px;  /*espacamento interno*/
     border-radius: 10px;
+    box-shadow: 0 0 5px whitesmoke;
+}
+
+.login:hover{
+    box-shadow: 0 0 10px whitesmoke;
+
 }
 
 .signup{
@@ -161,13 +167,3 @@ input.field-is-valid + span::before {
     color: green;
 }
 
-.password-input {
-    padding-right: 30px; /* Space for the toggle button */
-    background-image: url('../accounts/images/icons/view.png'); /* Closed eye icon */
-    background-repeat: no-repeat;
-    background-position: right center;
-}
-
-.password-input.show-password {
-    background-image: url('../accounts/images/icons/view.png'); /* Open eye icon when showing password */
-}

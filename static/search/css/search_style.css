@@ -30,6 +30,14 @@ body {
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
+=======
+h1{
+    font-size: 20px;
+    margin 20px
+}
+
+>>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 /* Style the search field */
 form.search_bar_box input[type=text] {
     padding: 8px;
@@ -50,6 +58,10 @@ form.search_bar_box input[type=text] {
     form.search_bar_box input[type=text] {
         width: 500px;
     }
+}
+
+.select-all-products{
+    visibility: hidden;
 }
 
 /* Style the submit button */
@@ -219,10 +231,10 @@ input[type=radio] {
 
 }
 
-input[type=submit] {
+/* input[type=submit] {
     border: solid 1px black;
     height: 25px;
-    width: auto;
+    width: 50p;
     border-radius: 4px;
     padding: 5px;
     background-color: #ffad33;
@@ -230,7 +242,7 @@ input[type=submit] {
     text-transform: uppercase;
     cursor: pointer;
     color: #eee;
-}
+} */
 
 
 
@@ -240,6 +252,7 @@ input:checked+label {
     color: green;
     background-color: white;
     font-weight: bold;
+    cursor: pointer;
 }
 
 input:checked+label:before {
@@ -265,6 +278,11 @@ input.checkbox:checked+label:before {
     content: "";
 }
 
+.container_get_all_products{
+    display: flex;
+   
+}
+
 .get_all_products {
     display: flex;
     flex-wrap: wrap;
@@ -273,7 +291,8 @@ input.checkbox:checked+label:before {
     margin-left: 18%;
     justify-content: center;
     border-radius: solid 4px black;
-
+    text-decoration: none;
+    
 
 }
 
@@ -281,14 +300,17 @@ input.checkbox:checked+label:before {
     position: fixed;
     top: 18%;
     right: 20px;
-    color: #fff;
+    color: black;
     z-index: 999;
     cursor: pointer;
     text-transform: uppercase;
-    font-size: 10px;
-    background-color: #ffad33;
-    height: 25px;
-    border-radius: px;
+    font-size: 14px;
+    /* height: 30px; */
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    /* margin-bottom: 7px; */
+    background-color:  #ff9900;
 
 
 }
@@ -345,6 +367,12 @@ input.checkbox:checked+label:before {
 }
 
 
+<<<<<<< HEAD
+=======
+
+/* MODAL ESCOLHA DE PRODUTOS */
+
+>>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 .addProductsToGroup_modal {
     display: none;
     position: fixed;
@@ -354,6 +382,7 @@ input.checkbox:checked+label:before {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+<<<<<<< HEAD
 }
 
 .addProductsToGroup_modal-content {
@@ -371,24 +400,89 @@ input.checkbox:checked+label:before {
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+=======
+    overflow-y: scroll;
+}
+
+.addProductsToGroup_modal-content {
+    background-color: #ecedec;
+    margin: 2% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.container-bottoms{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 10px;
+
+}
+
+.container-add-products-into-group{
+    
+    width: 100%;
+    right: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+
+    
+
+}
+
+/* .add-products-into-group{
+    margin: 2px;
+   
+
+} */
+
+.add-products-into-group{
+    margin: 8px;
+    width: 200px;
+    right: 30px;
+    padding: 8px;
+    cursor: pointer;
+    
+
+}
+
+
+
+.close {
+    color: #dd1515;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: capitalize;
+>>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 }
 
 #openCreationGroup {
     color: #ffad33;
-    float: left;
-    font-size: 50px;
+    /* float: left; */
+    font-size: 30px;
     font-weight: bold;
     cursor: pointer;
 }
 
 #goBackToGroups {
-    display: None;
+    /* display: None; */
     cursor: pointer;
 }
 
 .userGroupByAd img {
+<<<<<<< HEAD
     width: 150px;
     height: 150px;
+=======
+    width: 100px;
+    height: 100px;
+>>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 }
 
 
@@ -396,29 +490,100 @@ input.checkbox:checked+label:before {
     display: flex;
     flex-direction: row;
 }
+<<<<<<< HEAD
 
 .radio-container {
     display: flex;
     cursor: pointer;
     padding: 5px;
+=======
+.radio-group:hover {
+    box-shadow: #000;
+}
+.radio-container {
+    display: flex;
+    cursor: pointer;
+    padding: 2px;
+    align-items: center;
+>>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 }
 
 .radio-container input[type="radio"] {
     display: none;
 }
 
+
 .checkmark {
     width: 20px;
     height: 20px;
     border: 2px solid #000;
     border-radius: 50%;
+<<<<<<< HEAD
     margin-right: 10px;
+=======
+    margin-right: 10px; 
+    text-decoration: none;
+    margin: solid 2px red;
+}
+
+
+.title_GroupByAd{
+    margin-left: 30px;
+    color: #010503;
+    text-transform: uppercase;
+    font-size: 10px;
+    
+>>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 }
 
 .radio-container:hover .checkmark {
     background-color: #000;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    border: solid 2px red;
+>>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
+=======
+>>>>>>> 06d8067af9812e0577e457b414938a08655e08fa
 }
+
 
 .radio-container input[type="radio"]:checked+.checkmark {
     background-color: #000;
 }
+
+.title-new-group{
+    margin: 10px;
+}
+
+.form-new-group{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-new-group p{
+    font-size: 15px;
+}
+
+.item-image{
+    column-gap: 10px;
+}
+
+.item-titulo{
+    column-gap: 10px;
+}
+
+.item-titulo input{
+    border: solid 2px #282e2b ;
+    color: black;
+    width: 300px;
+    height: 30px;
+    border-radius: 6px;
+}
+
+/* .class-p{
+    margin-bottom: 10px;
+} */
+

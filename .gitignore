@@ -1,6 +1,7 @@
 db.sqlite3
 dump.rdb
-/myenv
-/venv
+celerybeat-schedule.db
+**/myenv
+**/venv
 .env
-/__pycache__
+__pycache__/
