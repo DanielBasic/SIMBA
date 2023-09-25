@@ -8,13 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     {% load static %}
 
-<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href={% static "accounts/css/accounts_style.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
-=======
-    <link rel="stylesheet"  type="text/css" href={% static "accounts/css/accounts_style.css" %}>
-    <link rel="stylesheet"  type="text/css" href={% static "accounts/css/nav.css" %}  >
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 
     
     
@@ -53,11 +48,7 @@
         <div>
             <img src={% static "accounts/images/SIMBA.png" %}>
         </div>
-<<<<<<< HEAD
-        <form action="{% url 'log_in' %}" method="POST" class="form_login"> {% csrf_token %}
-=======
         <form action="{% url 'log_in'%}" method="POST" class="form_login"> {% csrf_token %}
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
             <input type="text" placeholder="Email ou Nome" name="email-username" required>
             <input type="password" placeholder="Senha" name="password" required>
             <input type="submit" placeholder="Sign in" value="sign in">

@@ -4,4 +4,8 @@ celerybeat-schedule.db
 **/myenv
 **/venv
 .env
+<<<<<<< HEAD
 __pycache__/
+=======
+_pycache_/
+>>>>>>> 21d5d43 (inserido na pagina dashboard graficos com chart.js)
