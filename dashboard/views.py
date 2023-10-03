@@ -73,4 +73,3 @@ def relatorio_funcionario(request):
     x = list(zip(*x))
     
     return JsonResponse({'labels': x[0][:3], 'data': x[1][:3]})
-

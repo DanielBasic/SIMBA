@@ -9,6 +9,12 @@ urlpatterns = [
   path("signup/", views.signup, name="signup"),
   path("logout/", views.logout, name="logout"),
   path("sobre/", views.sobre, name="sobre"),
+  path("usuario/", views.usuario, name="usuario"),
+
+  path('register', views.register, name='register'),
+  path('profile/update/', views.update_profile, name='update_profile'),
+  path('alterar_senha/', views.alterar_senha, name='alterar_senha'),
+  
   path('validate_username/', csrf_exempt(views.UsernameValidationView.as_view()), name='validate_username'),
   path('validate_email/', csrf_exempt(views.EmailValidationView.as_view()), name='validate_email'),
   path('validate_password/', csrf_exempt(views.PasswordValidationView.as_view()), name='validate_password')

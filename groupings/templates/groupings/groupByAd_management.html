@@ -32,7 +32,7 @@
           <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
           <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li>
           <li><a href="{% url 'search' %}">search</a></li>
-          <li><a href="{% url 'sobre' %}">usuario</a></li>
+          <li><a href="{% url 'usuario' %}">usuario</a></li>
           {% if request.user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Sair</a></li>
           {% endif %}
@@ -58,7 +58,7 @@
                 
                 <div class="form-new-group">
                   <div class="item-image">
-                    <p>Imagem:{{groupByAd_form.image}}</p>
+                    
                   </div>
                  
                   <div class="item-titulo">

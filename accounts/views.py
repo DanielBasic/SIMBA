@@ -7,8 +7,10 @@ from django.urls import reverse
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from .forms import RegistrationForm
 
 import logging
+
 
 def login(request):
   if request.method == "GET":
@@ -101,6 +103,41 @@ def signup(request):
     messages.add_message(request, constants.SUCCESS, "Usuário cadastrado com sucesso")
     
     return redirect(reverse("login")) 
+  
+
+
+def register(request): 
+  if request.method == "POST":
+    form = RegistrationForm(request.POST)
+    if form.is_valid():
+      form.save()
+      mensagem = "Usuario criado com sucesso"
+      context = {
+        'mensagem' : mensagem,
+      }
+      return render(request, "registration/login.html", context)
+    else:
+      mensagem = "Dados invalidos"
+      context = {
+        'form' : form,
+        'mensagem' : mensagem,
+
+      }
+      return render(request, "accounts/register.html", context)
+  
+  else:
+    form = RegistrationForm()
+    context = {
+      'form' : form
+    }
+    return render(request, "accounts/register.html", context)
+
+    
+
+
+
+
+
 
 def logout(request):
   auth.logout(request)
@@ -122,10 +159,65 @@ def sobre(request):
   if request.method == "GET":
     return render(request, "accounts/sobre.html")
 
-    # endereco = request.user.userprofile.endereco
-    # telefone = request.user.userprofile.telefone
-    # data_de_nascimento = request.user.userprofile.data_de_nascimento    
+
+def usuario(request):
+  if request.method == "GET":
+    return render(request, "accounts/usuario.html")
+  
+  
+
+def update_profile(request):
+  if request.method == 'POST':
+    new_username = request.POST['username']
+    new_email = request.POST['email']
+    # new_password = request.POST.get("password")
+    # new_confirm_password = request.POST.get("confirm_password")
+
+
+    user = request.user
+    user.username = new_username
+    user.email = new_email  
+    # user.password = new_password
+    # user.confirm_password = new_confirm_password
+
+
+    try:
+      user.save()
+      messages.success(request, 'Perfil atualizado com sucesso!')
+      return render(request, "accounts/usuario.html")
+    except Exception as e:
+        messages.error(request, f"Erro ao atualizar perfil usuario ou email ja utilizados")
+
+    return render(request, "accounts/usuario.html")
+  
+
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash  
+
+def alterar_senha(request):
+  
+  if request.method == 'POST':
+    form = PasswordChangeForm(data=request.POST, user=request.user)
+    if form.is_valid():
+      form.save()
+      update_session_auth_hash(request, form.user)
+      messages.success(request, 'Perfil atualizado com sucesso!')
+      return render(request, "accounts/usuario.html")
+    else:
+      messages.error(request, f"Erro ao atualizar perfil:")
+      return render(request, "accounts/usuario.html")
+      
+  else:
+    messages.error(request, f"Erro ao atualizar perfil:")
+    form = PasswordChangeForm(user=request.user)
+    context = {
+      'form' : form
+    }
+    messages.error(request, "Erro ao atualizar perfil:")
+    return render(request, "accounts/usuario.html")
+
     
-    # return render(request, "accounts/sobre.html", {endereco:endereco, telefone:telefone, data_de_nascimento:data_de_nascimento})
+
+    
   
 

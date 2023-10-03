@@ -53,7 +53,6 @@ def add_products_into_GroupByAd(request):
     try:
       groupByAd_id = request.POST.get("groupByAd_id")
       products = request.POST.getlist("products_info")
-      print(f'products: {products}')
       products = [str_to_dict(product) for product in products]
       group = Group_by_ad.objects.filter(id=int(groupByAd_id)).first()
       current_user = request.user
@@ -132,6 +131,7 @@ def create_new_GroupByAd_addProductsInIt(request):
     except ValueError as e:
       print(f"Error at 'create_new_GroupByAd_addProductsInIt' create: {e}")
       return redirect(reverse("search"))
+    
 @login_required
 def groupByAd_details(request):
   if request.method == "GET":
