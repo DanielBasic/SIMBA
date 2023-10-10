@@ -6,3 +6,7 @@ class UserProfile(models.Model):
     endereco = models.CharField(max_length=100)
     telefone = models.CharField(max_length=20)
     data_de_nascimento = models.DateField()
+
+class SeuModelo(models.Model):
+    # Outros campos do seu modelo
+    imagem = models.ImageField(upload_to='imagens/')

@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet"  type="text/css" href={% static "accounts/css/accounts_style.css" %}>
+    <!-- <link rel="stylesheet"  type="text/css" href={% static "accounts/css/accounts_style.css" %}> -->
     <link rel="stylesheet"  type="text/css" href={% static "accounts/css/perfil_usuario.css" %}>
     <link rel="stylesheet"  type="text/css" href={% static "bases/css/nav.css" %}>
   </head>
@@ -35,16 +35,19 @@
               {% endif %}
             </ul>
             
-          </nav>      
+        </nav>      
     </header>
     <section class="seccion-perfil-usuario">
         <div class="perfil-usuario-header">
             <div class="perfil-usuario-portada">
                 <div class="perfil-usuario-avatar">
                    <img src={% static "accounts/images/SIMBA.png" %} alt="img-avatar">
-                    <button type="button" class="boton-avatar">
+                   
+                   <form action="{% url 'sua_view' %}" method="POST" > {% csrf_token %}
+                    <button type="button" class="boton-avatar" id="botao-adicionar-imagem" >
                         <i class="far fa-image"></i>
                     </button>
+                  </form>
                 </div>
                 
             </div>
@@ -58,60 +61,110 @@
 
             {% if messages %}
               {% for message in messages %}
-                <div id="myAlert" style="position: fixed; top: 150px; right: 80px; z-index: 1000;"  class="alert {{ message.tags }}">{{ message }}            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+                <div id="myAlert" style="position: fixed; top: 150px; right: 80px; z-index: 1000;"  class="alert {{ message.tags }}">{{ message }} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
                 
               {% endfor %}
             {% endif %}
 
             <div class="perfil-usuario-footer">
                 <ul class="lista-datos">
-                    <li><i class="icono fas fa-user"> </i></i> Usuario : </li>
+                    <li><i class="icono fas fa-user"> </i></i> Username : </li>
                     <li><i class="icono fas fa-envelope"></i> Email : </li>
-                    <li><i class="icono fas fa-envelope"></i> Senha : </li>
-                    <li><i class="icono fas fa-envelope"></i> Confirmar : </li>
-                    <!-- <li><i class="icono fas fa-lock"></i> Senha : </li>
-                    <li><i class="icono fas fa-building"></i> Endereço : </li>
-                    <li><i class="icono fas fa-phone-alt"></i> Telefone : </li>
-                    <li><i class="icono fas fa-calendar-alt"></i> Data de Nascimento : </li> -->
-                </ul>
-                
-
+                </ul>  
                 <ul class="lista-datos">
-                  <form action="{% url 'update_profile'%}" method="POST" class="form_login"> {% csrf_token %}
-                    <input type="text" id="id_username" name="username" value="{{ user.username }}" required>
-                    <input type="email" id="id_email" name="email" value="{{ user.email }}" required>
-                    <input type="submit"  value="simba"  class="dark-button" >
-                    
-
-                    <!-- <input  placeholder="{{user.username}}" type="password" value="" class="input-user">
-                    <input  placeholder="{{user.username}}" value="" class="input-user">
-                    <input  placeholder="{{user.username}}" value="" class="input-user">
-                    <input  placeholder="{{data_de_nascimento}}" value="" class="input-user"> -->
+                  <form id="form-name-or-email"action="{% url 'update_profile' user.id %}" method="POST" class="form_login"> {% csrf_token %}
+                    <input class="input-user " id="id_username" name="username" value="{{ user.username }}" required>
+                    <input class="input-user " type="email" id="id_email" name="email" value="{{ user.email }}" required>
+                    <button id="name-or-email" class="button-sub " type="submit">Alterar Dados</button>
+                  
                      
                   </form>
-
-                  <hr>
-                  <form action="{% url 'alterar_senha'%}" method="POST" class="form_login"> {% csrf_token %}
-                    <input class="password-input" id="password_field" type="password" placeholder="Senha antiga" name="old_password" required> 
-                    <input id="confirm_password_field" type="password" placeholder="Nova senha" name="new_password1"required>
-                    <input id="confirm_password_field" type="password" placeholder="Confirmar Nova senha" name="new_password2"required>
-                    <button type="submit">Alterar senha</button>
+                  <br>
+                </ul> 
+                           
+                  <ul class="lista-datos">
+                    <li><i class="icono fas fa-lock"></i> Senha Antiga : </li>
+                    <li><i class="icono fas fa-lock"></i> Senha : </li>
+                    <li><i class="icono fas fa-lock"></i> Confirmar : </li>
+                  </ul>
+                  <ul class="lista-datos">
+                  <form id="form_senha"action="{% url 'alterar_senha'%}" method="POST" class="form_login"> {% csrf_token %}
+                    <input class="input-user " id="password_field" type="password" placeholder="Senha antiga" name="old_password" required> 
+                    <input class="input-user " id="confirm_password_field" type="password" placeholder="Nova senha" name="new_password1"required>
+                    <input class="input-user " id="confirm_password_field" type="password" placeholder="Confirmar Nova senha" name="new_password2"required>
+                    <button id="senha" class="button-sub " type="submit">Alterar Senha</button>
                   </form>
-  
-                </ul>
+                  <br><br>
+                </ul> 
 
+                <br>
 
-            </div>
-            
-          </div>
+                <div class="container_exclude">
+                  <div class="lista-datos">
+                    <p>Você deseja excluir seu usuario : "{{ user.username }}"?        </p>
+                  </div>
+                  <div class="lista-datos" >
+                    <form method="POST" id="meuFormulario" action="{% url 'excluir_usuario'%}">
+                        {% csrf_token %}
 
-          
-
+                        <button class="button-sub " id="exclude" type="submit">Excluir Usuario</button>
+                        
+                    </form>
+                  </div>
+                </div>
+        
+            </div>          
+        </div>
     </section>
     
 
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
 <script src="{% static 'accounts/js/accounts.js' %}"></script>
+
+<script>
+  document.getElementById("exclude").addEventListener("click", function(event) {
+      // Impedir o envio do formulário automaticamente
+      event.preventDefault();
+      
+      // Exibir a caixa de diálogo de confirmação
+      var confirmacao = confirm("Tem certeza que deseja excluir o usuário?");
+      
+      // Se o usuário confirmar, enviar o formulário
+      if (confirmacao) {
+            document.getElementById("meuFormulario").submit();
+        }
+  });
+
+  document.getElementById("name-or-email").addEventListener("click", function(event) {
+      // Impedir o envio do formulário automaticamente
+      event.preventDefault();
+      
+      // Exibir a caixa de diálogo de confirmação
+      var confirmacao = confirm("Tem certeza que quer alterar seus dados?");
+      
+      // Se o usuário confirmar, enviar o formulário
+      if (confirmacao) {
+            document.getElementById("form-name-or-email").submit();
+        }
+  });
+
+  document.getElementById("senha").addEventListener("click", function(event) {
+      // Impedir o envio do formulário automaticamente
+      event.preventDefault();
+      
+      // Exibir a caixa de diálogo de confirmação
+      var confirmacao = confirm("Tem certeza que quer alterar sua seneha?");
+      
+      // Se o usuário confirmar, enviar o formulário
+      if (confirmacao) {
+            document.getElementById("form_senha").submit();
+        }
+  });
+
+  
+</script>
+
+
 </body>
 
 

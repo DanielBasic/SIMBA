@@ -21,7 +21,7 @@
     {% endif %}
 
     <sectiond class="area-login">
-        {% if messages %}
+        {% if erros %}
             {% for message in messages %}
                 <div id="myAlert" style="position: fixed; top: 150px; right: 80px;"  class="alert {{ message.tags }}">{{ message }}            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -31,21 +31,27 @@
             <div>
                 <img src='{% static "accounts/images/SIMBA.png" %}'>
             </div>
-            <h2>CADASTRE-SE</h2>
+            <h4>CADASTRE-SE</h4>
             <form method="post">
                 {% csrf_token %}
                     <p>Username</p>
-                    {{form.username}}
+                    {{form.username}}                    
+                    {{ form.username.errors }}
                     <p>Email</p>
-                    {{form.email}}
-                    <p>password</p>
+                    {{ form.email }}                   
+                    {{ form.email.errors }}
+                    <p>Senha</p>
                     {{form.password1}}
-                    <p>password</p>
+                    {{ form.password1.errors }}
+                    <p>Confirmar senha</p>
                     {{form.password2}}
+                    {{ form.password2.errors }}
                     <!-- {{ form.as_p }} -->
                     <br>
-                    <p></p>
-                
+                    <br>
+                    
+                    
+
                 <button type="submit">Cadastrar</button>
             </form>
 
@@ -59,12 +65,12 @@
                 <span></span>
             </form> -->
             
-             
-
+            
             <p>Ja é membro?</p>  <a href="/login">RETURN</a> 
             
         </div>
     </section>
+    <br><br>
 
     <script src="{% static 'accounts/js/fields_signup_validation.js' %}"></script>
     <script src="{% static 'accounts/js/fields_signup_validation.js' %}"></script>

@@ -1,28 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: sans-serif;  
+    font: "Poppins", sans-serif; 
   
 }
 
 body{
     background-color: #1b1f27;
-    font-family: Arial, Arial, Helvetica, sans-serif;
+    font: "Poppins", sans-serif; 
     overflow: hidden;
 }
 
 h1{
-    h1{
-        font-size: 20px;
-        font-weight: bold;
-        text-transform: uppercase;
-      }
-}
+    /* font-size: 30px; */
+    font-weight: bold;
+    /* text-transform: uppercase; */
+    color: white;
+    
+
+  }
+
+  h2{
+    color: white;
+  }
 
 ul li::marker{
     color: #eee;
     font-size: larger;
+}
+
+.errorlist{
+    color: red;
 }
 
 .helptext text{
@@ -87,13 +98,19 @@ ul li::marker{
     outline: none;
     border-radius: 6px;
     padding-left: 10px;
+    width: 340px
 
 }
 
-.login input:last-child{
+.login input:hover{
+    /* background-color: #808a9c ; */
+
+}
+
+/* .login input:last-child{
     margin-top: 30px;
 
-}
+} */
 
 .login img{
     width: 100px;  /*largura*/
@@ -102,17 +119,20 @@ ul li::marker{
 
 input::placeholder{
     color: #cbd0f7;
-    font-size: 14px;
+    font-size: 16px;
     
 }
 
 input:hover{
     box-shadow: 0 0 5px whitesmoke;
-    background-color: #2d2e33 ;;
+    background-color: #252a34;
+    
 }
 
 input:hover:last-child{
-    background-color: #f2970e;
+    box-shadow: 0 0 5px whitesmoke;
+    background-color: #252a34;
+   
 
 }
 
@@ -124,7 +144,16 @@ form [type="submit"]{
     cursor: pointer;
     font-weight:  800px;
     color: #eee;
-    
+    width: 340px; 
+}
+
+form [type="submit"]:hover{
+    background-color: #f59f1f;
+    color: white
+}
+
+.form-control{
+    width: 100%;
 }
 
 p{
@@ -136,6 +165,12 @@ a{
     color:#eee;
     text-decoration: none;
     margin-left: 10px;
+}
+
+a:hover{
+    color:#ffad33 !important;
+    transition: 0.3s;
+
 }
 
 #feedback_erros {
@@ -166,4 +201,8 @@ input.field-is-valid + span::before {
     content: "✓";
     color: green;
 }
+
+
+
+
 
