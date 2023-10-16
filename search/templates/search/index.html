@@ -8,17 +8,19 @@
 {% load static %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href={% static "search/css/search_style.css" %}>
-<link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
+
+
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /> -->
 
 
 </head>
 <body>
  
   <header>
+    <div class="nav_fundo">
     <nav>
       <a class="logo" href="/">Simba</a>
       <div class="mobile-menu">
@@ -30,8 +32,8 @@
       <ul class="nav-list">
         <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
         <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li>
-        <li><a href="{% url 'search' %}">search</a></li>
-        <li><a href="{% url 'sobre' %}">usuario</a></li>
+        <li><a href="{% url 'search' %}">Search</a></li>
+        <li><a href="{% url 'usuario' %}">Usuario</a></li>
         {% if request.user.is_authenticated %}
           <li><a href="{% url 'logout' %}">Sair</a></li>
         {% endif %}
@@ -48,6 +50,7 @@
         </form> 
       </div>
     </nav>
+    </div>
     
   </header>
   <br>
@@ -100,7 +103,7 @@
 
   <div class=" container_get_all_products_">
     <span class="get_all_products">
-      <input type="checkbox" name="select-all-products" id="select-all-products"> Selecionar todos
+      <input type="checkbox" name="select-all-products" id="select-all-products" style="display: none;"> Selecionar todos
     </span>
   </div>
 

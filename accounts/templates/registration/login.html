@@ -1,77 +1,29 @@
-<!DOCTYPE html>
-<html>
+{% extends "bases/base-initial.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    {% load static %}
+{% load static %}
 
-<<<<<<< HEAD
-    <link rel="stylesheet" type="text/css" href={% static "accounts/css/accounts_style.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
-=======
-    <link rel="stylesheet"  type="text/css" href={% static "accounts/css/accounts_style.css" %}>
-    <link rel="stylesheet"  type="text/css" href={% static "accounts/css/nav.css" %}  >
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
+{% block title %}
+    login
+{% endblock title %}
 
-    
-    
-</head>
-
-
-<body>    
-    <header>
-        <nav>
-            <a class="logo" href="/">Simba</a>
-            <div class="mobile-menu">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
+{% block main %} 
+<main>
+    <sectiond class="area-login">
+        <div class="login">
+            <div>
+                <img src={% static "accounts/images/SIMBA.png" %}>
             </div>
-            <ul class="nav-list">
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Produtos</a></li>
-                <li><a href="#">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-
-<sectiond class="area-login">
-
-    {% if messages %}
-        {% for message in messages %}
-          <div id="myAlert" style="position: fixed; top: 150px; right: 80px;"  class="alert {{ message.tags }}">{{ message }}            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        {% endfor %}
-    {% endif %}
-
-    <div class="login">
-        <div>
-            <img src={% static "accounts/images/SIMBA.png" %}>
+            <form action="{% url 'log_in'%}" method="POST" class="form_login"> {% csrf_token %}
+                <input type="text" placeholder="Email ou Nome" name="email-username" required>
+                <input type="password" placeholder="Senha" name="password" required>
+                <input type="submit" class="btn" placeholder="Sign in" value="sign in">
+            </form>
+            <br>
+            <p>Não é membro? <a href="{% url 'signup' %}">Cadastre-se</a>
+              <br>
+              <br>
+            <a href="{% url 'password_reset' %}">Esqueci minha senha</a>
         </div>
-<<<<<<< HEAD
-        <form action="{% url 'log_in' %}" method="POST" class="form_login"> {% csrf_token %}
-=======
-        <form action="{% url 'log_in'%}" method="POST" class="form_login"> {% csrf_token %}
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
-            <input type="text" placeholder="Email ou Nome" name="email-username" required>
-            <input type="password" placeholder="Senha" name="password" required>
-            <input type="submit" placeholder="Sign in" value="sign in">
-        </form>
-        <br>
-        <p>Não é membro? <a href="{% url 'signup' %}">Cadastre-se</a>
-          <br>
-          <br>
-        <a href="{% url 'password_reset' %}">Esqueci minha senha</a>
-    </div>
-</section>
-</main>
-<script src="{% static 'accounts/js/accounts.js' %}"></script>
-<script src="{% static 'accounts/js/navbar.js' %}"></script>
-</body>
-
-</html>
+    </section>
+</main> 
+{% endblock main %}

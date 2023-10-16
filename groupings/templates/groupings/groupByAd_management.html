@@ -6,7 +6,7 @@
     <title>Agrupamentos</title>
     {% load static %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
-    
+    <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
 </head>
 <body>
     {% if messages %}
@@ -32,7 +32,7 @@
           <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
           <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li>
           <li><a href="{% url 'search' %}">search</a></li>
-          <li><a href="#">Contato</a></li>
+          <li><a href="{% url 'usuario' %}">usuario</a></li>
           {% if request.user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Sair</a></li>
           {% endif %}
@@ -45,7 +45,7 @@
         <button id="openModal" class="new-modal">Novo Agrupamento</button>
     </div>
 
-    <div class="modal" id="myModal"  >
+    <div class="modal" id="myModal"  style="z-index: 2;">
     <div class="area_formulario_agrupamento"  >
         <div class="form_group">
             <form method="post" class="modal-content" action=" {% url 'create_new_groupByAd' %}" enctype="multipart/form-data"> {% csrf_token %}    
@@ -58,7 +58,7 @@
                 
                 <div class="form-new-group">
                   <div class="item-image">
-                    <p>Imagem:{{groupByAd_form.image}}</p>
+                    <p>imagem:  {{groupByAd_form.image}}</p>
                   </div>
                  
                   <div class="item-titulo">
@@ -78,22 +78,24 @@
         <input type="text" id="searchInput" placeholder="Buscar...">
         <button id="searchButton">Buscar</button>
     </div>  -->
-    <tbody>
-        <table class="styled-table">
+    <div class="margin-table">
+    <form action="{% url 'groupByAd_details' %}" method="get" class="redirectToGroupDetails_form">
+        <table class="styled-table" id="my-table">
           <thead class="styled-thead">
             <tr>
               <th>Agrupamento</th>
               <th>Vendas brutas</th>
               <th>Unidades Vendidas</th>
               <th>Média Preço</th>
+              <th>opções</th>
             </tr>
           </thead>
           <tbody>
             {% for group in groupByAd_all %}
-            <form action="{% url 'groupByAd_details' %}" method="get" class="redirectToGroupDetails_form" group_id="{{group.id}}">
+            <!-- <form action="{% url 'groupByAd_details' %}" method="get" class="redirectToGroupDetails_form" group_id="{{group.id}}"> -->
               <tr>
-                <td class="group-details" group_id="{{group.id}}">
-                  <input type="hidden" name="group_id" value="{{group.id}}">
+                <td class="group-details"   group_id="{{group.id}}" >
+                  <!-- <input type="hidden" id="{{group.id}}"  name="group_id" value="{{group.id}}"> -->
                   <img src="{{group.image.url}}" alt="{{group.title}}" width="75px" height="75px">
                   <br>
                   <p>{{group.title}}</p>
@@ -101,20 +103,32 @@
                 <td> </td>
                 <td> </td>
                 <td> </td>
+                <td> </td>
               </tr>
-            </form>
+            <!-- </form> -->
             {% endfor %}
-            
-          </tbody>
+          </tbody>   
         </table>
-      </tbody>
-    </table>
+      </form>
+      
+  </div>
 
 </main>   
 
-
+<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
 <script src="{% static 'groupings/js/group_by_ad.js' %}"></script>
+
+<script>
+  $(document).ready(function(){
+    $("#my-table").DataTable();
+  });
+</script>
+
+
+
+ 
+
     
 </body>
 </html>

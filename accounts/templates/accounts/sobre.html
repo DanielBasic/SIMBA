@@ -1,80 +1,293 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--==================== FAVICON ====================-->
+    <link rel="icon" href="assets/img/logo.svg" />
+    <!--========== BOX ICONS LIBRARY ==========-->
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  
+    <!--========== Title ==========-->
+    <title>Simba</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do usuario</title>
+  
+    <meta
+      name="msapplication-TileImage"
+    />
+    <!-- fb & Whatsapp -->
+    <meta property="og:site_name" content="Simba" />
+    <meta
+      property="og:description"
+      content="Restaurantes e mercados próximos de você! "
+    />
+    <!-- IMG URL: -->
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <!--  size up to 300px. Anything above this will not work in WhatsApp -->
+    <meta property="og:image:width" content="300" />
+    <meta property="og:image:height" content="300" />
+
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet"  type="text/css" href={% static "accounts/css/accounts_style.css" %}>
-    <link rel="stylesheet"  type="text/css" href={% static "accounts/css/perfil_usuario.css" %}>
-    <link rel="stylesheet"  type="text/css" href={% static "bases/css/nav.css" %}>
+
+    <link rel="stylesheet" type="text/css" href={% static "accounts/css/sobre.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
+    <!-- <link rel="stylesheet" type="text/css" href={% static "accounts/css/accounts_style.css" %}> -->
   </head>
+  <body>
+    <!--========== SCROLL TOP ==========-->
+    <a href="#" class="scrollTop show-scroll" id="scroll-top">
+      <i class="bx bx-chevron-up scrollTop_icon"></i>
+    </a>
 
-<body>
-    <header>
-    <nav>
-        <a class="logo" href="/">Simba</a>
-        <div class="mobile-menu">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-        <ul class="nav-list">
-            <li><a href="#">Início</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Produtos</a></li>
-            <li><a href="#">Contato</a></li>
-        </ul>
-    </nav>
-</header>
-    <section class="seccion-perfil-usuario">
-        <div class="perfil-usuario-header">
-            <div class="perfil-usuario-portada">
-                <div class="perfil-usuario-avatar">
-                   <img src={% static "accounts/images/SIMBA.png" %} alt="img-avatar">
-                    <button type="button" class="boton-avatar">
-                        <i class="far fa-image"></i>
-                    </button>
-                </div>
-                <!-- <button type="button" class="boton-portada">
-                    <i class="far fa-image"></i> Cambiar fondo
-                </button> -->
-            </div>
-        </div>
-        <div class="perfil-usuario-body">
-            <div class="perfil-usuario-bio">
-                <h3 style=" text-transform: uppercase;"  class="titulo">{{user.username}}</h3>
-            </div>
-            <div class="perfil-usuario-footer">
-                <ul class="lista-datos">
-                    <li><i class="icono fas fa-user"> </i></i> Usuario : </li>
-                    <li><i class="icono fas fa-lock"></i> Senha : </li>
-                    <li><i class="icono fas fa-envelope"></i> Email : </li>
-                    <li><i class="icono fas fa-building"></i> Endereço : </li>
-                    <li><i class="icono fas fa-phone-alt"></i> Telefone : </li>
-                    <li><i class="icono fas fa-calendar-alt"></i> Data de Nascimento : </li>
-                </ul>
-                <ul class="lista-datos">
-                    <input  placeholder="{{user.username}}" value="" class="input-user">
-                    <input  placeholder="{{user.email}}" value="" class="input-user">
-                    <input  placeholder="{{user.username}}" value="" class="input-user">
-                    <input  placeholder="{{user.username}}" value="" class="input-user">
-                    <input  placeholder="{{user.username}}" value="" class="input-user">
-                    <input  placeholder="{{data_de_nascimento}}" value="" class="input-user">
-                </ul>
-
-                <div class="container">
-                  <button class="dark-button"> Enviar </button>
-                </div>
-
-            </div>
+    <!--========== HEADER ==========-->
+    <header class="l-header" id="header">
+      <nav class="nav bd-container">
+        <a href="/" class="nav_logo">
+          <b>
             
-           
-          </div>
-    </section>
-</body>
+            <span>SIMBA</span>
+          </b>
+        </a>
 
+        <div class="nav_menu" id="nav-menu">
+          <ul class="nav_list">
+            <li class="nav_item">
+                <a href="{% url 'log_in' %}" class="nav_link">Login</a>
+              </li>
+            <li class="nav_item">
+              <a href="#home" class="nav_link">Home</a>
+            </li>
+            <li class="nav_item">
+              <a href="#about" class="nav_link">Sobre Nós</a>
+            </li>
+            <li class="nav_item">
+              <a href="#services" class="nav_link">Serviços</a>
+            </li>
+            <!-- <li class="nav_item">
+              <a href="#foods" class="nav_link">Comidas</a>
+            </li> -->
+            <li class="hidden_item">
+              <a href="#app" class="nav_link">App</a>
+            </li>
+            <li class="nav_item">
+              <a href="#contact" class="nav_link">Contate-nos</a>
+            </li>
+
+            <li><i class="bx bx-moon change-theme" id="theme-button"></i></li>
+          </ul>
+        </div>
+
+        <div class="nav_toggle" id="nav-toggle">
+          <!--When clicked activate the class "opened"
+          to the button tag as well to the 4 SVG lines-->
+          <button
+            class="menu"
+            aria-label="Abrir Menu"
+            onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened'))"
+          >
+            <svg width="40" height="41" viewBox="0 0 100 100">
+              <path
+                class="line line1"
+                d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"
+              />
+              <path class="line line2" d="M 20,50 H 80" />
+              <path
+                class="line line3"
+                d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"
+              />
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+
+    <main class="l-main">
+      <!--========== HOME ==========-->
+      <section class="home" id="home">
+        <div class="home_container bd-container bd-grid">
+          <div class="home_data">
+            <h1 class="home_title">Transfome dados em decisoes</h1>
+            <h2 class="home_subtitle">com nosso serviço de monitoramento de anúncios</h2>
+          </div>
+          <img class="home_img" alt="Grafico de Linha crescente"  src={% static "accounts/images/sobre/growth.png" %} />
+        </div>
+      </section>
+
+
+      <!--========== ABOUT ==========-->
+      <section class="about section bd-container" id="about">
+        <div class="about_container bd-grid">
+          <div class="about_data">
+            <span class="section-subtitle about_initial">Sobre Nós</span>
+            <h2 class="section-title about_initial">
+              Potencialize o seu sucesso com nosso plataforma!
+            </h2>
+            <p class="about_description">
+              Com apenas alguns cliques, Proporcionamos a você a oportunidade de acessar informações valiosas.
+            </p>
+            <!-- <a href="#app" class="button">Gostou? Veja agora!</a> -->
+          </div>
+
+          <img class="about_img" alt="imagem" src="{% static "accounts/images/sobre/about_1.png" %}" alt="">
+
+        </div>
+      </section>
+
+
+      <!--========== SERVICES ==========-->
+      <section class="services section bd-container" id="services">
+        <span class="section-subtitle">Oferecemos para ti</span>
+        <h2 class="section-title">O que fazemos de melhor</h2>
+
+        <div class="services_container bd-grid">
+          <div class="services_content">
+            
+            <img alt="imagem de cadastro"  src={% static "accounts/images/sobre/laranja.png" %} />
+
+
+            <h3 class="services_title">Integrado com Mercado Livre</h3>
+            <p class="services_description">
+              Liste os produtos e apliquer os filtros desejados de acordo com a plataforma
+            </p>
+          </div>
+
+          <div class="services_content">
+           
+           
+          <img alt="imagem de cadastro"  src={% static "accounts/images/sobre/alvo_laranja.png" %} />
+
+
+            <h3 class="services_title">Acerte seu alvo</h3>
+            <p class="services_description">
+              Tenha graficos precisos para te ajudar na sua tomada de decisão
+            </p>
+          </div>
+
+          <div class="services_content">
+            
+            <img alt="imagem de cadastro"  src={% static "accounts/images/sobre/laranja.png" %} />
+            <h3 class="services_title">Grupos de produtos</h3>
+            <p class="services_description">
+              Agrupe seu produtos de acordo com suas necessidas
+            </p>
+          </div>
+        </div>
+      </section>
+
+     
+      <!--===== APP =======-->
+      <section class="app section bd-container" id="app">
+        <div class="app_container bd-grid">
+          <div class="app_data">
+            <span class="section-subtitle app_initial">Comece agora!</span>
+            <h2 class="section-title app_initial">Cadastre-se</h2>
+            <p class="app_description">
+              Apenas um clique abaixo, e sera redirecionado para nossa pagina de cadastro
+            </p>
+            <div class="app_stores">
+              <a href="{% url 'signup' %}">
+                <div class="cadastro_button">CADASTRAR</div>
+              </a>
+            </div>
+          </div>
+
+          <div class="app_img" >
+            <sectiond class="area-login">
+              <div class="login">
+                  <div>
+                      <img src='{% static "accounts/images/SIMBA.png" %}'>
+                  </div>
+                  <h2>CADASTRE-SE</h2>
+                  <form action="{% url 'signup'%}" method="POST" class="formlogin">{% csrf_token %}
+                      <input id="username_field" type="text" placeholder="Nome" name="username" required><div id="username_feedback_error"></div>
+                      <input id="email_field" type="email" placeholder="Email" name="email" required><div id="email_feedback_error"></div>
+                      <input class="password-input" id="password_field" type="password" placeholder="Senha" name="password" required> 
+                      <div id="password_feedback_error"></div>
+                      <input id="confirm_password_field" type="password" placeholder="Confirmar senha" name="confirm_password"required><div id="password_confirm_feedback_error"></div>
+                      <input type="submit" value="CADASTRAR">
+                      <span></span>
+                  </form>
+                  <p>Ja é membro?</p>  <a href="/login">RETURN</a>       
+              </div>
+          </section>
+          </div>
+          
+
+
+          
+          <!-- <img class="app_img" alt="imagem de cadastro"  src={% static "accounts/images/sobre/cadastro.png" %} /> -->
+        </div>
+      </section>
+
+      <!--========== CONTACT US ==========-->
+      <section class="contact section bd-container" id="contact">
+        <div class="contact_container bd-grid">
+          <div class="contact_data">
+            <span class="section-subtitle contact_initial"
+              >Vamos começar?</span
+            >
+            <h2 class="section-title contact_initial">Contate-nos</h2>
+            <p class="contact_description">
+              Precisa de ajuda para usar nossa aplicação? 
+              Ou mais detalhes e opções sobre nossos serviços, contate-nos
+              agora! Estamos online das 8:00 as 18:00, de Segunda á sexta!
+            </p>
+          </div>
+
+          <div class="contact_button">
+            <a href="https://api.whatsapp.com/send?phone=5516992853636" target="_blank">WhatsApp</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!--========== FOOTER ==========-->
+    <footer class="footer section bd-container">
+      <div class="footer_container bd-grid">
+        <div class="footer_content">
+          <b class="footer_logo">
+            
+            <span>SIMBA</span>
+          </b>
+
+          <span class="footer_description"> Feito pra você. </span>
+
+          <div>
+            <a href="#" class="footer_social"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a href="#" class="footer_social"
+              ><i class="bx bxl-facebook"></i
+            ></a>
+            <a href="#" class="footer_social"><i class="bx bxl-twitter"></i></a>
+          </div>
+        </div>
+
+      
+      </div>
+
+      <p class="footer_copy">
+        &#169; 2023,
+        <a
+          href="https://github.com/Thiagoow/UberEats-Responsive-LandingPage"
+          class="footer_link"
+          target="_blank"
+        >
+          Simba Corporation
+        </a>
+      </p>
+    </footer>
+
+    <!--========== SCROLL REVEAL LIBRARY ==========-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!--========== MAIN JS ==========-->
+    <script src="{% static 'accounts/js/sobre.js' %}"></script>
+  </body>
 </html>
