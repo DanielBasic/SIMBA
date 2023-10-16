@@ -24,8 +24,7 @@ from groupings.models import Group_by_ad
 from utils_objects import Pagination
 from decouple import config
 
-from .models import Product
-
+from product.models import Product, TrackingProduct
 
 @login_required
 def search(request):
@@ -132,11 +131,13 @@ def add_product(request):
     )
 
     produto.save()
-    messages.add_message(request, constants.SUCCESS, 'Evento cadastrado com sucesso')
+    messages.add_message(request, constants.SUCCESS, 'Monitorando com sucesso')
     return redirect(reverse('search'))
                     
   else:
     return HttpResponse("Método de requisição inválido.")
+  
+
   
 from .forms import async_form
 def teste_async(request ):

@@ -4,18 +4,8 @@ import random
 import requests
 from django.http import Http404
 
-app_id = "1481157846018069"
-redirect_url = 'https://simba20-1.jeffersosousa.repl.co'
-client_secret = "1G5RWQSbNZtz1HC1oioNFdIUnOPAs7GU"
-
-secure_random = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
-
-authorization_code = "TG-647222b83b397700019b8058-1095654007"
-state = "W3TH2Z"
-
-authorization_url = f"https://auth.mercadolivre.com.br/authorization?response_type=code&client_id={app_id}&redirect_uri={redirect_url}&state={secure_random}"
-
-
+#secure_random = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
+#authorization_url = f"https://auth.mercadolivre.com.br/authorization?response_type=code&client_id={app_id}&redirect_uri={redirect_url}&state={secure_random}"
 
 #OBTEM A AUTORIZAÇÃO
 def get_authorization(app_id, client_secret, authorization_code, redirect_url):
@@ -30,10 +20,8 @@ def get_authorization(app_id, client_secret, authorization_code, redirect_url):
     response = requests.post(token_url, headers=headers, data=payload)
     return response.json()
 
-token_infos = get_authorization(app_id, client_secret, authorization_code, redirect_url)
 
-
-# OBTEM O TOKEM DE ACESSO
+# OBTEM O TOKEN DE ACESSO
 def get_access_token(app_id, client_secret, refresh_token):
     url = "https://api.mercadolibre.com/oauth/token"
 
@@ -52,7 +40,7 @@ def getInfoFromProduct(access_token, product_id):
     url = f"https://api.mercadolibre.com/items/{product_id}"
     payload = {}
     headers = {
-        'Authorization': f'beirearer {access_token}'
+        'Authorization': f'bearer {access_token}'
     }
 
     response = requests.request("GET", url, headers=headers, data=payload)
@@ -62,8 +50,33 @@ def getInfoFromProduct(access_token, product_id):
 
     return response.json()
 
+def getPeriodicInfoProduct(access_token, products_ids, attributes):
+    url = 'https://api.mercadolibre.com/items?ids='
 
+    payload = {}
+    headers = {
+        'Authorization': f'bearer {access_token}'
+    }
 
+    if not products_ids:
+        raise ValueError('products_ids is required!')
+    if not isinstance(products_ids, list):
+        raise TypeError('products_ids most be a list!')
+        
+    ids = ','.join(products_ids)
+    url += ids
+
+    if attributes:
+        if not isinstance(attributes, list):
+            raise TypeError('attributes most be a list!')
+        att = ','.join(attributes)
+        url = url + '&attributes=' + att
+    response =  requests.request("GET", url, headers=headers, data=payload)
+    
+    if response.status_code > 200:
+        return None
+    
+    return response.json()
 
 def addFilterIntoUrlSearchRequest(url, filters):
     try:
@@ -195,3 +208,32 @@ def str_to_dict(input_string):
             return None
     except ValueError as e:
         print(f'Error: {e}')
+
+def get_ad_info_with_att(access_token, products_ids, attributes):
+
+    url = 'https://api.mercadolibre.com/items?ids='
+
+    access_token = access_token['access_token']
+    payload = {}
+    headers = {
+        'Authorization': f'bearer {access_token}'
+    }
+
+    if not products_ids:
+        raise ValueError('products_ids is required!')
+    if not isinstance(products_ids, list):
+        raise TypeError('products_ids most be a list!')
+
+    ids = ','.join(products_ids)
+    url += ids
+
+    if attributes:
+        if not isinstance(attributes, list):
+            raise TypeError('attributes most be a list!')
+        att = ','.join(attributes)
+        url = url + '&attributes=' + att
+    response = requests.request("GET", url, headers=headers, data=payload)
+    if response.status_code > 200:
+        return response.status_code
+
+    return response.json()

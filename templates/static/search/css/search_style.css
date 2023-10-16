@@ -30,14 +30,11 @@ body {
     box-sizing: border-box;
 }
 
-<<<<<<< HEAD
-=======
 h1{
     font-size: 20px;
     margin 20px
 }
 
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 /* Style the search field */
 form.search_bar_box input[type=text] {
     padding: 8px;
@@ -367,12 +364,9 @@ input.checkbox:checked+label:before {
 }
 
 
-<<<<<<< HEAD
-=======
 
 /* MODAL ESCOLHA DE PRODUTOS */
 
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 .addProductsToGroup_modal {
     display: none;
     position: fixed;
@@ -382,25 +376,6 @@ input.checkbox:checked+label:before {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-<<<<<<< HEAD
-}
-
-.addProductsToGroup_modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 60%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-=======
     overflow-y: scroll;
 }
 
@@ -459,7 +434,6 @@ input.checkbox:checked+label:before {
     font-weight: bold;
     cursor: pointer;
     text-transform: capitalize;
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 }
 
 #openCreationGroup {
@@ -476,13 +450,8 @@ input.checkbox:checked+label:before {
 }
 
 .userGroupByAd img {
-<<<<<<< HEAD
-    width: 150px;
-    height: 150px;
-=======
     width: 100px;
     height: 100px;
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 }
 
 
@@ -490,13 +459,6 @@ input.checkbox:checked+label:before {
     display: flex;
     flex-direction: row;
 }
-<<<<<<< HEAD
-
-.radio-container {
-    display: flex;
-    cursor: pointer;
-    padding: 5px;
-=======
 .radio-group:hover {
     box-shadow: #000;
 }
@@ -505,7 +467,6 @@ input.checkbox:checked+label:before {
     cursor: pointer;
     padding: 2px;
     align-items: center;
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 }
 
 .radio-container input[type="radio"] {
@@ -518,9 +479,6 @@ input.checkbox:checked+label:before {
     height: 20px;
     border: 2px solid #000;
     border-radius: 50%;
-<<<<<<< HEAD
-    margin-right: 10px;
-=======
     margin-right: 10px; 
     text-decoration: none;
     margin: solid 2px red;
@@ -533,18 +491,10 @@ input.checkbox:checked+label:before {
     text-transform: uppercase;
     font-size: 10px;
     
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
 }
 
 .radio-container:hover .checkmark {
     background-color: #000;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    border: solid 2px red;
->>>>>>> cb2a4f9a2b058b9a0caa984fc4c2f97499cc3638
-=======
->>>>>>> 06d8067af9812e0577e457b414938a08655e08fa
 }
 
 
@@ -586,4 +536,3 @@ input.checkbox:checked+label:before {
 /* .class-p{
     margin-bottom: 10px;
 } */
-
