@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
 </head>
 <body>
     {% if messages %}
@@ -21,7 +22,7 @@
   <main>
     <header>
       <nav>
-        <a class="logo" href="/">Simba</a>
+        <a class="logo" href="#">Simba</a>
         <div class="mobile-menu">
           <div class="line1"></div>
           <div class="line2"></div>
@@ -30,9 +31,9 @@
   
         <ul class="nav-list">
           <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
-          <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li>
-          <li><a href="{% url 'search' %}">search</a></li>
-          <li><a href="{% url 'usuario' %}">usuario</a></li>
+          <!-- <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li> -->
+          <li><a href="{% url 'search' %}">Search</a></li>
+          <li><a href="{% url 'usuario' %}">Usuario</a></li>
           {% if request.user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Sair</a></li>
           {% endif %}
@@ -79,6 +80,13 @@
         <button id="searchButton">Buscar</button>
     </div>  -->
     <div class="margin-table">
+      <div class="container_canvas" style="width: 800px; height: 300px;" >
+        <br>
+        <h4>Vendas: {PRODUTO x }</h4>
+        <canvas id="despesas_mensal" ></canvas>
+      </div>
+    <div class="space">
+    </div>
     <form action="{% url 'groupByAd_details' %}" method="get" class="redirectToGroupDetails_form">
         <table class="styled-table" id="my-table">
           <thead class="styled-thead">
@@ -123,6 +131,13 @@
   $(document).ready(function(){
     $("#my-table").DataTable();
   });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+<script>
+  renderiza_despesas_mensal()
+
 </script>
 
 

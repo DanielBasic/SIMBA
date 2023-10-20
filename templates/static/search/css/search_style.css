@@ -95,6 +95,14 @@ form.search_bar_box button:hover {
 
 }
 
+.hidden-label{
+    cursor: pointer;
+}
+.hidden-label{
+    cursor: pointer;
+    color: #000;
+}
+
 /* Clear floats */
 form.search_bar_box::after {
     content: "";

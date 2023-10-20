@@ -11,7 +11,7 @@
 body{
     background-color: #1b1f27;
     font: "Poppins", sans-serif; 
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 h1{
@@ -200,6 +200,27 @@ input.field-is-invalid + span::before {
 input.field-is-valid + span::before {
     content: "✓";
     color: green;
+}
+
+
+.footer_title {
+  font-size: 12px;
+  color: #fff;
+  margin-right: var(--mb-2);
+}
+.footer_link {
+  display: inline-block;
+  color: #e8e8e8;
+  margin-bottom: 10px
+}
+.footer_link:hover {
+  color: #e8e8e8;
+}
+.footer_copy {
+  text-align: center;
+  font-size: 12px;
+  color:#e8e8e8;
+  margin-top: 3.5rem;
 }
 
 

@@ -18,7 +18,7 @@
 <body>
     <header>
         <nav>
-            <a class="logo" href="/">Simba</a>
+            <a class="logo" href="#">Simba</a>
             <div class="mobile-menu">
               <div class="line1"></div>
               <div class="line2"></div>
@@ -27,9 +27,9 @@
       
             <ul class="nav-list">
               <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
-              <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li>
-              <li><a href="{% url 'search' %}">search</a></li>
-              <li><a href="{% url 'usuario' %}">usuario</a></li>
+              <!-- <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li> -->
+              <li><a href="{% url 'search' %}">Search</a></li>
+              <li><a href="{% url 'usuario' %}">Usuario</a></li>
               {% if request.user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Sair</a></li>
               {% endif %}
