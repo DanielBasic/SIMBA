@@ -93,7 +93,11 @@ def addFilterIntoUrlSearchRequest(url, filters):
 
 
 def searchAdByKeyWord(access_token, key_word, filter=None):
-    url = f"https://api.mercadolibre.com/sites/MLB/search?q={key_word}"
+    if key_word == None:
+        key_word="cameras"
+        url = f"https://api.mercadolibre.com/sites/MLB/search?q={key_word}"
+    else:
+        url = f"https://api.mercadolibre.com/sites/MLB/search?q={key_word}"
 
     url = addFilterIntoUrlSearchRequest(url, filter)
 
@@ -166,6 +170,8 @@ def tranform_strFilters_list_into_dictFilters_list(values_of_filters):
         filters_list.append({'filter' : values_of_filters[value_filter + 1],
                               'value_of_filter' : values_of_filters[value_filter + 3],
                               'filter_name' : values_of_filters[value_filter + 5]})
+
+
 
     return filters_list
 

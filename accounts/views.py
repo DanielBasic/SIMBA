@@ -8,9 +8,12 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .forms import RegistrationForm
+from django.views.decorators.cache import cache_page
 
 import logging
 import re
+
+from django.views.decorators.cache import cache_page
 
 
 def login(request):
@@ -77,6 +80,7 @@ class PasswordValidationView(View):
     return JsonResponse({'field_valid' : True})
 
 
+@cache_page(60)
 def signup(request):
   if request.method == "GET":
     return render(request, "accounts/signup.html")

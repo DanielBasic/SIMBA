@@ -17,7 +17,10 @@ def addLastUpdadeProductInDb():
 def add_stock_info_in_db(url, initial_quantity, objt_product_id):
     try:
         stock_quantity = get_stock_quantity_from_ml_ad(url)
-        sold_quantity = int(initial_quantity) - stock_quantity
+        if stock_quantity: 
+            sold_quantity = int(initial_quantity) - stock_quantity
+        else:
+            sold_quantity = None
 
         product = Product.objects.get(object_id=objt_product_id)
         one_day_before = product.tracking_since - timedelta(days=1)

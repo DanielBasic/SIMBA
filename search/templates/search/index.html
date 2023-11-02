@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 {% load static %}
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-<link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href={% static "search/css/search_style.css" %}>
+<link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
 
 
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
@@ -19,11 +19,15 @@
 
 </head>
 <body>
+  <!--========== SCROLL TOP ==========-->
+  <a href="#" class="scrollTop show-scroll" id="scroll-top">
+    <i class="bx bx-chevron-up scrollTop_icon"></i>
+  </a>
  
   <header>
     <div class="nav_fundo">
     <nav>
-      <a class="logo" href="#">Simba</a>
+      <a class="logo" href="/">Simba</a>
       <div class="mobile-menu">
         <div class="line1"></div>
         <div class="line2"></div>
@@ -32,8 +36,7 @@
 
       <ul class="nav-list">
         <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
-        <!-- <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li> -->
-        <li><a href="{% url 'search' %}">Search</a></li>
+        <li><a href="{% url 'search' %}">Procurar Produtos</a></li>
         <li><a href="{% url 'usuario' %}">Usuario</a></li>
         {% if request.user.is_authenticated %}
           <li><a href="{% url 'logout' %}">Sair</a></li>
@@ -64,9 +67,11 @@
   </ul>
   {% endif %}
 
+
+
   <div class="wrapper">
     <div class="side_bar_filters">
-      <input type="submit" value="Filtrar" form="filters">
+      <input type="submit" class="input-filter" value="Filtrar" form="filters">
       <br><br>
       <form id="filter_to_exclude" action="{% url 'search' %}" method="get">
         {% csrf_token %}
@@ -75,7 +80,7 @@
         <input type="hidden" name="applied_filter_to_exclude" id="selected_filter_to_exclude" name="selected_filter_to_exclude" value="">
         {% for filter in applied_filters %}
         <span>
-          <button type="button" class="filter_to_exclude_button" value="{{filter.value_of_filter}}">{{ filter.filter_name }} : {{filter.value_of_filter}}  &#x2716</button>
+          <button type="button" class="filter_to_exclude_button" value="{{filter.value_of_filter}}">{{ filter.filter_name }} : {{filter.value_of_filter}}  <strong>&#x2716</strong></button>
         </span>
         {% endfor %}   
       </form>
@@ -104,7 +109,14 @@
 
   <div class=" container_get_all_products_">
     <span class="get_all_products">
-      <input type="checkbox" name="select-all-products" id="select-all-products" > Selecionar todos
+      <input type="checkbox" name="select-all-products" id="select-all-products" style="display: inline-block;
+      background-color: #3498db; 
+      color: #fff;
+      padding: 8px 16px; 
+      border: 1px solid #3498db; 
+      border-radius: 4px; 
+      cursor: pointer;
+      user-select: none;"> Selecionar todos
     </span>
   </div>
 
@@ -115,7 +127,7 @@
   {% csrf_token %}
   <div class="catalog">
   {% for product in products %}
-    <input class="checkbox_product" id={{product.id}} type="checkbox" name="products_info" value="id={{product.id}}|title={{product.title}}|price={{product.price}}|sellerId={{product.seller.id}}|image={{product.thumbnail|slice:':-5'}}F.WEBP"/>
+    <input class="checkbox_product" id={{product.id}} type="checkbox" name="products_info" value="id={{product.id}}|title={{product.title}}|price={{product.price}}|sellerId={{product.seller.id}}|image={{product.thumbnail|slice:':-5'}}F.WEBP|category_id={{product.category_id}}|listing_type_id={{product.listing_type_id}}|condition={{product.condition}}|permalink={{product.permalink}}|status={{product.status}}|catalog_listing={{product.catalog_listing}}|free_shipping={{product.shipping.free_shipping}}|logistic_type={{product.shipping.logistic_type}}"/>
     <label for={{product.id}}>
     <div class="product">
       <span class="check">✓</span>
@@ -254,6 +266,8 @@
     });
   });
 </script>
+
+
 
 
 <script src="{% static 'search/js/search.js' %}"></script>

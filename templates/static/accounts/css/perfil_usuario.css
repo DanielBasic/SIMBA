@@ -10,22 +10,20 @@ html {
 }
 
 ::-webkit-scrollbar {
-    width: 10px; /* Largura da barra de rolagem */
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #888; /* Cor da barra de rolagem */
-    border-radius: 5px; /* Borda arredondada */
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Cor da barra de rolagem no hover */
-}
-
-/* Estilizando a área de rolagem */
-::-webkit-scrollbar-track {
-    background-color: #000000; /* Cor de fundo da área de rolagem */
-}
+    width: 10px;
+    background-color: #172a31;
+    border-radius: 0.5rem;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #f2970e;
+    border-radius: 0.5rem;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #ffad33;
+  }
+  
 
 
 * {

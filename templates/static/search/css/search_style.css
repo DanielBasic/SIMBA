@@ -9,6 +9,86 @@ body {
 
 }
 
+::before,
+::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 0.62rem;
+    background-color: #172a31;
+    border-radius: 0.5rem;
+  }
+  
+::-webkit-scrollbar-thumb {
+background-color: #f2970e;
+border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background-color: #ffad33;
+}
+
+.scrollTop {
+    position: fixed;
+    right: 1rem;
+    bottom: -20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3rem;
+    background: var(--first-color);
+    border-radius: 0.4rem;
+    z-index: var(--z-tooltip);
+    transition: 0.4s;
+    visibility: hidden;
+  }
+.scrollTop:hover {
+background-color: var(--first-color-alt);
+}
+.scrollTop_icon {
+font-size: 1.8rem;
+color: var(--body-color);
+}
+
+/* Show scrollTop */
+.show-scroll {
+visibility: visible;
+bottom: 1.5rem;
+}
+
+/* Change background header */
+.scroll-header {
+    box-shadow: 0 2px 4px var(--shadow-color);
+  }
+  
+  /* Scroll Top */
+  .scrollTop {
+    position: fixed;
+    right: 1rem;
+    bottom: -20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3rem;
+    background: var(--first-color);
+    border-radius: 0.4rem;
+    z-index: var(--z-tooltip);
+    transition: 0.4s;
+    visibility: hidden;
+  }
+  .scrollTop:hover {
+    background-color: var(--first-color-alt);
+  }
+  .scrollTop_icon {
+    font-size: 1.8rem;
+    color: var(--body-color);
+  }
+
+
 
 .side_bar_filters {
     width: 18%;
@@ -20,6 +100,39 @@ body {
     /* Adicione rolagem vertical quando necessário */
     max-height: 100vh;
     /* Limita a altura máxima para ocupar a altura total da janela */
+}
+
+.input-filter{
+    width: 100px;
+    height: 35px;
+    color:white;
+    font-weight: 600;
+    background-color: #282e2b;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.input-filter:hover{
+    background-color: #191b1a;
+    font-weight: 800;
+    font-size: 14px;
+    
+    
+}
+
+.filter_to_exclude_button{
+    margin-top: 5px;
+    height: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+
+
+strong{
+    font-size: 15px;
+    font-weight: 200;
 }
 
 .contents_ad {
@@ -314,7 +427,7 @@ input.checkbox:checked+label:before {
     top: 18%;
     right: 20px;
     color: black;
-    z-index: 999;
+    z-index: 1;
     cursor: pointer;
     text-transform: uppercase;
     font-size: 14px;
@@ -549,6 +662,3 @@ input.checkbox:checked+label:before {
     border-radius: 6px;
 }
 
-/* .class-p{
-    margin-bottom: 10px;
-} */

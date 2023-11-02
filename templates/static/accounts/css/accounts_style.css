@@ -27,6 +27,21 @@ h1{
     color: white;
   }
 
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #172a31;
+    border-radius: 0.5rem;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #f2970e;
+    border-radius: 0.5rem;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #ffad33;
+  }
+  
 ul li::marker{
     color: #eee;
     font-size: larger;

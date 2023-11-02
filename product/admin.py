@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import TrackingProduct, Product
 
-# Register your models here.
+admin.site.register(TrackingProduct)
+admin.site.register(Product)
+
