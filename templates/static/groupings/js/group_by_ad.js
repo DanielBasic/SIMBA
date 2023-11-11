@@ -1,4 +1,4 @@
-// modal para adicionar no agrupamento
+//MODAL PARA CRIAR UM NOVO AGRUPAMENTO
 
 const modal = document.getElementById("myModal");
 const openModalBtn = document.getElementById("openModal");
@@ -26,40 +26,7 @@ window.addEventListener("click", function (event) {
 
 
 
-
-// modal para editar o agrupamento
-// const modall = document.getElementById("myModall");
-// const openModallBtn = document.getElementById("openModall");
-// const closeModallBtn = document.getElementById("closeModall");
-// const titleToModify = document.getElementById("title-modify");
-// const imageToModify = document.getElementById("image-modify");
-// const groupIdToModify = document.getElementById("group-id-modify");
-// var title = openModallBtn.getAttribute("title")
-// var group_id = openModallBtn.getAttribute("group_id")
-
-// let modallIsOpen = false;
-
-// function toggleModall() {
-//     if (modallIsOpen) {
-//         modall.style.display = "none"; // Fecha o modal
-//         imageToModify.value = "";
-//         titleToModify.value = "";
-//         groupIdToModify.value = "";
-
-//     } else {
-//         modall.style.display = "block"; // Abre o modal
-//         titleToModify.value = title;
-//         groupIdToModify.value = parseInt(group_id) ;
-        
-//     }
-//     modallIsOpen = !modallIsOpen; // Inverte o estado do modal
-
-// }
-
-// openModallBtn.addEventListener("click", toggleModall);
-// closeModallBtn.addEventListener("click", toggleModall);
-
-
+// MODAL PARA EDOTAR O AGRUPAMENT
 const openModallBtns = document.querySelectorAll(".edit-button");
 const closeModallBtn = document.getElementById("closeModall");
 const modall = document.getElementById("myModall");
@@ -76,14 +43,12 @@ openModallBtns.forEach((openModallBtn) => {
         titleToModify.value = title;
         imageToModify.value = "";
         groupIdToModify.value = parseInt(group_id);
-
         modall.style.display = "block";
     });
 });
 
 closeModallBtn.addEventListener("click", () => {
     modall.style.display = "none";
-
     titleToModify.value = "";
     imageToModify.value = "";
     groupIdToModify.value = "";
@@ -92,35 +57,31 @@ closeModallBtn.addEventListener("click", () => {
 
 
 
+// // JavaScript for search filter
+// document.addEventListener("DOMContentLoaded", function() {
+//     const searchInput = document.getElementById("searchInput");
+//     const searchButton = document.getElementById("searchButton");
+//     const tableBody = document.getElementById("tableBody");
+//     const rows = tableBody.getElementsByTagName("tr");
 
+//     searchButton.addEventListener("click", performSearch);
+//     searchInput.addEventListener("input", performSearch);
 
+//     function performSearch() {
+//         const searchText = searchInput.value.toLowerCase();
 
+//         for (let i = 0; i < rows.length; i++) {
+//             const row = rows[i];
+//             const titleCell = row.querySelector("td:nth-child(2)"); // Assuming title is the second column
+//             if (titleCell) {
+//                 const title = titleCell.innerHTML.toLowerCase();
+//                 const shouldDisplay = title.includes(searchText);
+//                 row.style.display = shouldDisplay ? "" : "none";
+//             }
+//         }
+//     }
+// });
 
-
-// JavaScript for search filter
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.getElementById("searchInput");
-    const searchButton = document.getElementById("searchButton");
-    const tableBody = document.getElementById("tableBody");
-    const rows = tableBody.getElementsByTagName("tr");
-
-    searchButton.addEventListener("click", performSearch);
-    searchInput.addEventListener("input", performSearch);
-
-    function performSearch() {
-        const searchText = searchInput.value.toLowerCase();
-
-        for (let i = 0; i < rows.length; i++) {
-            const row = rows[i];
-            const titleCell = row.querySelector("td:nth-child(2)"); // Assuming title is the second column
-            if (titleCell) {
-                const title = titleCell.innerHTML.toLowerCase();
-                const shouldDisplay = title.includes(searchText);
-                row.style.display = shouldDisplay ? "" : "none";
-            }
-        }
-    }
-});
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -150,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-//Alerta com JS Fecha com 5 Segundo
+//Alerta com JS Fecha com 5 Segundo gerenciar agrupamento
 
 document.addEventListener("DOMContentLoaded", function() {
 var alertElement = document.getElementById("myAlert");
@@ -161,7 +122,7 @@ if (alertElement) {
 }
 });
 
-//Alerta com JS Fecha quando clica no botão
+//Alerta com JS Fecha quando clica no botão gerenciar agrupamento
 $(document).ready(function () {
     $(".btn-close").on("click", function () {
       $(this).closest(".alert").hide();
@@ -169,14 +130,9 @@ $(document).ready(function () {
   });
 
 
-// filtros do datatable
+// filtros do datatable gerenciar agrupamento
 $(document).ready(function(){
 $("#my-table").DataTable();
-});
-
-// filtros do datatable
-$(document).ready(function(){
-$("#produtos-table").DataTable();
 });
 
 

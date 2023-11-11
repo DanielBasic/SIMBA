@@ -22,6 +22,19 @@ text-decoration: none;
 transition: 0.3s;
 }
 
+p a {
+  color: #6190dc;
+  text-decoration: none;
+  transition: 0.3s;
+  }
+
+  p a:hover {
+    color: #1e6dee;
+  
+    }
+
+
+
 p{
   margin-bottom: 0px;
 }
@@ -123,7 +136,7 @@ align-items: center;
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis;
-  width: 100%;
+  width: 90%;
   font-size: 12px;
 }
 
@@ -179,6 +192,12 @@ cursor: pointer;
 body {
   
 }
+
+.title_product{
+  width: 100%;
+  
+}
+
 .nav-list {
   position: absolute;
   top: 8vh;
@@ -241,12 +260,20 @@ justify-content: flex-end;
 padding-right: 10px;
 }
 
-.new-modal{
-border: solid 2px teal;
-height: 30px;
+.new-modal {
+  border: 1px solid #ffad33;
+  background: #fff;
+  color: #010101;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
 
-border-radius: 4px;
-cursor: pointer;
+.new-modal:hover {
+  background: #ffad33;
+  color: #fff;
+  transform: scale(1);
 }
 
 
@@ -324,13 +351,16 @@ background-color: #823131;
 .styled-table td:first-child {
 border-top-left-radius: 5px;
 border-bottom-left-radius: 5px;
+max-width: 400px;
+/* cursor: pointer; */
 }
 
 .styled-table th:last-child,
 .styled-table td:last-child {
 border-top-right-radius: 5px;
 border-bottom-right-radius: 5px;
-max-width: 200px;
+/* max-width: 200px; */
+cursor: pointer;
 }
 
 
@@ -514,6 +544,11 @@ display: flex;
 flex-direction: column;
 }
 
+.group-details-products{
+  display: flex;
+  flex-direction: column;
+}
+
 /* 
  BOTOES DE EDITAR */
 
@@ -558,20 +593,11 @@ flex-direction: column;
 
 /* Estilo para o botão "Editar" */
 .edit-button {
-  background-color: #25bd2a; /* Cor de fundo verde */
-  color: #fff; /* Cor do texto branca */
-  padding: 10px 20px; /* Espaçamento interno do botão */
-  border: none; /* Sem borda */
-  border-radius: 5px; /* Cantos arredondados */
-  cursor: pointer; /* Cursor de mão ao passar o mouse */
-  font-size: 12px; /* Tamanho da fonte */
-  width: 90px;
-  height: 30px;
+
+
 }
 
-.edit-button:hover {
-  background-color: #0ddd17c5; /* Cor de fundo verde mais escura quando hover */
-}
+
 
 .dataTables_wrapper .dataTables_length select {
   color: rgba(16, 16, 15, 0.678) !important ; 
@@ -631,11 +657,109 @@ flex-direction: column;
 
 }
 
+.image-product{
+  border-radius: 10px;
+  width: 500px;
+  height: 500px;
+}
+
 .primary_informations{
   gap: 20px;
 
 }
 
+@media (max-width: 999px) {
+.primary-container{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.styled-table th:first-child,
+.styled-table td:first-child {
+border-top-left-radius: 5px;
+border-bottom-left-radius: 5px;
+max-width: 200px;
+}
+.image-product{
+  border-radius: 10px;
+  width: 550px;
+  height: 550px;
+  align-items: center;
+}
+
+
+
+}
+
+@media (max-width: 600px) {
+  .primary-container{
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .image-product{
+    border-radius: 10px;
+    width: 400px;
+    height: 400px;
+    align-items: center;
+  }
+  
+  
+  
+  }
+
+
+
+/* teste 3 pontinhos */
+
+.menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-button {
+  /* background-color: #333; */
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.hidden-buttons {
+  display: none;
+  position: absolute;
+  min-width: 100px;
+  background-color: #ffffff;
+  border: 1px solid #333;
+  border-radius: 5px;
+  /* right: 0; */
+  left: 100%;
+  top: 10%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  font-weight: 600;
+}
+
+.hidden-buttons button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.hidden-buttons button:hover {
+  background-color: #dddddd;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+
+}
+
+.menu-container:hover .hidden-buttons {
+  display: block;
+}
 
 
 

@@ -33,7 +33,7 @@
         <ul class="nav-list">
           <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
           <!-- <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li> -->
-          <li><a href="{% url 'search' %}">Search</a></li>
+          <li><a href="{% url 'search' %}">Procurar Produtos</a></li>
           <li><a href="{% url 'usuario' %}">Usuario</a></li>
           {% if request.user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Sair</a></li>
@@ -62,54 +62,84 @@
         <th>Vendas brutas</th>
         <th>Unidades Vendidas</th>
         <th>Média Preço</th>
+        <th>Opções</th>
       </tr>
     </thead>
     <tbody>
       {% for product in products %}
-        <form action="" method="get" class="redirectToProductDetails_form" product_id="{{product.id}}">
           <tr>
-            <td class="group-details" group_id="{{product.id}}">
-              <input type="hidden" name="product_id" value="{{product.id}}">
-              <img src="{{product.image.url}}" alt="{{product.title}}" width="75px" height="75px">
+            <td class="group-details-pro"  group_id="{{product.id}}">
+              <input type="hidden" name="product_id" name2="bla bla" value="{{product.product_id}}">
+              
+              <img src="{{product.image.url}}" alt="{{product.title}}" value="{{product.id}}"  width="75px" height="75px">
               <br>
               <p class="title_product">{{product.title}}</p>
+              
             </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
+            <td>
+              <p class="title_product">O id do produto é o {{product.product_id}}</p>
+
+              
+          </td>
+          <td> </td>
+          <td> </td>
+              
+          
+            <td>
+              <div class="menu-container">
+                <div class="menu-button">...</div> 
+                <div class="hidden-buttons">
+
+                  <form method="POST" action="{% url 'stop_product' product.object_id %}">{% csrf_token %}
+                    <input type="hidden" name="group_id" value="{{group_id}}">                
+                    {%if product.is_tracking_activated %}
+                      <button  id="parar-anuncio">Parar</button>
+                    {% else %}
+                      <button  id="parar-anuncio">Monitorar</button>
+                    {% endif %}               
+                  </form>
+
+                  <form method="POST" action="{% url 'more_details' product.product_id %}" >{% csrf_token %}
+                    <button type="submit">Detalhes</button>
+                  </form>
+                  
+                  <form method="POST" action="{% url 'exclude_products' product.object_id %}" id="formulario-exclusao-{{group_id}}">
+                    {% csrf_token %}
+                    <input type="hidden" name="group_id" value="{{group_id}}">
+                    <button type="button" id="excluir-anuncio-{{group_id}}" title="{{group_title}}">Excluir</button>
+                  </form>
+                    
+               </div>
+            </td>
           </tr>
-        </form>
+       
       {% endfor %}  
     </tbody>
   </table>
 </div>
       
 
-</main>   
+</main>  
 
 
-<!-- importação do datatable para tabelas dinamicas -->
+
+
+
+
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
 
-<!-- js da aplicação que nos mesmo criamos -->
+
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
-<script src="{% static 'groupings/js/group_by_ad.js' %}"></script>
+<script src="{% static 'groupings/js/group_by_ad_product.js' %}"></script>
 
-
-<script>
-  $(document).ready(function(){
-    $("#produtos-table").DataTable();
-  });
-</script>
-
-
-<!-- importação do JS para o dashboar -->
+ 
+<!--importação do JS para o dashboar -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
 <script>
   renderiza_despesas_mensal()
-
 </script>
-    
+
+
 </body>
 </html>

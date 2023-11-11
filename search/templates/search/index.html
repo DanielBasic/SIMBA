@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Procurar Produtos</title>
 {% load static %}
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href={% static "search/css/search_style.css" %}>
 <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
@@ -59,13 +60,17 @@
   </header>
   <br>
 
-  {% if messages %}
-  <ul class="messages">
+
+
+{% if messages %}
+<div class="alert-messages">
   {% for message in messages %}
-  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  <div id="myAlert"  class="alert {{ message.tags }}">{{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   {% endfor %}
-  </ul>
-  {% endif %}
+  </div>
+{% endif %}
 
 
 

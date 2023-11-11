@@ -25,10 +25,8 @@ from utils_objects import Pagination
 from decouple import config
 
 from product.models import Product, TrackingProduct
-from django.views.decorators.cache import cache_page
 
 @login_required
-@cache_page(60*5)
 def search(request):
   if request.method == "GET":
     app_id = config('APP_ID')

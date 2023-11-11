@@ -15,5 +15,14 @@ urlpatterns = [
   path('stop_groupByAd/<int:group_id>/', views.stop_groupByAd, name='stop_groupByAd'),
   path('edit_groupByAd/', views.edit_groupByAd, name='edit_groupByAd'),
   path('exclud_groupByAd/<int:group_id>/', views.exclud_groupByAd, name='exclud_groupByAd'),
-  
+
+  path('exclude_products/<int:object_id>/', views.exclude_products, name='exclude_products'),
+  path('stop_product/<int:object_id>/', views.stop_product, name='stop_product'),
+  path('more_details/<str:product_id>/', views.more_details, name='more_details'),
+
+
+
+   
+
+
 ]
