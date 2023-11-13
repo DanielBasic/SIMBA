@@ -67,22 +67,36 @@ function renderiza_faturamento_mensal(url){
 
 
 
-function renderiza_despesas_mensal(){
+function renderiza_despesas_mensal() {
     const ctx = document.getElementById('despesas_mensal').getContext('2d');
     var cores_despesas_mensal = gera_cor(qtd=12)
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-            datasets: [{
-                label: 'Despesas',
-                data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
-                backgroundColor: "#CB1EA8",
-                borderColor: "#FFFFFF",
-                borderWidth: 0.2
-            }]
+            labels: ['Janeiro', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            datasets: [
+                {
+                    label: 'Unidades Vendidas',
+                    data: [12, 55, 3, 20, 10, 30, 12, 190, 3, 5, 2, 3],
+                    backgroundColor: "#CB1EA8",
+                    borderColor: "#FFFFFF",
+                    borderWidth: 0.2,
+                    lineTension: 0.3,
+                    pointBorderColor: 'transparent',
+                    borderJoinStyle: 'round',
+                },
+                {
+                    label: 'Custos Mensais',
+                    data: [8, 15, 5, 15, 12, 35, 9, 23, 5, 70, 4, 10],
+                    backgroundColor: "#1E90FF",
+                    borderColor: "#FFFFFF",
+                    borderWidth: 0.2,
+                    lineTension: 0.3,
+                    pointBorderColor: 'transparent',
+                    borderJoinStyle: 'round',
+                }
+            ]
         },
-        
     });
 }
 

@@ -11,7 +11,7 @@
 body{
     background-color: #1b1f27;
     font: "Poppins", sans-serif; 
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 h1{
@@ -27,6 +27,21 @@ h1{
     color: white;
   }
 
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #172a31;
+    border-radius: 0.5rem;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #f2970e;
+    border-radius: 0.5rem;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #ffad33;
+  }
+  
 ul li::marker{
     color: #eee;
     font-size: larger;
@@ -200,6 +215,27 @@ input.field-is-invalid + span::before {
 input.field-is-valid + span::before {
     content: "✓";
     color: green;
+}
+
+
+.footer_title {
+  font-size: 12px;
+  color: #fff;
+  margin-right: var(--mb-2);
+}
+.footer_link {
+  display: inline-block;
+  color: #e8e8e8;
+  margin-bottom: 10px
+}
+.footer_link:hover {
+  color: #e8e8e8;
+}
+.footer_copy {
+  text-align: center;
+  font-size: 12px;
+  color:#e8e8e8;
+  margin-top: 3.5rem;
 }
 
 

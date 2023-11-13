@@ -3,6 +3,7 @@ import requests
 from datetime import datetime
 
 def is_ad_paused(url):
+def is_ad_paused(url):
     response = requests.get(url, allow_redirects=False)
     if response.status_code > 302:
         raise requests.exceptions.HTTPError(f"HTTP Error: {response.status_code} - {response.reason}")
@@ -24,8 +25,14 @@ def get_stock_quantity_from_ml_ad(url):
         raise requests.exceptions.HTTPError(f"HTTP Error: {response.status_code} - {response.reason}")
     response = BeautifulSoup(response.content, 'html.parser')
     try:
-        stock = response.find(class_='ui-pdp-buybox__quantity__available')
+        stock = response.find(class_='ui-pdp-buybox_quantity_available')
         if not stock:
+            stock = response.find(class_='ui-pdp-action-row__subtitle')
+            if not stock:
+                stock = None
+            else:
+                stock = int(stock.text.split(' ')[0][1:])
+
             stock = response.find(class_='ui-pdp-action-row__subtitle')
             if not stock:
                 stock = None
@@ -38,6 +45,8 @@ def get_stock_quantity_from_ml_ad(url):
         return stock
     except ValueError as e:
         raise(f'Error at get_stock_quantity_from_ml_ad: {e}')
+    
+
 
 def datetime_stprtime(datetime_inString):
     format_string = '%Y-%m-%dT%H:%M:%S.%fZ'

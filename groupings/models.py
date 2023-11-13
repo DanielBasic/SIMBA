@@ -18,13 +18,13 @@ class Group_by_ad(models.Model):
         return self.title
 
 
-class Group_by_seller(models.Model):
-    id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True)
-    logo = models.CharField(max_length=15)
-    store_name = models.CharField(max_length=15)
-    created_at = models.DateTimeField(default=timezone.now)
-    is_tracking_activated = models.BooleanField(default=True)
+# class Group_by_seller(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     user = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True)
+#     logo = models.CharField(max_length=15)
+#     store_name = models.CharField(max_length=15)
+#     created_at = models.DateTimeField(default=timezone.now)
+#     is_tracking_activated = models.BooleanField(default=True)
 
 
     

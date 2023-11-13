@@ -1,50 +1,98 @@
-// JavaScript for modal
+//MODAL PARA CRIAR UM NOVO AGRUPAMENTO
+
 const modal = document.getElementById("myModal");
 const openModalBtn = document.getElementById("openModal");
 const closeModalBtn = document.getElementById("closeModal");
 
+let modalIsOpen = false;
+
+function toggleModal() {
+    if (modalIsOpen) {
+        modal.style.display = "none"; // Fecha o modal
+    } else {
+        modal.style.display = "block"; // Abre o modal
+    }
+    modalIsOpen = !modalIsOpen; // Inverte o estado do modal
+}
 if (openModalBtn !== null){
     openModalBtn.onclick = function () {
         modal.style.display = "block";
     };
 }
 
+openModalBtn.addEventListener("click", toggleModal);
+closeModalBtn.addEventListener("click", toggleModal);
 if (closeModalBtn !== null){
     closeModalBtn.onclick = function () {
         modal.style.display = "none";
     };
 }
 
-window.onclick = function (event) {
+window.addEventListener("click", function (event) {
     if (event.target === modal) {
-        modal.style.display = "none";
-    }
-};
-
-// JavaScript for search filter
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.getElementById("searchInput");
-    const searchButton = document.getElementById("searchButton");
-    const tableBody = document.getElementById("tableBody");
-    const rows = tableBody.getElementsByTagName("tr");
-
-    searchButton.addEventListener("click", performSearch);
-    searchInput.addEventListener("input", performSearch);
-
-    function performSearch() {
-        const searchText = searchInput.value.toLowerCase();
-
-        for (let i = 0; i < rows.length; i++) {
-            const row = rows[i];
-            const titleCell = row.querySelector("td:nth-child(2)"); // Assuming title is the second column
-            if (titleCell) {
-                const title = titleCell.innerHTML.toLowerCase();
-                const shouldDisplay = title.includes(searchText);
-                row.style.display = shouldDisplay ? "" : "none";
-            }
-        }
+        toggleModal();
     }
 });
+
+
+
+// MODAL PARA EDOTAR O AGRUPAMENT
+const openModallBtns = document.querySelectorAll(".edit-button");
+const closeModallBtn = document.getElementById("closeModall");
+const modall = document.getElementById("myModall");
+const titleToModify = document.getElementById("title-modify");
+const imageToModify = document.getElementById("image-modify");
+const groupIdToModify = document.getElementById("group-id-modify");
+
+openModallBtns.forEach((openModallBtn) => {
+    openModallBtn.addEventListener("click", () => {
+        const group_id = openModallBtn.getAttribute("group_id");
+        const title = openModallBtn.getAttribute("title");
+        const image = openModallBtn.getAttribute("image");
+
+        titleToModify.value = title;
+        imageToModify.value = "";
+        groupIdToModify.value = parseInt(group_id);
+        modall.style.display = "block";
+    });
+});
+
+closeModallBtn.addEventListener("click", () => {
+    modall.style.display = "none";
+    titleToModify.value = "";
+    imageToModify.value = "";
+    groupIdToModify.value = "";
+});
+
+
+
+
+// // JavaScript for search filter
+// document.addEventListener("DOMContentLoaded", function() {
+//     const searchInput = document.getElementById("searchInput");
+//     const searchButton = document.getElementById("searchButton");
+//     const tableBody = document.getElementById("tableBody");
+//     const rows = tableBody.getElementsByTagName("tr");
+
+//     searchButton.addEventListener("click", performSearch);
+//     searchInput.addEventListener("input", performSearch);
+
+//     function performSearch() {
+//         const searchText = searchInput.value.toLowerCase();
+
+//         for (let i = 0; i < rows.length; i++) {
+//             const row = rows[i];
+//             const titleCell = row.querySelector("td:nth-child(2)"); // Assuming title is the second column
+//             if (titleCell) {
+//                 const title = titleCell.innerHTML.toLowerCase();
+//                 const shouldDisplay = title.includes(searchText);
+//                 row.style.display = shouldDisplay ? "" : "none";
+//             }
+//         }
+//     }
+// });
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const clickableDivs = document.querySelectorAll(".group-details");
@@ -70,6 +118,56 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+
+//Alerta com JS Fecha com 5 Segundo gerenciar agrupamento
+
+document.addEventListener("DOMContentLoaded", function() {
+var alertElement = document.getElementById("myAlert");
+if (alertElement) {
+    setTimeout(function(){
+    alertElement.remove();
+    }, 5000);
+}
+});
+
+//Alerta com JS Fecha quando clica no botão gerenciar agrupamento
+$(document).ready(function () {
+    $(".btn-close").on("click", function () {
+      $(this).closest(".alert").hide();
+    });
+  });
+
+
+// filtros do datatable gerenciar agrupamento
+$(document).ready(function(){
+$("#my-table").DataTable();
+});
+
+
+
+// confirmar se o usuario realemten vai excluir o agrupamento
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('[id^="excluir-anuncio-"]');
+
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const groupId = button.id.replace('excluir-anuncio-', '');
+        const title = button.title;
+
+        const confirmation = confirm('Você tem certeza de que deseja excluir o grupo "' + title + '"?   Você perdera todos os produtos que estão dentro desse agrupamento');
+
+        if (confirmation) {
+          // Se o usuário confirmar, envie o formulário
+          document.getElementById('formulario-exclusao-' + groupId).submit();
+        }
+      });
+    });
+  });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const tracking_infos = JSON.parse(document.getElementById('tracking_infos').textContent);

@@ -12,31 +12,42 @@ from datetime import datetime, timedelta
 from product.models import Product, TrackingProduct
 from .models import Group_by_ad
 from product.tasks import add_geral_infos_product_in_db
+from .utils import add_products_into_group
 from django.core.serializers import serialize
 
 from .utils import add_products_into_group, getMonthPeriodsDates, getAvgDataFromGroupByAd, getAvgDataFromProducts
 import os
-
+from django.core.exceptions import ObjectDoesNotExist
 
 @login_required
 def create_new_groupByAd(request):
-  if request.method == "GET":
-    return render(request, "groupings/create_new_groupByAd.html")
+    if request.method == "GET":
+        return render(request, "groupings/create_new_groupByAd.html")
+    
+    elif request.method == "POST":
+        data_groupByAd = GroupByAd_form(request.POST, request.FILES)
+        if data_groupByAd.is_valid():
+            cleaned_data = data_groupByAd.cleaned_data
+            image = cleaned_data['image']
+            title = cleaned_data['title']
+            
+           
+            try:
+                existing_groupByAd = Group_by_ad.objects.get(title=title)
+                messages.add_message(request, constants.ERROR, 'Já existe um agrupamento com esse título.')
+                return redirect(reverse('groupByAd_management'))
+            except ObjectDoesNotExist:
+              
+                groupByAd = Group_by_ad(image=image, title=title, user=request.user)
+                groupByAd.save()
+                messages.add_message(request, constants.SUCCESS, 'Agrupamento criado com sucesso')
+                return redirect(reverse('groupByAd_management'))
+        
+        messages.add_message(request, constants.ERROR, 'Adicione uma imagem e um título válido')
+        return redirect(reverse('groupByAd_management'))
   
-  elif request.method == "POST":
-    data_groupByAd = GroupByAd_form(request.POST, request.FILES)
-    if data_groupByAd.is_valid():
-      cleaned_data = data_groupByAd.cleaned_data
-      image = cleaned_data['image']
-      title = cleaned_data['title']
-      groupByAd = Group_by_ad(image=image, title=title, user=request.user)
-      groupByAd.save()
-      messages.add_message(request, constants.SUCCESS,'Agrupamento criado com sucesso')
-      return redirect(reverse('groupByAd_management'))
 
-    messages.add_message(request, constants.ERROR, 'Adicione uma imagem e um título válido')                      
-    return redirect(reverse('groupByAd_management'))
-  
+
 
     
 @login_required
@@ -78,6 +89,8 @@ def add_products_into_GroupByAd(request):
       return redirect(f"/groupings/group/?group_id={group.id}")
     except ValueError as e:
       return redirect(reverse('search'))
+    
+
 
 @login_required
 def create_new_GroupByAd_addProductsInIt(request):
@@ -93,12 +106,11 @@ def create_new_GroupByAd_addProductsInIt(request):
       users_group = Group_by_ad.objects.filter(user=request.user)
       group = None
       
-
       if form_image_title.is_valid():
         title, image = form_image_title.cleaned_data['title'], form_image_title.cleaned_data['image']
         group_exist = users_group.filter(title=title).first()
         if group_exist:
-          messages.error(request, f'O grupo com título {title} já existe.')
+          messages.add_message(request, constants.ERROR,'Ja existe um agrupamento com esse nome')
         else:
           group = Group_by_ad(title=title, image=image, user=current_user)
           group.save()
@@ -120,6 +132,8 @@ def create_new_GroupByAd_addProductsInIt(request):
       print(f"Error at 'create_new_GroupByAd_addProductsInIt' create: {e}")
       return redirect(reverse("search"))
     
+ 
+    
 @login_required
 def groupByAd_details(request):
   if request.method == "GET":
@@ -140,16 +154,85 @@ def groupByAd_details(request):
       print(tracking_infos)
     else:
       raise TypeError("The group_id must be a int type")
+    return render(request, "groupings/groupByAd_details.html", {'products' : products, 'group_id' : group_id})
+
+
+# PARAR O AGRUPAMENTO
+@login_required
+def stop_groupByAd(request, group_id):
+    if request.method == "GET":
+      group = get_object_or_404(Group_by_ad, id=group_id)
+      group.is_tracking_activated
+      return render(request, 'groupByAd_management.html', group.is_tracking_activated)
     
+    if request.method == "POST":
+        group = get_object_or_404(Group_by_ad, id=group_id)
+        current_value = group.is_tracking_activated
+        group.is_tracking_activated = not current_value
+        group.save()
+        messages.add_message(request, constants.SUCCESS, 'O Monitoramento desse agrupamento foi alterado')
+        return redirect(reverse('groupByAd_management'))
+    else:
+        messages.add_message(request, constants.SUCCESS, 'Não foi possível alterar o monitoramento desse agrupamento')
+
+
+# EDITAR O AGRUPAMENTO
+@login_required
+def edit_groupByAd(request):
+    if request.method == "POST":
+      image = request.FILES.get("image_to_modify")
+      title = request.POST.get("title_to_modify")
+      group_id = request.POST.get("group_id_modify")
+      ad_group = Group_by_ad.objects.get(id=group_id)
+      users_group = Group_by_ad.objects.filter(user=request.user, title=title)
+
+      if not users_group.exists():
+        if title:
+          ad_group.title = title
+      if image:
+        ad_group.image = image
+      
+      ad_group.save() 
+
+      if users_group.exists():
+        if ad_group.title == title:
+          pass
+        else:
+          messages.add_message(request, constants.ERROR,'Ja existe um agrupamento com esse nome')   
+      return redirect(reverse('groupByAd_management'))
+    elif request.method == "GET":
+      return redirect(reverse('groupByAd_management'))
 
     return render(request, "groupings/groupByAd_details.html", {'products' : products, 'tracking_infos' : tracking_infos, 'date_interval' : date_interval})
 
+         
+# EXCLUIR UM AGRUPAMENTO
+@login_required
+def exclud_groupByAd(request, group_id):
+  if request.method == "POST":
+    objeto = Group_by_ad.objects.filter(id=group_id)
+    if objeto.exists():
 
+      objeto.delete()
+     
+      return redirect(reverse('groupByAd_management'))
+  else:
+    print("nao encontrado")
+
+
+
+# EXCLUIR UM PRODUTO
 @login_required
-def deletar_agrupamentos(request):
-  pass
-  
-@login_required
+def exclude_products(request, object_id):
+  if request.method == "POST":
+    objeto = TrackingProduct.objects.filter(object_id=object_id)
+    if objeto.exists():
+      group_id = request.POST.get('group_id')
+      objeto.delete() 
+      return redirect(f'/groupings/group/?group_id={group_id}')
+    
+
+# PARAR O MONITORAMENTO DE UM PRODUTO
 def gerenciar_agrupamentos_seller(request):
   if request.method == "GET":
 
@@ -157,23 +240,72 @@ def gerenciar_agrupamentos_seller(request):
     return render(request, "groupings/gerenciar_agrupamentos_seller.html", {'agrupamentos':groups})
 
 @login_required
-def criar_agrupamentos_seller(request):
-  if request.method == "GET":
-    return render(request, "groupings/criar_agrupamentos_seller.html")
-  elif request.method == "POST":
-    logo = request.POST.get("logo")
-    name  = request.POST.get("title")
-    start_date  = request.POST.get("start_date")
-    description  = request.POST.get("description")
-    # agrupamento_seler = Agrupamento_seller(
-    #   criador=request.user,
-    #   logo = logo,
-    #   name = name,
-    #   start_date = start_date,
-    #   description = description, 
-    # )
-    # agrupamento_seler.save()
+def stop_product(request, object_id):
+  if request.method == "POST":
+    objeto = TrackingProduct.objects.filter(object_id=object_id)
+    if objeto.exists():
+      print('tipo post stop')
+      group_id = request.POST.get('group_id')
+      product = get_object_or_404(TrackingProduct, object_id=object_id)
+      current_value = product.is_tracking_activated
+      product.is_tracking_activated = not current_value
+      product.save()
+      messages.add_message(request, constants.SUCCESS, 'O Monitoramento desse agrupamento foi alterado')
+      return redirect(f'/groupings/group/?group_id={group_id}')
+    else:
+      print('objeto nao existe')
+      return redirect(f'/groupings/group/?group_id={group_id}')
+  
+#Mais detalhes
+def more_details(request, product_id):
+  if request.method == "POST":
+    print(f'ID do produto = {product_id}')
+    return redirect(f'/product/?product_id={product_id}')
+  
 
-    messages.add_message(request, constants.SUCCESS,'Evento cadastrado com sucesso')
-                            
-    return redirect(reverse('create_new_groupByAd'))
+
+
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from product.models import Product, TrackingProduct
+from django.db.models import Q
+from api_MercadoLivre.getContent import getInfoFromProduct, get_access_token
+from decouple import config
+from django.contrib.auth.decorators import login_required
+
+
+def index(request, product_id):
+  if request.method == "GET":
+      app_id = config('APP_ID')
+      client_secret = config('CLIENT_SECRET')
+      refresh_token = config('REFRESH_TOKEN')
+      
+      access_token = get_access_token(app_id, client_secret, refresh_token)
+      access_token = access_token["access_token"]   
+      # key_word = request.GET.get("keyWord")
+      product_id = request.GET.get("product_id")
+      # products = Product.objects.filter(Q(id=product_id) & Q(user=request.user)).all()
+      if product_id:
+          product_info = getInfoFromProduct(access_token, product_id)
+          if product_info:
+      
+              return render(request, "product/index.html", {'product' : product_info})
+
+      return render(request, "product/index.html")
+
+  elif request.method == "POST":
+      return render(request, "product/index.html")
+  
+
+
+
+
+
+
+   
+
+
+
+
+    

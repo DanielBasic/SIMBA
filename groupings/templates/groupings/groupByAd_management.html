@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agrupamentos</title>
     {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
 </head>
 
 <body>
@@ -19,12 +22,18 @@
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
             {% endfor %}
         </ul>
+{% if messages %}
+  {% for message in messages %}
+    <div id="myAlert"  class="alert {{ message.tags }}">{{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    {% endif %}
+  {% endfor %}
+{% endif %}
+    
   <main>
     <header>
-      <nav>
-        <a class="logo" href="/">Simba</a>
+      <nav style="z-index: 1;">
+        <a class="logo" href="#">Simba</a>
         <div class="mobile-menu">
           <div class="line1"></div>
           <div class="line2"></div>
@@ -33,9 +42,8 @@
   
         <ul class="nav-list">
           <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
-          <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li>
-          <li><a href="{% url 'search' %}">search</a></li>
-          <li><a href="{% url 'usuario' %}">usuario</a></li>
+          <li><a href="{% url 'search' %}">Procurar Produtos</a></li>
+          <li><a href="{% url 'usuario' %}">Usuario</a></li>
           {% if request.user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Sair</a></li>
           {% endif %}
@@ -44,45 +52,93 @@
       </nav>     
 </header>
 
+
     <div class="container-new-modal">
         <button id="openModal" class="new-modal">Novo Agrupamento</button>
     </div>
+   
+  
 
-    <div class="modal" id="myModal"  style="z-index: 2;">
-    <div class="area_formulario_agrupamento"  >
-        <div class="form_group">
-            <form method="post" class="modal-content" action=" {% url 'create_new_groupByAd' %}" enctype="multipart/form-data"> {% csrf_token %}    
-                <div class="container-close-modal">
-                    <span id="closeModal" class="close_modal"  >&times;</span> 
-                </div>
-                <div> 
-                    <h3>Novo Agrupamento Produto</h3>
-                </div>  
+    <div class="modal-group" id="myModal"  style="z-index: 1;">
+      <div class="area_formulario_agrupamento"  >
+          <div class="form_group">
+              <form method="post" class="modal-content" action=" {% url 'create_new_groupByAd' %}" enctype="multipart/form-data"> {% csrf_token %}    
+                  <div class="container-close-modal">
+                      <span id="closeModal" class="close_modal"  >&times;</span> 
+                  </div>
+                  <div> 
+                      <h3>Novo Agrupamento Produto</h3>
+                  </div>  
+                  
+                  <div class="form-new-group">
+                    <div class="item-image">
+                      <p>imagem:  {{groupByAd_form.image}}</p>
+                    </div>
+                  
+                    <div class="item-titulo">
+                    <p>Titulo:  {{groupByAd_form.title}}</p>
+                    </div>
                 
-                <div class="form-new-group">
-                  <div class="item-image">
-                    <p>imagem:  {{groupByAd_form.image}}</p>
                   </div>
-                 
-                  <div class="item-titulo">
-                   <p>Titulo:  {{groupByAd_form.title}}</p>
-                  </div>
-               
-                </div>
 
-                <button type="submit">Criar </button>
+                  <button class="button-modal-edit" type="submit">Criar </button>
 
-            </form>
-        </div>
+              </form>
+          </div>
+      </div>
     </div>
+
+
+
+
+
+    <div class="modal-group" id="myModall"  style="z-index: 1;">
+      <div class="area_formulario_agrupamento"  >
+          <div class="form_group">
+              <form method="post" class="modal-content" action=" {% url 'edit_groupByAd' %}" enctype="multipart/form-data"> {% csrf_token %}    
+                  <div class="container-close-modal">
+                      <span id="closeModall" class="close_modal"  >&times;</span> 
+                  </div>
+
+                  <div> 
+                      <h3>Editar Agrupamentos</h3>
+                  </div>  
+                  
+                  <div class="form-new-group">
+                    <div class="item-image">
+                      <p>imagem:</p>
+                      <input type="file" name="image_to_modify" id="image-modify">
+                    </div>
+             
+                    <div class="item-titulo">
+                    <p>Titulo: </p>
+                    <input type="text" name="title_to_modify" id="title-modify">
+                    </div>      
+                  </div>
+                  <input type="hidden" name="group_id_modify" id="group-id-modify">
+
+                  <button class="button-modal-edit" type="submit">Editar </button>
+
+              </form>
+          </div>
+      </div>
+    </div>
+
+
+
+    
+    <div class="margin-table">
+      <div class="container_canvas" style="width: 800px; height: 300px;" >
+        <br>
+        <h4>Vendas: {PRODUTO x }</h4>
+        <canvas id="despesas_mensal" ></canvas>
+        
+      </div>
+    
+    <div class="espaçamento">
+     
     </div>
     
-    <!-- <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Buscar...">
-        <button id="searchButton">Buscar</button>
-    </div>  -->
-    <div class="margin-table">
-    <form action="{% url 'groupByAd_details' %}" method="get" class="redirectToGroupDetails_form">
         <table class="styled-table" id="my-table">
           <thead class="styled-thead">
             <tr>
@@ -95,13 +151,42 @@
           </thead>
           <tbody>
             {% for group in groupByAd_all %}
-            <!-- <form action="{% url 'groupByAd_details' %}" method="get" class="redirectToGroupDetails_form" group_id="{{group.id}}"> -->
               <tr>
                 <td class="group-details" group_id="{{group.id}}" >
                   <!-- <input type="hidden" id="{{group.id}}"  name="group_id" value="{{group.id}}"> -->
                   <img src="{{group.image.url}}" alt="{{group.title}}" width="75px" height="75px">
                   <br>
                   <p>{{group.title}}</p>
+                <td class="group-details"   group_id="{{group.id}}" >
+                  <img src="{{group.image.url}}" alt="{{group.title}}" width="65px" height="65px">
+                  <p id="title-{{group.id}}">{{group.title}}</p> 
+                </td>
+                <td> ID é {{group.id}}</td>
+                <td></td>
+                <td></td>
+                </td></td>
+         
+                  
+                
+
+                <td>
+                  <div class="menu-container">
+                    <div class="menu-button">. . .</div> 
+                    <div class="hidden-buttons">
+                      <form method="POST" action="{% url 'stop_groupByAd' group.id %}">{% csrf_token %}  
+                        {%if group.is_tracking_activated %}
+                          <button  id="parar-anuncio">Parar</button>
+                        {% else %}
+                          <button  id="parar-anuncio">Monitorar</button>
+                        {% endif %}
+                      </form>
+                      
+                      <button id="openModall" class="edit-button" title="{{group.title}}" image="{{group.image.url}}" group_id="{{group.id}}"> Editar</button>  
+
+                      <form method="POST" id="formulario-exclusao-{{ group.id }}"  action="{% url 'exclud_groupByAd' group.id %}">{% csrf_token %}
+                        <button type="submit" title="{{group.title}}" id="excluir-anuncio-{{ group.id }}" >Excluir</button>
+                      </form>
+                    </div>
                 </td>
                 <td id="price_container">
                   {% if tracking_infos|get_key:group.id|get_key:'avg_price'%}
@@ -126,29 +211,40 @@
                 <td> </td>
                 <td> </td>
               </tr>
-            <!-- </form> -->
             {% endfor %}
           </tbody>   
-        </table>
-      </form>
-      
+        </table>   
   </div>
 
 </main>   
 
 
+</main> 
 
+
+
+
+<!-- importação do datatable para tabelas dinamicas -->
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
+
+<!-- js da aplicação que nos mesmo criamos -->
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
 <script src="{% static 'groupings/js/group_by_ad.js' %}"></script>
 
+<!-- importação do JS para o dashboar -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+<script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+
 <script>
-  $(document).ready(function(){
-    $("#my-table").DataTable();
-  });
+  renderiza_despesas_mensal()
 </script>
 
 {{ tracking_infos|json_script:'tracking_infos' }}
 
+
+
+
+
+    
 </body>
 </html>

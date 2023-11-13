@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrupamento</title>
+    <title>Detalhes do produto</title>
     {% load static %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
     
 </head>
 <body>
@@ -18,52 +19,104 @@
         </ul>
     </div>
     {% endif %}
-  <main>
+ 
     <header>
         <nav>
-            <a class="logo" href="/">Simba</a>
-            <div class="mobile-menu">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
+          <a class="logo" href="#">Simba</a>
+          <div class="mobile-menu">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+          </div>
+    
+          <ul class="nav-list">
+            <li><a href="{% url 'groupByAd_management' %}">Gerenciar Agrupamento</a></li>
+            <!-- <li><a href="{% url 'create_new_groupByAd' %}">Criar Agupamento</a></li> -->
+            <li><a href="{% url 'search' %}">Procurar Produtos</a></li>
+            <li><a href="{% url 'usuario' %}">Usuario</a></li>
+            {% if request.user.is_authenticated %}
+              <li><a href="{% url 'logout' %}">Sair</a></li>
+            {% endif %}
+          </ul>
+          
+        </nav>     
+  </header>
+<main>
+    <div class="container_principal_product_details" >
+
+        <div class="primary-container">
+            <div id="main_picture">
+                <img src="{{product.pictures.0.secure_url}}" alt="Thumbnail foto" class="image-product" >
             </div>
-            <ul class="nav-list">
-                {% if request.user.is_authenticated %}
-                    <li><a href="#">Início</a></li>
+            <br>
+
+            <div class="primary_informations">
+                <h2>Informações do produto</h2>
+                <hr>
+                <br>     
+                <p class="title">Titulo: {{product.title}}</p><br>
+                <!-- <p class="original_price">Preço original   R$ {{product.original_price}}</p><br> -->
+                <p class="price">Preço atual:   R$ {{product.price}}</p><br>
+                <p class="id">ID:   {{product.id}}</p><br>
+                <p>Quantidade inicial de estoque:   {{product.initial_quantity}}</p><br>
+                <p>Quantidade disponível:   {{product.available_quantity}}</p><br>
+                <p>Vendas:   {{product.sold_quantity}}</p><br>
+                <p> Data de criação: {{product.date_created}} </p><br>
+                
+                {% for term in product.sale_terms %}
+                    <p>{{term.name}}: {{term.value_name}} </p> <br>
+                {% endfor %}
+                <p>Link do Produto:  <a href="{{product.permalink}}">{{product.permalink}}</a></p><br>
+
+
+                {% if product.condition == 'new'%}
+                    <p> Condição do Produto: Novo </p><br>
+                {% else %}
+                    <p> Condição do Produto: Usado </p><br>
                 {% endif %}
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Projetos</a></li>
-                <li><a href="#">Contato</a></li>          
-                {% if request.user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Sair</a></li>
-                {% endif %}
-            </ul> 
-        </nav>      
-</header>
 
-<div id="main_picture">
-    <img src="{{product.pictures.0.secure_url}}" alt="Thumbnail foto" class="main_picture" width="700" height="500">
-</div>
+                <p> Tipo de entrega: {{product.logistic_type}} </p><br>
+
+                
 
 
-<div class="side_informations">
+                <br><br>       
+            </div>
+        </div>
 
-</div>
+        <br>
+        
+        <br>
+    <div class="side_informations">
 
-<div class="complementaries_informations">
-    <span class="title">{{product.title}}</span>
-    <span class="original_price">R$: {{product.original_price}}</span>
-    <span class="price">R$: {{product.price}}</span>
-    <span class="quantities"> 
-        <p>Quantidade inicial de estoque: {{product.initial_quantity}}</p>
-        <p>Quantidade disponível: {{product.available_quantity}}</p>
-        <p>Vendas: {{product.sold_quantity}}
-        </p>
-    </span>
-    <span class="date_created">{{product.date_created}}</span>
-</div>
+        <h2>Informação do vendedor</h2><br>
 
-<p>{{product}}</p>
+    </div>
+   
+    <hr>
+    <br>
+
+    <div class="complementaries_informations">
+        {% for key, value in product.seller_address.items %}
+            <!-- <p>{{key}}, ":", {{value.name}} </p> <br> -->
+            {%if key == "city"%}
+                <p>Cidade : {{value.name}} </p> <br>
+            {%endif%}
+
+            {%if key == "state"%}
+                <p>Estado : {{value.name}} </p> <br>
+            {%endif%}
+
+            {%if key == "country"%}
+                <p>Pais : {{value.name}} </p> <br>
+            {%endif%}
+
+        {% endfor %}
+        <span class="date_created">{{product.date_created}}</span>
+    </div>
+    <br><br><br><br><br><br>
+    <!-- <p>{{product}}</p> -->
+    </div>
 
 </main>   
 

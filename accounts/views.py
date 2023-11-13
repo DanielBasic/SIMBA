@@ -8,8 +8,12 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .forms import RegistrationForm
+from django.views.decorators.cache import cache_page
 
 import logging
+import re
+
+from django.views.decorators.cache import cache_page
 
 
 def login(request):
@@ -37,7 +41,7 @@ def login(request):
         return redirect(reverse("login"))
     
     auth.login(request, user)
-    return redirect(reverse("groupByAd_management"))
+    return redirect(reverse("search"))
     
 import json
 from django.http import JsonResponse
@@ -76,6 +80,7 @@ class PasswordValidationView(View):
     return JsonResponse({'field_valid' : True})
 
 
+@cache_page(60)
 def signup(request):
   if request.method == "GET":
     return render(request, "accounts/signup.html")
@@ -86,9 +91,29 @@ def signup(request):
     password = request.POST.get("password")
     confirm_password = request.POST.get("confirm_password")
 
+    if len(password) < 8:
+      messages.add_message(request, constants.ERROR, "Senha muito curta, no minimo 8 caracteres")
+      return render(request, "accounts/signup.html")
+    
+    if not bool(re.search(r'(?=.*[0-9])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~])(?=.*[a-zA-Z])', password)):
+      messages.add_message(request, constants.ERROR, "Senha deve ter numeros, letras e caracteres")
+      return render(request, "accounts/signup.html")
+
     if not password == confirm_password:
       messages.add_message(request, constants.ERROR, "As senhas não conferem")
       return render(request, "accounts/signup.html")
+
+    
+    
+    # if bool(re.search(r'(?=.*[0-9])', password)):
+    #   messages.add_message(request, constants.ERROR, "Senha deve ter numeros")
+    #   return render(request, "accounts/signup.html")
+    
+    # if bool(re.match(r'^[^\w\s]+$', password)):
+    #   messages.add_message(request, constants.ERROR, "Deve ter no minimo um caracter")
+    #   return render(request, "accounts/signup.html")
+       
+       
     
     email_exists = User.objects.filter(email=email)
     username_exists = User.objects.filter(username=username)
