@@ -17,17 +17,19 @@ def addLastUpdadeProductInDb():
 def add_stock_info_in_db(url, initial_quantity, objt_product_id):
     try:
         stock_quantity = get_stock_quantity_from_ml_ad(url)
-        if stock_quantity: 
-            sold_quantity = int(initial_quantity) - stock_quantity
-        else:
-            sold_quantity = None
+        if initial_quantity:
+            if stock_quantity and stock_quantity < 100: 
+                sold_quantity = int(initial_quantity) - stock_quantity
+            else:
+                sold_quantity = None
+                stock_quantity = None
 
         product = Product.objects.get(object_id=objt_product_id)
-        one_day_before = product.tracking_since - timedelta(days=1)
-        last_stock_quantity = Product.objects.filter(tracking_since__date=one_day_before, id=product.id)
+        one_day_before = product.date_tracked - timedelta(days=1)
+        last_stock_quantity = Product.objects.filter(date_tracked__date=one_day_before, id=product.id)
         if not last_stock_quantity.exists():
             daily_sales = 0
-        else:
+        elif sold_quantity:
             daily_sales = sold_quantity - last_stock_quantity.first().sold_quantity
         
         product.sold_quantity = sold_quantity
@@ -41,7 +43,7 @@ def add_stock_info_in_db(url, initial_quantity, objt_product_id):
 @shared_task(name='add_geral_infos_product_in_db')
 def add_geral_infos_product_in_db(products):
     if bool(products):
-        attributes = ['id', 'date_created', 'last_updated', 'health', 'initial_quantity', 'status', 'permalink']
+        attributes = ['id', 'date_created', 'last_updated', 'health', 'initial_quantity', 'status', 'permalink', 'variations']
         products_id = list(products.keys())
         app_id = config('APP_ID')
         client_secret = config('CLIENT_SECRET')
@@ -53,7 +55,11 @@ def add_geral_infos_product_in_db(products):
                 if ad['code'] == 200:
                     body = ad['body']
                     object_product_id = products[body['id']]
-                    add_stock_info_in_db.delay(body['permalink'], body['initial_quantity'], object_product_id)
+                    if body['variations']:
+                        initial_quantity = None
+                    else:
+                        initial_quantity = body['initial_quantity']
+                    add_stock_info_in_db.delay(body['permalink'], initial_quantity, object_product_id)
                     try:
                         product = Product.objects.get(object_id = object_product_id)
                         product.date_created = datetime_stprtime(body['date_created'])

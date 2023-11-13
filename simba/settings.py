@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'search',
     'groupings',
     'product',
-    'dashboard'
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -124,7 +124,7 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (css, JavaScript, Images)

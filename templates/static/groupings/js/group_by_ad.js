@@ -14,9 +14,19 @@ function toggleModal() {
     }
     modalIsOpen = !modalIsOpen; // Inverte o estado do modal
 }
+if (openModalBtn !== null){
+    openModalBtn.onclick = function () {
+        modal.style.display = "block";
+    };
+}
 
 openModalBtn.addEventListener("click", toggleModal);
 closeModalBtn.addEventListener("click", toggleModal);
+if (closeModalBtn !== null){
+    closeModalBtn.onclick = function () {
+        modal.style.display = "none";
+    };
+}
 
 window.addEventListener("click", function (event) {
     if (event.target === modal) {
@@ -157,3 +167,58 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tracking_infos = JSON.parse(document.getElementById('tracking_infos').textContent);
+    var arrows_price = document.querySelectorAll('#arrow_price');
+    var arrows_health = document.querySelectorAll('#arrow_health');
+    function updateArrowsAndPercentages(arrowElements) {
+        var threshold = 0;
+        arrowElements.forEach(function(arrowElement) {
+            var group_id = parseInt(arrowElement.getAttribute('group_id'));
+            var product_id = arrowElement.getAttribute('product_id');
+            var id;
+            if (!isNaN(group_id)){
+                id = group_id;
+            }else {
+                id = product_id;
+            }
+            console.log(id);
+
+            var value_id_arrow = arrowElement.id;
+            
+            var variation_percentage ;
+
+            if (value_id_arrow == 'arrow_price') {
+                variation_percentage = 'price_variation_percentage';
+            } else {
+                if (value_id_arrow == 'arrow_health'){
+                    variation_percentage = 'health_variation_percentage'
+                }
+            }
+
+            var value_percentage = tracking_infos[id][variation_percentage];
+
+            arrowElement.innerHTML = '';
+
+            if (value_percentage !== 0) {
+                var arrowClass = value_percentage >= threshold ? 'green' : 'red';
+
+                var arrowIcon = document.createElement('i');
+                arrowIcon.className = 'fas fa-sort-up';
+                arrowElement.style.backgroundColor = arrowClass;
+                arrowElement.appendChild(arrowIcon);
+            }
+
+            var percentageCircle = document.createElement('div');
+            percentageCircle.className = 'percentage-circle';
+            percentageCircle.innerText = value_percentage + '%';
+
+            // Append the percentage circle to the container
+            arrowElement.appendChild(percentageCircle);
+        });
+    }
+    updateArrowsAndPercentages(arrows_price);
+    updateArrowsAndPercentages(arrows_health);
+});

@@ -540,8 +540,28 @@ border-radius: 6px;
 }
 
 .group-details{
-display: flex;
-flex-direction: column;
+  display: flex;
+  align-items: center;
+}
+
+.circle-container {
+  width: 50px; /* Adjust the size of the circle as needed */
+  height: 30px;
+  position: relative;
+  border-radius: 90%;
+  background-color: #ccc; /* Gray background for the circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
 }
 
 .group-details-products{

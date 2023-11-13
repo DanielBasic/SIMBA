@@ -237,3 +237,18 @@ def get_ad_info_with_att(access_token, products_ids, attributes):
         return response.status_code
 
     return response.json()
+
+
+def get_visits_from_product(access_token, product_id, last_period, unit_period, ending_period):
+    url = f'https://api.mercadolibre.com/items/{product_id}/visits/time_window?last={last_period}&unit={unit_period}&ending={ending_period}'
+
+    payload = {}
+    headers = {
+        'Authorization': f'bearer {access_token}'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    if response.status_code > 200:
+        return None
+
+    return response.json()

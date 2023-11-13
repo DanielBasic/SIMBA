@@ -5,13 +5,17 @@ from django.contrib.messages import constants
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from .forms import GroupByAd_form
-from api_MercadoLivre.getContent import str_to_dict
-from django.db.models import Q
+from api_MercadoLivre.getContent import str_to_dict, get_visits_from_product
+from django.db.models import Q, Avg
 from django.core.files.base import ContentFile
+from datetime import datetime, timedelta
 from product.models import Product, TrackingProduct
 from .models import Group_by_ad
 from product.tasks import add_geral_infos_product_in_db
 from .utils import add_products_into_group
+from django.core.serializers import serialize
+
+from .utils import add_products_into_group, getMonthPeriodsDates, getAvgDataFromGroupByAd, getAvgDataFromProducts
 import os
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -51,7 +55,17 @@ def groupByAd_management(request):
   if request.method == "GET":
     groupByAd_all = Group_by_ad.objects.filter(user=request.user)
     form_groupByAd = GroupByAd_form()
-    return render(request, "groupings/groupByAd_management.html", {'groupByAd_all': groupByAd_all , 'groupByAd_form' : form_groupByAd})
+    groups = Group_by_ad.objects.filter(user=request.user)
+  
+    periods = getMonthPeriodsDates()
+    start_old_period, end_old_period = periods['start_old_period'], periods['end_old_period']
+    start_actual_period, end_actual_period = periods['start_actual_period'], periods['end_actual_period']
+
+    avg_infos = getAvgDataFromGroupByAd(groups, start_old_period, end_old_period, start_actual_period, end_actual_period)
+
+    tracking_infos, date_interval = avg_infos['tracking_infos'], avg_infos['date_interval']
+
+    return render(request, "groupings/groupByAd_management.html", {'groupByAd_all': groupByAd_all , 'groupByAd_form' : form_groupByAd, 'tracking_infos' : tracking_infos, 'date_interval' : date_interval})
 
 
 @login_required
@@ -67,7 +81,6 @@ def add_products_into_GroupByAd(request):
       current_user = request.user
       if group and products:
         product_already_in_group, products_id = add_products_into_group(group, current_user, products)
-        print(f'products ids: {list(products_id.keys())}')
         add_geral_infos_product_in_db.delay(products_id)
         if product_already_in_group:
           messages.add_message(request, messages.ERROR , f'Não foi possível adicionar os seguinte produtos, pois eles já estão adicionados nesse agrupamento: {product_already_in_group}')
@@ -75,7 +88,6 @@ def add_products_into_GroupByAd(request):
           messages.add_message(request, messages.SUCCESS,'Monitoramento iniciado com sucesso')
       return redirect(f"/groupings/group/?group_id={group.id}")
     except ValueError as e:
-      print(f"Error at add_products_into_GroupByAd: {e}")
       return redirect(reverse('search'))
     
 
@@ -131,6 +143,15 @@ def groupByAd_details(request):
       group = Group_by_ad.objects.filter(id=group_id).first()
       user = request.user
       products = TrackingProduct.objects.filter(Q(user=user) & Q(group=group))
+      
+      periods = getMonthPeriodsDates()
+      start_old_period, end_old_period = periods['start_old_period'], periods['end_old_period']
+      start_actual_period, end_actual_period = periods['start_actual_period'], periods['end_actual_period']
+
+      avg_infos = getAvgDataFromProducts(products, start_old_period, end_old_period, start_actual_period, end_actual_period)
+
+      tracking_infos, date_interval = avg_infos['tracking_infos'], avg_infos['date_interval']
+      print(tracking_infos)
     else:
       raise TypeError("The group_id must be a int type")
     return render(request, "groupings/groupByAd_details.html", {'products' : products, 'group_id' : group_id})
@@ -182,6 +203,8 @@ def edit_groupByAd(request):
     elif request.method == "GET":
       return redirect(reverse('groupByAd_management'))
 
+    return render(request, "groupings/groupByAd_details.html", {'products' : products, 'tracking_infos' : tracking_infos, 'date_interval' : date_interval})
+
          
 # EXCLUIR UM AGRUPAMENTO
 @login_required
@@ -210,6 +233,12 @@ def exclude_products(request, object_id):
     
 
 # PARAR O MONITORAMENTO DE UM PRODUTO
+def gerenciar_agrupamentos_seller(request):
+  if request.method == "GET":
+
+      
+    return render(request, "groupings/gerenciar_agrupamentos_seller.html", {'agrupamentos':groups})
+
 @login_required
 def stop_product(request, object_id):
   if request.method == "POST":
