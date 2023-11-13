@@ -7,8 +7,11 @@
     {% load static %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
+
 </head>
+
 <body>
+    {% load custom_filters %}
     {% if messages %}
     <div class="messages">
         <ul class="messages-list">
@@ -84,8 +87,8 @@
           <thead class="styled-thead">
             <tr>
               <th>Agrupamento</th>
-              <th>Vendas brutas</th>
-              <th>Unidades Vendidas</th>
+              <th>Preço médio</th>
+              <th>Saúde Média</th>
               <th>Média Preço</th>
               <th>opções</th>
             </tr>
@@ -94,14 +97,32 @@
             {% for group in groupByAd_all %}
             <!-- <form action="{% url 'groupByAd_details' %}" method="get" class="redirectToGroupDetails_form" group_id="{{group.id}}"> -->
               <tr>
-                <td class="group-details"   group_id="{{group.id}}" >
+                <td class="group-details" group_id="{{group.id}}" >
                   <!-- <input type="hidden" id="{{group.id}}"  name="group_id" value="{{group.id}}"> -->
                   <img src="{{group.image.url}}" alt="{{group.title}}" width="75px" height="75px">
                   <br>
                   <p>{{group.title}}</p>
                 </td>
-                <td> </td>
-                <td> </td>
+                <td id="price_container">
+                  {% if tracking_infos|get_key:group.id|get_key:'avg_price'%}
+                  {{tracking_infos|get_key:group.id|get_key:'avg_price'}}
+                  <div id="arrow_price" class="circle-container" group_id="{{group.id}}">
+                    
+                  </div>
+                  {% else %}
+                  N/A
+                  {% endif %}
+                </td>
+                <td>
+                  {% if tracking_infos|get_key:group.id|get_key:'avg_health'%}
+                  {{tracking_infos|get_key:group.id|get_key:'avg_health'}}
+                  <div id="arrow_health" class="circle-container" group_id="{{group.id}}">
+                    
+                  </div>
+                  {% else %}
+                  N/A
+                  {% endif %}
+                </td>
                 <td> </td>
                 <td> </td>
               </tr>
@@ -115,6 +136,8 @@
 
 </main>   
 
+
+
 <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-1.13.6/datatables.min.js"></script>
 <script src="{% static 'accounts/js/navbar.js' %}"></script>
 <script src="{% static 'groupings/js/group_by_ad.js' %}"></script>
@@ -125,10 +148,7 @@
   });
 </script>
 
+{{ tracking_infos|json_script:'tracking_infos' }}
 
-
- 
-
-    
 </body>
 </html>

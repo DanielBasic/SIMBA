@@ -13,7 +13,7 @@ class TrackingProduct(models.Model):
     user = models.ManyToManyField(User, related_name='products')
     group = models.ManyToManyField(Group_by_ad, related_name='products')
     seller = models.IntegerField(null=True)
-    tracking_since = models.DateTimeField(default=timezone.now)
+    date_tracked = models.DateTimeField(default=timezone.now)
     is_tracking_activated = models.BooleanField(default=True)
 
     def __str__(self):
@@ -39,7 +39,7 @@ class Product(models.Model):
     health = models.FloatField(null=True)
     status = models.CharField(max_length=30, null=True)
     catalog_listing = models.BooleanField()
-    tracking_since = models.DateTimeField(default=timezone.now)
+    date_tracked = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.id

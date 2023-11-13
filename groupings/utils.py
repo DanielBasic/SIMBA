@@ -1,8 +1,8 @@
 from product.models import Product, TrackingProduct
 from .helpers.image_helpers import get_image
-from django.db.models import Q
+from django.db.models import Q, Avg
 from django.core.files.base import ContentFile
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 class Product_Info:
@@ -78,3 +78,84 @@ def add_products_into_group(group, user, products):
         
     except ValueError as e:
         print('error at add_products_into_group:' + e)
+
+
+def getMonthPeriodsDates():
+    end_actual_period = datetime.now()
+    start_actual_period = end_actual_period - timedelta(days=30)
+    end_old_period = start_actual_period - timedelta(days=1)
+    start_old_period = end_old_period - timedelta(days=30)
+
+    periods = {'end_actual_period' : end_actual_period, 'start_actual_period' : start_actual_period
+               ,'end_old_period' : end_old_period, 'start_old_period' : start_old_period}
+    return periods
+
+
+def getDifferenceBetweenPeriods(old_period_products, actual_period_products):
+    if not actual_period_products['avg_price'] or  not old_period_products['avg_price']:
+        price_difference_between_periods = 0
+    else:
+        price_difference_between_periods = round(actual_period_products['avg_price'] - old_period_products['avg_price'], 2)
+
+    if not actual_period_products['avg_health'] or not old_period_products['avg_health']:
+        health_difference_between_periods = 0
+    else:
+        health_difference_between_periods = round(actual_period_products['avg_health'] - old_period_products['avg_health'], 2)
+
+    return {'price_difference_between_periods' : price_difference_between_periods, 'health_difference_between_periods' : health_difference_between_periods}
+
+def getProductsIdsTorGroupByAd(group):
+    products_ids = TrackingProduct.objects.filter(group=group).values_list('product_id', flat=True)
+    products_ids = list(products_ids)
+    return products_ids
+
+def getProductsAvgInfos(products_ids, start_old_period, end_old_period, start_actual_period, end_actual_period):
+    old_period_products = Product.objects.filter(id__in=products_ids, date_tracked__range=(start_old_period, end_old_period)).exclude(price__isnull=True, health__isnull=True).aggregate(
+    avg_price=Avg('price'),
+    avg_health=Avg('health')
+    )
+
+    actual_period_products = Product.objects.filter(id__in=products_ids, date_tracked__range=(start_actual_period, end_actual_period)).exclude(price__isnull=True, health__isnull=True).aggregate(
+    avg_price=Avg('price'),
+    avg_health=Avg('health')
+    )
+
+    if not actual_period_products:
+        actual_period_products = Product.objects.filter(id__in=products_ids).exclude(price__isnull=True, health__isnull=True).aggregate(
+        avg_price = Avg('price'),
+        avg_health = Avg('health')
+        )
+        start_date = Product.objects.filter(id__in=products_ids).earliest('date_tracked')
+        end_date = Product.objects.filter(id__in=products_ids).latest('date_tracked')
+        date_interval = {'start_date' : start_date, 'end_date' : end_date}
+    else:
+        date_interval = {'start_date' : start_actual_period, 'end_date' : end_actual_period}
+    actual_period_products['avg_price'] = round(actual_period_products['avg_price'], 2) if actual_period_products['avg_price'] else None
+    actual_period_products['avg_health'] = round(actual_period_products['avg_health'], 2) if actual_period_products['avg_health'] else None
+
+    return {'date_interval' : date_interval, 'actual_period_products': actual_period_products, 'old_period_products' : old_period_products}
+
+    
+def getAvgDataFromGroupByAd(groups, start_old_period, end_old_period, start_actual_period, end_actual_period):
+    tracking_infos = {}
+    for group in groups:
+        avg_info = getProductsAvgInfos(getProductsIdsTorGroupByAd(group), start_old_period, end_old_period, start_actual_period, end_actual_period)
+        actual_period_products, old_period_products = avg_info['actual_period_products'], avg_info['old_period_products']
+        differenceBetweenPeriods = getDifferenceBetweenPeriods(old_period_products, actual_period_products)
+        price_difference_between_periods, health_difference_between_periods = differenceBetweenPeriods['price_difference_between_periods'], differenceBetweenPeriods['health_difference_between_periods']
+        date_interval = avg_info['date_interval']
+        tracking_infos[group.id] = {'avg_price' : actual_period_products['avg_price'], 'avg_health' : actual_period_products['avg_health'], 'price_variation_percentage' : price_difference_between_periods, 'health_variation_percentage' : health_difference_between_periods}
+
+    return {'tracking_infos' : tracking_infos, 'date_interval' : date_interval}
+
+def getAvgDataFromProducts(products, start_old_period, end_old_period, start_actual_period, end_actual_period):
+    tracking_infos = {}
+    for product in products:
+        avg_info = getProductsAvgInfos([product], start_old_period, end_old_period, start_actual_period, end_actual_period)
+        actual_period_products, old_period_products = avg_info['actual_period_products'], avg_info['old_period_products']
+        differenceBetweenPeriods = getDifferenceBetweenPeriods(old_period_products, actual_period_products)
+        price_difference_between_periods, health_difference_between_periods = differenceBetweenPeriods['price_difference_between_periods'], differenceBetweenPeriods['health_difference_between_periods']
+        date_interval = avg_info['date_interval']
+        tracking_infos[product.product_id] = {'avg_price' : actual_period_products['avg_price'], 'avg_health' : actual_period_products['avg_health'], 'price_variation_percentage' : price_difference_between_periods, 'health_variation_percentage' : health_difference_between_periods}
+        
+    return {'tracking_infos' : tracking_infos, 'date_interval' : date_interval}

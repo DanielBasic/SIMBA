@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import Group_by_ad
 
-# Register your models here.
+admin.site.register(Group_by_ad)

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agrupamento</title>
     {% load static %}
+    {% load custom_filters %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
 
@@ -61,7 +62,26 @@
               <br>
               <p class="title_product">{{product.title}}</p>
             </td>
-            <td> </td>
+            <td id="price_container">
+              {% if tracking_infos|get_key:product.product_id|get_key:'avg_price'%}
+              {{tracking_infos|get_key:product.product_id|get_key:'avg_price'}}
+              <div id="arrow_price" class="circle-container" product_id="{{product.product_id}}">
+                
+              </div>
+              {% else %}
+              N/A
+              {% endif %}
+            </td>
+            <td>
+              {% if tracking_infos|get_key:product.product_id|get_key:'avg_health'%}
+              {{tracking_infos|get_key:product.product_id|get_key:'avg_health'}}
+              <div id="arrow_health" class="circle-container" product_id="{{product.product_id}}">
+                
+              </div>
+              {% else %}
+              N/A
+              {% endif %}
+            </td>
             <td> </td>
             <td> </td>
           </tr>
@@ -83,6 +103,8 @@
     $("#produtos-table").DataTable();
   });
 </script>
-    
+
+{{ tracking_infos|json_script:'tracking_infos' }}
+
 </body>
 </html>
