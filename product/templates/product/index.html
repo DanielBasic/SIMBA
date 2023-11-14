@@ -60,7 +60,7 @@
                 <p class="id">ID:   {{product.id}}</p><br>
                 <p>Quantidade inicial de estoque:   {{product.initial_quantity}}</p><br>
                 <p>Quantidade disponível:   {{product.available_quantity}}</p><br>
-                <p>Vendas:   {{product.sold_quantity}}</p><br>
+                <!-- <p>Vendas:   {{product.sold_quantity}}</p><br> -->
                 <p> Data de criação: {{product.date_created}} </p><br>
                 
                 {% for term in product.sale_terms %}
@@ -112,10 +112,10 @@
             {%endif%}
 
         {% endfor %}
-        <span class="date_created">{{product.date_created}}</span>
+        <!-- <span class="date_created">{{product.date_created}}</span> -->
     </div>
     <br><br><br><br><br><br>
-    <!-- <p>{{product}}</p> -->
+    <p>{{product}}</p>
     </div>
 
 </main>   
