@@ -9,7 +9,7 @@
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
 </head>
 
@@ -151,6 +151,7 @@
                   <p>{{group.title}}</p>
 
                 <td id="price_container">
+<<<<<<< HEAD
                   <div class="variable-container">
                     <div>
                       {% if tracking_infos|get_key:group.id|get_key:'avg_price'%}
@@ -210,14 +211,48 @@
                   {% endif %}
 
                   </div>
+=======
+                  R$: 
+                  {% if tracking_infos|get_key:group.id|get_key:'avg_price'%}
+                  {{tracking_infos|get_key:group.id|get_key:'avg_price'}}
+                  <div id="arrow_price" class="circle-container" group_id="{{group.id}}">
+                    
+                  </div>
+                  {% else %}
+                  N/A
+                  {% endif %}
+                </td>
+                <td>
+                  {% if tracking_infos|get_key:group.id|get_key:'avg_health'%}
+                  {{tracking_infos|get_key:group.id|get_key:'avg_health'}}
+                  <div id="arrow_health" class="circle-container" group_id="{{group.id}}">
+                    
+                  </div>
+                  {% else %}
+                  N/A
+                  {% endif %}
+                </td>
+                <td>
+                  {% if group.is_tracking_activated %}
+                    Ativo    <span class="green-dot"></span>
+                  {% else %}
+                    Pausado    <span class="red-dot"></span>
+                  {% endif %}
+>>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
                 </td>
                 <td>
                   <div class="menu-container">
                     <div class="menu-button">. . .</div> 
                     <div class="hidden-buttons">
+<<<<<<< HEAD
                       <form method="POST" action="{% url 'stop_groupByAd' group.id %}">{% csrf_token %}  
                         {%if group.is_tracking_activated %}
                           <button  id="parar-anuncio">Parar</button>
+=======
+                      <form method="POST" action="{% url 'toggle_tracking_groupByAd' group.id %}">{% csrf_token %}  
+                        {%if group.is_tracking_activated %}
+                          <button  id="parar-anuncio">Parar de Monitorar</button>
+>>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
                         {% else %}
                           <button  id="parar-anuncio">Monitorar</button>
                         {% endif %}
@@ -225,7 +260,11 @@
                       
                       <button id="openModall" class="edit-button" title="{{group.title}}" image="{{group.image.url}}" group_id="{{group.id}}"> Editar</button>  
 
+<<<<<<< HEAD
                       <form method="POST" id="formulario-exclusao-{{ group.id }}"  action="{% url 'exclud_groupByAd' group.id %}">{% csrf_token %}
+=======
+                      <form method="POST" id="formulario-exclusao-{{ group.id }}"  action="{% url 'exclude_groupByAd' group.id %}">{% csrf_token %}
+>>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
                         <button type="submit" title="{{group.title}}" id="excluir-anuncio-{{ group.id }}" >Excluir</button>
                       </form>
                     </div>

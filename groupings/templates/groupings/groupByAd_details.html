@@ -11,7 +11,7 @@
     {% load custom_filters %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     
 </head>
 <body>
@@ -62,8 +62,13 @@
     <thead class="styled-thead">
       <tr>
         <th>Produto</th>
+<<<<<<< HEAD
         <th >Preço Médio</th>
         <th >Saúde média</th>
+=======
+        <th>Preço Médio</th>
+        <th>Saúde média</th>
+>>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
         <th>Monitoramento</th>
         <th>Opções</th>
       </tr>
@@ -79,6 +84,7 @@
               <img src="{{product.image.url}}" alt="{{product.title}}" value="{{product.id}}"  width="75px" height="75px">
               <br>
               <p class="title_product">{{product.title}}</p>
+<<<<<<< HEAD
 
               </div>
 
@@ -159,13 +165,44 @@
                   </div>
                 {% endif %}
               </div>
+=======
+          </td>
+            </td>
+            <td id="price_container">
+              R$: 
+              {% if tracking_infos|get_key:product.product_id|get_key:'avg_price'%}
+              {{tracking_infos|get_key:product.product_id|get_key:'avg_price'}}
+              <div id="arrow_price" class="circle-container" product_id="{{product.product_id}}">
+                
+              </div>
+              {% else %}
+              N/A
+              {% endif %}
+            </td>
+            <td>
+              {% if tracking_infos|get_key:product.product_id|get_key:'avg_health'%}
+              {{tracking_infos|get_key:product.product_id|get_key:'avg_health'}}
+              <div id="arrow_health" class="circle-container" product_id="{{product.product_id}}">
+                
+              </div>
+              {% else %}
+              N/A
+              {% endif %}
+            </td>
+            <td>
+              {% if product.is_tracking_activated %}
+                Ativo <span class="green-dot"></span>
+              {% else %}
+                Pausado <span class="red-dot"></span>
+              {% endif %}
+>>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
             </td>
             <td>
               <div class="menu-container">
                 <div class="menu-button">...</div> 
                 <div class="hidden-buttons">
 
-                  <form method="POST" action="{% url 'stop_product' product.object_id %}">{% csrf_token %}
+                  <form method="POST" action="{% url 'toggle_tracking_product' product.object_id %}">{% csrf_token %}
                     <input type="hidden" name="group_id" value="{{group_id}}">                
                     {%if product.is_tracking_activated %}
                       <button  id="parar-anuncio">Parar</button>
@@ -186,6 +223,10 @@
                     
                </div>
             </td>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
           </tr>
        
       {% endfor %}  

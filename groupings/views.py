@@ -159,7 +159,7 @@ def groupByAd_details(request):
 
 # PARAR O AGRUPAMENTO
 @login_required
-def stop_groupByAd(request, group_id):
+def toggle_tracking_groupByAd(request, group_id):
     if request.method == "GET":
       group = get_object_or_404(Group_by_ad, id=group_id)
       group.is_tracking_activated
@@ -167,9 +167,15 @@ def stop_groupByAd(request, group_id):
     
     if request.method == "POST":
         group = get_object_or_404(Group_by_ad, id=group_id)
-        current_value = group.is_tracking_activated
-        group.is_tracking_activated = not current_value
+        status = not group.is_tracking_activated
+        tracking_products = TrackingProduct.objects.filter(group=group)
+        if tracking_products.exists():
+          for product in tracking_products:
+            product.is_tracking_activated = status
+            product.save()
+        group.is_tracking_activated = status
         group.save()
+        
         messages.add_message(request, constants.SUCCESS, 'O Monitoramento desse agrupamento foi alterado')
         return redirect(reverse('groupByAd_management'))
     else:
@@ -208,12 +214,14 @@ def edit_groupByAd(request):
          
 # EXCLUIR UM AGRUPAMENTO
 @login_required
-def exclud_groupByAd(request, group_id):
+def exclude_groupByAd(request, group_id):
   if request.method == "POST":
-    objeto = Group_by_ad.objects.filter(id=group_id)
-    if objeto.exists():
-
-      objeto.delete()
+    group = Group_by_ad.objects.filter(id=group_id).first()
+    if group:
+      tracking_products = TrackingProduct.objects.filter(group=group)
+      for product in tracking_products:
+        product.delete()
+      group.delete()
      
       return redirect(reverse('groupByAd_management'))
   else:
@@ -240,7 +248,7 @@ def gerenciar_agrupamentos_seller(request):
     return render(request, "groupings/gerenciar_agrupamentos_seller.html", {'agrupamentos':groups})
 
 @login_required
-def stop_product(request, object_id):
+def toggle_tracking_product(request, object_id):
   if request.method == "POST":
     objeto = TrackingProduct.objects.filter(object_id=object_id)
     if objeto.exists():
