@@ -55,7 +55,7 @@ def get_access_token(app_id, client_secret, refresh_token):
     response = requests.request("POST", url, headers=headers, data=payload)
     if response.status_code == 200:
         response = response.json()
-
+        print(response)
         changeNewRefreshToken(response['refresh_token'])
         return response
     return None

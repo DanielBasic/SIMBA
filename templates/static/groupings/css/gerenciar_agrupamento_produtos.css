@@ -41,17 +41,38 @@ p a {
 
 }
 
-.variable-container{
+.variable-container {
   display: flex;
   gap: 10px;
   align-items: center;
   align-content: center;
-  justify-content: space-between;
+  
+}
 
+
+.variable-table{
+  justify-content: space-between;
+  flex-direction: ;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  align-content: center;
 }
-.variable-container i {
-  margin-right: 20px;
+
+.variable-table i {
+ 
+  width: 20px;
+  transition-delay: 0s;
+  
 }
+
+.variable-table i:hover {
+  transition-delay: 0s;
+  
+}
+
+
+
 
 p{
   margin-bottom: 0px;

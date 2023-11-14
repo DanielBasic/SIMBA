@@ -25,7 +25,7 @@
   <main>
     <header>
       <nav>
-        <a class="logo" href="#">Simba</a>
+        <a class="logo" href="{% url 'sobre' %}">Simba</a>
         <div class="mobile-menu">
           <div class="line1"></div>
           <div class="line2"></div>
@@ -61,11 +61,36 @@
   <table class="styled-table" id="produtos-table">
     <thead class="styled-thead">
       <tr>
-        <th>Produto</th>
-        <th >Preço Médio</th>
-        <th >Saúde média</th>
-        <th>Monitoramento</th>
-        <th>Opções</th>
+        <th>
+          <div class="variable-table">
+          <p>Produto</p>
+          <i class="icono fas fa-question" title="Nome do produto"> </i>
+          </div>
+        </th>
+        <th>
+          <div class="variable-table">
+          <p>Preço</p>
+          <i class="icono fas fa-question" title="Preço atual"> </i>
+          </div>
+        </th>
+        <th>
+          <div class="variable-table">
+          <p>Saúde</p>
+          <i class="icono fas fa-question" title="Saude atual"> </i>
+          </div>
+        </th>
+        <th>
+          <div class="variable-table">
+          <p>Monitoramento</p>
+          <i class="icono fas fa-question" title="Monitoramento pode estar ativo ou pausado"> </i>
+          </div>
+        </th>
+        <th>
+          <div class="variable-table">
+          <p>Opções</p>
+          <i class="icono fas fa-question" title="Opções do produto"> </i>
+          </div>
+        </th>
       </tr>
     </thead>
     <tbody>
