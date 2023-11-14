@@ -45,6 +45,7 @@
                    <form action="{% url 'sua_view' %}" method="POST" > {% csrf_token %}
                     <button type="button" class="boton-avatar" id="botao-adicionar-imagem" >
                         <i class="far fa-image"></i>
+                        
                     </button>
                   </form>
                 </div>
@@ -69,6 +70,7 @@
                 <ul class="lista-datos">
                     <li><i class="icono fas fa-user"> </i></i> Username : </li>
                     <li><i class="icono fas fa-envelope"></i> Email : </li>
+                    
                 </ul>  
                 <ul class="lista-datos">
                   <form id="form-name-or-email"action="{% url 'update_profile' user.id %}" method="POST" class="form_login"> {% csrf_token %}
