@@ -154,12 +154,12 @@ def groupByAd_details(request):
       print(tracking_infos)
     else:
       raise TypeError("The group_id must be a int type")
-    return render(request, "groupings/groupByAd_details.html", {'products' : products, 'group_id' : group_id})
+    return render(request, "groupings/groupByAd_details.html", {'products' : products, 'group_id' : group_id, 'tracking_infos' : tracking_infos, 'date_interval' : date_interval})
 
 
 # PARAR O AGRUPAMENTO
 @login_required
-def stop_groupByAd(request, group_id):
+def toggle_tracking_groupByAd(request, group_id):
     if request.method == "GET":
       group = get_object_or_404(Group_by_ad, id=group_id)
       group.is_tracking_activated
@@ -167,9 +167,15 @@ def stop_groupByAd(request, group_id):
     
     if request.method == "POST":
         group = get_object_or_404(Group_by_ad, id=group_id)
-        current_value = group.is_tracking_activated
-        group.is_tracking_activated = not current_value
+        status = not group.is_tracking_activated
+        tracking_products = TrackingProduct.objects.filter(group=group)
+        if tracking_products.exists():
+          for product in tracking_products:
+            product.is_tracking_activated = status
+            product.save()
+        group.is_tracking_activated = status
         group.save()
+        
         messages.add_message(request, constants.SUCCESS, 'O Monitoramento desse agrupamento foi alterado')
         return redirect(reverse('groupByAd_management'))
     else:

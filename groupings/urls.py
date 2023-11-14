@@ -12,7 +12,7 @@ urlpatterns = [
   path("group/", views.groupByAd_details, name="groupByAd_details"),
 
 
-  path('stop_groupByAd/<int:group_id>/', views.stop_groupByAd, name='stop_groupByAd'),
+  path('toggle_tracking_groupByAd/<int:group_id>/', views.toggle_tracking_groupByAd, name='toggle_tracking_groupByAd'),
   path('edit_groupByAd/', views.edit_groupByAd, name='edit_groupByAd'),
   path('exclud_groupByAd/<int:group_id>/', views.exclud_groupByAd, name='exclud_groupByAd'),
 

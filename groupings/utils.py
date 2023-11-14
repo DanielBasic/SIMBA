@@ -138,6 +138,7 @@ def getProductsAvgInfos(products_ids, start_old_period, end_old_period, start_ac
     
 def getAvgDataFromGroupByAd(groups, start_old_period, end_old_period, start_actual_period, end_actual_period):
     tracking_infos = {}
+    date_interval = {}
     for group in groups:
         avg_info = getProductsAvgInfos(getProductsIdsTorGroupByAd(group), start_old_period, end_old_period, start_actual_period, end_actual_period)
         actual_period_products, old_period_products = avg_info['actual_period_products'], avg_info['old_period_products']
@@ -150,6 +151,7 @@ def getAvgDataFromGroupByAd(groups, start_old_period, end_old_period, start_actu
 
 def getAvgDataFromProducts(products, start_old_period, end_old_period, start_actual_period, end_actual_period):
     tracking_infos = {}
+    date_interval = {}
     for product in products:
         avg_info = getProductsAvgInfos([product], start_old_period, end_old_period, start_actual_period, end_actual_period)
         actual_period_products, old_period_products = avg_info['actual_period_products'], avg_info['old_period_products']

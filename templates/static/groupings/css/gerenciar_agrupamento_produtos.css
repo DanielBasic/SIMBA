@@ -781,5 +781,17 @@ max-width: 200px;
   display: block;
 }
 
+.green-dot, .red-dot {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
 
+.green-dot {
+  background-color: LightGreen;
+}
 
+.red-dot {
+  background-color: red;
+}
