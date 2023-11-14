@@ -45,15 +45,22 @@
       </nav>     
 </header>
 
-<div class="margin-table">
+<div class="row">
+    
+  <div class="col-md">
+      <br>
 
-  
-  <div class="container_canvas" style="width: 800px; height: 300px;" >
-    <br>
-    <h4>Vendas: {PRODUTO x } <i class="fa-solid fa-arrow-up"></i></h4>
-    <canvas id="despesas_mensal" ></canvas>
+      <h4>Preço Médio dos Produtos</h4>
+      <canvas id="price_variation" width="250" height="200"></canvas>
   </div>
-<div class="espaçamento">
+  
+  <div class="col-md">
+      <br>
+      <h4>Saúde Média dos Produtos</h4>
+      <canvas id="health_variation" width="250" height="200"></canvas>
+  </div>
+
+</div>
   
  
 </div>
@@ -62,13 +69,8 @@
     <thead class="styled-thead">
       <tr>
         <th>Produto</th>
-<<<<<<< HEAD
         <th >Preço Médio</th>
         <th >Saúde média</th>
-=======
-        <th>Preço Médio</th>
-        <th>Saúde média</th>
->>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
         <th>Monitoramento</th>
         <th>Opções</th>
       </tr>
@@ -84,7 +86,6 @@
               <img src="{{product.image.url}}" alt="{{product.title}}" value="{{product.id}}"  width="75px" height="75px">
               <br>
               <p class="title_product">{{product.title}}</p>
-<<<<<<< HEAD
 
               </div>
 
@@ -165,37 +166,6 @@
                   </div>
                 {% endif %}
               </div>
-=======
-          </td>
-            </td>
-            <td id="price_container">
-              R$: 
-              {% if tracking_infos|get_key:product.product_id|get_key:'avg_price'%}
-              {{tracking_infos|get_key:product.product_id|get_key:'avg_price'}}
-              <div id="arrow_price" class="circle-container" product_id="{{product.product_id}}">
-                
-              </div>
-              {% else %}
-              N/A
-              {% endif %}
-            </td>
-            <td>
-              {% if tracking_infos|get_key:product.product_id|get_key:'avg_health'%}
-              {{tracking_infos|get_key:product.product_id|get_key:'avg_health'}}
-              <div id="arrow_health" class="circle-container" product_id="{{product.product_id}}">
-                
-              </div>
-              {% else %}
-              N/A
-              {% endif %}
-            </td>
-            <td>
-              {% if product.is_tracking_activated %}
-                Ativo <span class="green-dot"></span>
-              {% else %}
-                Pausado <span class="red-dot"></span>
-              {% endif %}
->>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
             </td>
             <td>
               <div class="menu-container">
@@ -223,10 +193,6 @@
                     
                </div>
             </td>
-<<<<<<< HEAD
-=======
-
->>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
           </tr>
        
       {% endfor %}  
@@ -253,7 +219,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
 <script>
-  renderiza_despesas_mensal()
+  window.onload = function(e){
+    showLineCharComparation('{% url "getPriceVariationsProducts" group_id %}', 'price_variation')
+    showLineCharComparation('{% url "getHealthVariationsOfProducts" group_id %}', 'health_variation')
+}
 </script>
 
 {{ tracking_infos|json_script:'tracking_infos' }}

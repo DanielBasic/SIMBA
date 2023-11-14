@@ -23,7 +23,7 @@ from api_MercadoLivre.getContent import getInfoFromProduct, get_access_token
 from decouple import config
 from django.contrib.auth.decorators import login_required
 
-from .utils import add_products_into_group, getMonthPeriodsDates, getAvgDataFromGroupByAd, getAvgDataFromProducts, priceVariationsOfGroupByAd
+from .utils import add_products_into_group, getMonthPeriodsDates, getAvgDataFromGroupByAd, getAvgDataFromProducts, priceVariationsOfGroupByAd, healthVariationsOfGroupByAd, priceVariationsOfProducts, healthVariationsOfProducts
 import os
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -264,13 +264,32 @@ def getPriceVariationsGroupByAd(request):
       dataJson = priceVariationsOfGroupByAd(groups)
       return JsonResponse(dataJson)
 
-def healthVariationsOfGroupByAd(request):
+def getHealthVariationsOfGroupByAd(request):
   if request.method == 'GET':
     user = request.user
     groups = Group_by_ad.objects.filter(user=user)
-  if groups.exists():
-    dataJson = healthVariationsOfGroupByAd(groups)
-    return JsonResponse(dataJson)
+    if groups.exists():
+      dataJson = healthVariationsOfGroupByAd(groups)
+      print(f'dataJSon: {dataJson}')
+      return JsonResponse(dataJson)
+    
+def getPriceVariationsProducts(request, group_id):
+  if request.method == 'GET':
+    print(f'type : {type(group_id), group_id}')
+    group = Group_by_ad.objects.get(id=group_id)
+    if group:
+      dataJson = priceVariationsOfProducts(group)
+      return JsonResponse(dataJson)
+
+def getHealthVariationsOfProducts(request, group_id):
+  if request.method == 'GET':
+    print(f'type : {type(group_id), group_id}')
+    group = Group_by_ad.objects.get(id=group_id)
+    if group:
+      print(group)
+      dataJson = healthVariationsOfProducts(group)
+      print(f'dataJSon: {dataJson}')
+      return JsonResponse(dataJson)
 
 @login_required
 def toggle_tracking_product(request, object_id):

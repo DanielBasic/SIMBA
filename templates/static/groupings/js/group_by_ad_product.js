@@ -98,3 +98,47 @@ document.addEventListener('DOMContentLoaded', function () {
     updateArrowsAndPercentages(arrows_price);
     updateArrowsAndPercentages(arrows_health);
 });
+
+
+function showLineCharComparation(url, ctx_id) {
+
+  fetch(url, {
+      method: 'get',
+  }).then(function(result){
+      return result.json()
+  }).then(function(data){
+  
+  console.log('dict', data)
+
+  const ctx = document.getElementById(ctx_id).getContext('2d');
+  const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: data['actual_dates'],
+          datasets: [
+              {
+                  label: data['actual_dates'],
+                  data: data['actual_data'],
+                  backgroundColor: "#CB1EA8",
+                  borderColor: "#FFFFFF",
+                  borderWidth: 0.2,
+                  lineTension: 0.3,
+                  pointBorderColor: 'transparent',
+                  borderJoinStyle: 'round',
+              },
+              {
+                  label: data['old_dates'],
+                  data: data['old_data'],
+                  backgroundColor: "#1E90FF",
+                  borderColor: "#FFFFFF",
+                  borderWidth: 0.2,
+                  lineTension: 0.3,
+                  pointBorderColor: 'transparent',
+                  borderJoinStyle: 'round',
+              }
+          ]
+      },
+  });
+});
+}
+

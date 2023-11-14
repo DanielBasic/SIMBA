@@ -21,7 +21,9 @@ urlpatterns = [
   path('more_details/<str:product_id>/', views.more_details, name='more_details'),
 
   path('getPriceVariationsGroupByAd/', views.getPriceVariationsGroupByAd, name='getPriceVariationsGroupByAd'),
-  path('healthVariationsOfGroupByAd/', views.healthVariationsOfGroupByAd, name='healthVariationsOfGroupByAd')
+  path('getHealthVariationsOfGroupByAd/', views.getHealthVariationsOfGroupByAd, name='getHealthVariationsOfGroupByAd'),
+  path('getPriceVariationsProducts/<int:group_id>/', views.getPriceVariationsProducts, name='getPriceVariationsProducts'),
+  path('getHealthVariationsOfProducts/<int:group_id>/', views.getHealthVariationsOfProducts, name='getHealthVariationsOfProducts')
 
 
 ]

@@ -51,3 +51,5 @@ def get_stock_quantity_from_ml_ad(url):
 def datetime_stprtime(datetime_inString):
     format_string = '%Y-%m-%dT%H:%M:%S.%fZ'
     return datetime.strptime(datetime_inString, format_string)
+
+

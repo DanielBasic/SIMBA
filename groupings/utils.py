@@ -227,3 +227,128 @@ def healthVariationsOfGroupByAd(groups):
                 'actual_data' : actual_period_data, 'actual_dates' : dates_actual_period}
 
     return jsonData
+
+def healthVariationsOfProducts(group):
+    dates =  getMonthPeriodsDates()
+    start_old_period, end_old_period = dates['start_old_period'], dates['end_old_period']
+    start_actual_period, end_actual_period = dates['start_actual_period'], dates['end_actual_period']
+    locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+    def getDataAndDates(start_period, end_period):
+        dates = []
+        data = []
+        products_ids = TrackingProduct.objects.filter(group=group).values_list('product_id', flat=True)
+        products = Product.objects.filter(id__in=products_ids, date_tracked__range=(start_period, end_period)).exclude(health__isnull=True).annotate(date_only=Cast('date_tracked', DateField()))
+        result = products.values('date_only').annotate(
+        avg_health=ExpressionWrapper(
+            Avg(F('health')),
+            output_field=fields.FloatField()
+        ))
+        
+        for entry in result:
+            date = entry['date_only'].strftime("%A, %d %b. %Y")
+            avg_health = entry['avg_health']
+            dates.append(date)
+            data.append(avg_health)
+        return data, dates
+    
+    old_period_data, dates_old_period = getDataAndDates(start_old_period, end_old_period)
+    actual_period_data, dates_actual_period = getDataAndDates(start_actual_period, end_actual_period)
+    jsonData = {'old_data' : old_period_data, 'old_dates' : dates_old_period,
+                'actual_data' : actual_period_data, 'actual_dates' : dates_actual_period}
+
+    return jsonData
+
+def priceVariationsOfProducts(group):
+    dates =  getMonthPeriodsDates()
+    start_old_period, end_old_period = dates['start_old_period'], dates['end_old_period']
+    start_actual_period, end_actual_period = dates['start_actual_period'], dates['end_actual_period']
+    locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+    def getDataAndDates(start_period, end_period):
+        dates = []
+        data = []
+        products_ids = TrackingProduct.objects.filter(group=group).values_list('product_id', flat=True)
+
+        products = Product.objects.filter(id__in=products_ids, date_tracked__range=(start_period, end_period)).exclude(price__isnull=True).annotate(date_only=Cast('date_tracked', DateField()))
+        result = products.values('date_only').annotate(
+        avg_price=ExpressionWrapper(
+            Avg(F('price')),
+            output_field=fields.FloatField()
+        ))
+        
+        for entry in result:
+            date = entry['date_only'].strftime("%A, %d %b. %Y")
+            avg_price = entry['avg_price']
+            dates.append(date)
+            data.append(avg_price)
+        return data, dates
+    
+    old_period_data, dates_old_period = getDataAndDates(start_old_period, end_old_period)
+    actual_period_data, dates_actual_period = getDataAndDates(start_actual_period, end_actual_period)
+    jsonData = {'old_data' : old_period_data, 'old_dates' : dates_old_period,
+                'actual_data' : actual_period_data, 'actual_dates' : dates_actual_period}
+
+    return jsonData
+
+
+
+def priceVariationsSpecificProduct(product_id):
+    dates =  getMonthPeriodsDates()
+    start_old_period, end_old_period = dates['start_old_period'], dates['end_old_period']
+    start_actual_period, end_actual_period = dates['start_actual_period'], dates['end_actual_period']
+    locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+    def getDataAndDates(start_period, end_period):
+        dates = []
+        data = []
+        products = Product.objects.filter(id=product_id, date_tracked__range=(start_period, end_period)).exclude(price__isnull=True).annotate(date_only=Cast('date_tracked', DateField()))
+        result = products.values('date_only').annotate(
+        avg_price=ExpressionWrapper(
+            Avg(F('price')),
+            output_field=fields.FloatField()
+        ))
+        
+        for entry in result:
+            date = entry['date_only'].strftime("%A, %d %b. %Y")
+            avg_price = entry['avg_price']
+            dates.append(date)
+            data.append(avg_price)
+        return data, dates
+    
+    old_period_data, dates_old_period = getDataAndDates(start_old_period, end_old_period)
+    actual_period_data, dates_actual_period = getDataAndDates(start_actual_period, end_actual_period)
+    jsonData = {'old_data' : old_period_data, 'old_dates' : dates_old_period,
+                'actual_data' : actual_period_data, 'actual_dates' : dates_actual_period}
+
+    return jsonData
+
+def healthVariationsOfSpecificProduct(product_id):
+    dates =  getMonthPeriodsDates()
+    start_old_period, end_old_period = dates['start_old_period'], dates['end_old_period']
+    start_actual_period, end_actual_period = dates['start_actual_period'], dates['end_actual_period']
+    locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+    def getDataAndDates(start_period, end_period):
+        dates = []
+        data = []
+        products = Product.objects.filter(id=product_id, date_tracked__range=(start_period, end_period)).exclude(health__isnull=True).annotate(date_only=Cast('date_tracked', DateField()))
+        result = products.values('date_only').annotate(
+        avg_health=ExpressionWrapper(
+            Avg(F('health')),
+            output_field=fields.FloatField()
+        ))
+        
+        for entry in result:
+            date = entry['date_only'].strftime("%A, %d %b. %Y")
+            avg_health = entry['avg_health']
+            dates.append(date)
+            data.append(avg_health)
+        return data, dates
+    
+    old_period_data, dates_old_period = getDataAndDates(start_old_period, end_old_period)
+    actual_period_data, dates_actual_period = getDataAndDates(start_actual_period, end_actual_period)
+    jsonData = {'old_data' : old_period_data, 'old_dates' : dates_old_period,
+                'actual_data' : actual_period_data, 'actual_dates' : dates_actual_period}
+
+    return jsonData
+
+
+def getViewDataSpecificProduct():
+    pass

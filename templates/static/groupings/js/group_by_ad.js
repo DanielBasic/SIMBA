@@ -241,6 +241,7 @@ function showLineCharComparation(url, ctx_id) {
         type: 'line',
         data: {
             labels: data['actual_dates'],
+
             datasets: [
                 {
                     label: data['actual_dates'],
