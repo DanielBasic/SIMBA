@@ -807,7 +807,6 @@ max-width: 200px;
   display: inline-block;
 }
 
-<<<<<<< HEAD
 .green-dot, .red-dot {
   height: 20px;
   width: 20px;
@@ -823,11 +822,6 @@ max-width: 200px;
   background-color: red;
 }
 
-=======
-.green-dot {
-  background-color: LightGreen;
-}
->>>>>>> 3c1714f8d2ae3e790564f2b8e5c008e652b9b5d5
 
 .red-dot {
   background-color: red;
