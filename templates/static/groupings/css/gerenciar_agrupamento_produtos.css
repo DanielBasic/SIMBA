@@ -32,13 +32,25 @@ p a {
     color: #1e6dee;
   
     }
+.variable-title{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  align-content: center;
+  
+
+}
 
 .variable-container{
   display: flex;
   gap: 10px;
   align-items: center;
   align-content: center;
+  justify-content: space-between;
 
+}
+.variable-container i {
+  margin-right: 20px;
 }
 
 p{
