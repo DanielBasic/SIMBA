@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
 
-def is_ad_paused(url):
+
 def is_ad_paused(url):
     response = requests.get(url, allow_redirects=False)
     if response.status_code > 302:

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos</title>
     {% load static %}
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
     {% load custom_filters %}
@@ -49,10 +50,11 @@
   
   <div class="container_canvas" style="width: 800px; height: 300px;" >
     <br>
-    <h4>Vendas: {PRODUTO x }</h4>
+    <h4>Vendas: {PRODUTO x } <i class="fa-solid fa-arrow-up"></i></h4>
     <canvas id="despesas_mensal" ></canvas>
   </div>
 <div class="espaçamento">
+  
  
 </div>
   
@@ -60,9 +62,9 @@
     <thead class="styled-thead">
       <tr>
         <th>Produto</th>
-        <th>Vendas brutas</th>
-        <th>Unidades Vendidas</th>
-        <th>Média Preço</th>
+        <th >Preço Médio</th>
+        <th >Saúde média</th>
+        <th>Monitoramento</th>
         <th>Opções</th>
       </tr>
     </thead>
@@ -70,22 +72,94 @@
       {% for product in products %}
           <tr>
             <td class="group-details-pro"  group_id="{{product.id}}">
+              <div class="variable-container">
+
               <input type="hidden" name="product_id" name2="bla bla" value="{{product.product_id}}">
               
               <img src="{{product.image.url}}" alt="{{product.title}}" value="{{product.id}}"  width="75px" height="75px">
               <br>
               <p class="title_product">{{product.title}}</p>
+
+              </div>
+
+            </td>
+            
+            <td id="price_container">
+
+              <div class="variable-container">
+                <div>
+
+                  {% if tracking_infos|get_key:product.product_id|get_key:'avg_price'%}
+                  
+
+                  {{tracking_infos|get_key:product.product_id|get_key:'avg_price'}}
+
+                </div>
+
+                <div>
+                  <div id="arrow_price" class="circle-container" product_id="{{product.product_id}}">
+                   
+                  </div>
+                  
+
+                  {% else %}
+                  N/A
+                  {% endif %}
+                </div>
+
+              </div>
+
+            </td>
+
+
+
+            <td>
+
+              <div class="variable-container">
+              <div>
+              {% if tracking_infos|get_key:product.product_id|get_key:'avg_health'%}
+              {{tracking_infos|get_key:product.product_id|get_key:'avg_health'}}
               
+                  
+                
+              </div>
+
+              <div>
+              <div id="arrow_health" class="circle-container" product_id="{{product.product_id}}">
+                
+                
+              </div>
+             
+              
+             
+              
+              {% else %}
+              N/A
+              {% endif %}
+              </div>
+
+              </div>
             </td>
             <td>
-              <p class="title_product">O id do produto é o {{product.product_id}}</p>
+              <div class="variable-container">
+                {% if product.is_tracking_activated %}
+                  <div>
+                    <p>Ativo</p>
+                  </div>
+                  <div>   
+                    <span class="green-dot"></span>                  
+                  </div>
 
-              
-          </td>
-          <td> </td>
-          <td> </td>
-              
-          
+                {% else %}
+                  <div>
+                    <p>Pausado</p>
+                  </div>
+                  <div>
+                    <span class="red-dot"></span>
+                  </div>
+                {% endif %}
+              </div>
+            </td>
             <td>
               <div class="menu-container">
                 <div class="menu-button">...</div> 
@@ -112,29 +186,6 @@
                     
                </div>
             </td>
-            </td>
-            <td id="price_container">
-              {% if tracking_infos|get_key:product.product_id|get_key:'avg_price'%}
-              {{tracking_infos|get_key:product.product_id|get_key:'avg_price'}}
-              <div id="arrow_price" class="circle-container" product_id="{{product.product_id}}">
-                
-              </div>
-              {% else %}
-              N/A
-              {% endif %}
-            </td>
-            <td>
-              {% if tracking_infos|get_key:product.product_id|get_key:'avg_health'%}
-              {{tracking_infos|get_key:product.product_id|get_key:'avg_health'}}
-              <div id="arrow_health" class="circle-container" product_id="{{product.product_id}}">
-                
-              </div>
-              {% else %}
-              N/A
-              {% endif %}
-            </td>
-            <td> </td>
-            <td> </td>
           </tr>
        
       {% endfor %}  
@@ -163,8 +214,6 @@
 <script>
   renderiza_despesas_mensal()
 </script>
-
-
 
 {{ tracking_infos|json_script:'tracking_infos' }}
 

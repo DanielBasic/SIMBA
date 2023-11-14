@@ -154,7 +154,7 @@ def groupByAd_details(request):
       print(tracking_infos)
     else:
       raise TypeError("The group_id must be a int type")
-    return render(request, "groupings/groupByAd_details.html", {'products' : products, 'group_id' : group_id})
+    return render(request, "groupings/groupByAd_details.html", {'products' : products, 'group_id' : group_id, 'tracking_infos' : tracking_infos, 'date_interval' : date_interval})
 
 
 # PARAR O AGRUPAMENTO

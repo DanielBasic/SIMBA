@@ -15,13 +15,6 @@
 
 <body>
     {% load custom_filters %}
-    {% if messages %}
-    <div class="messages">
-        <ul class="messages-list">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
 {% if messages %}
   {% for message in messages %}
     <div id="myAlert"  class="alert {{ message.tags }}">{{ message }}
@@ -145,30 +138,79 @@
               <th>Agrupamento</th>
               <th>Preço médio</th>
               <th>Saúde Média</th>
-              <th>Média Preço</th>
-              <th>opções</th>
+              <th>Monitoramento</th>
+              <th>Opções</th>
             </tr>
           </thead>
           <tbody>
             {% for group in groupByAd_all %}
               <tr>
                 <td class="group-details" group_id="{{group.id}}" >
-                  <!-- <input type="hidden" id="{{group.id}}"  name="group_id" value="{{group.id}}"> -->
                   <img src="{{group.image.url}}" alt="{{group.title}}" width="75px" height="75px">
                   <br>
                   <p>{{group.title}}</p>
-                <td class="group-details"   group_id="{{group.id}}" >
-                  <img src="{{group.image.url}}" alt="{{group.title}}" width="65px" height="65px">
-                  <p id="title-{{group.id}}">{{group.title}}</p> 
-                </td>
-                <td> ID é {{group.id}}</td>
-                <td></td>
-                <td></td>
-                </td></td>
-         
-                  
-                
 
+                <td id="price_container">
+                  <div class="variable-container">
+                    <div>
+                      {% if tracking_infos|get_key:group.id|get_key:'avg_price'%}
+                      {{tracking_infos|get_key:group.id|get_key:'avg_price'}}
+                    </div>
+
+                    <div>
+                      <div id="arrow_price" class="circle-container" group_id="{{group.id}}"></div>
+                      
+                      {% else %}
+                      N/A
+                      {% endif %}
+                    </div>
+
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="variable-container">
+                      <div>
+                      {% if tracking_infos|get_key:group.id|get_key:'avg_health'%}
+                      {{tracking_infos|get_key:group.id|get_key:'avg_health'}}
+
+                      </div>
+                        <div>
+
+                        <div id="arrow_health" class="circle-container" group_id="{{group.id}}"></div>
+                          
+                        {% else %}
+                        N/A
+                        {% endif %}
+                      </div>
+
+                    </div>
+
+                 
+                </td>
+                <td>
+                  <div class="variable-container">
+                  
+                  {% if group.is_tracking_activated %}
+                    <div>
+                      <p>Ativo</p>
+                    </div>
+                    <div>
+                      <span class="green-dot"></span>
+                    </div>
+
+                  {% else %}
+                    <div>
+                      <p>Pausado</p>    
+                    </div>
+                    <div>
+                    <span class="red-dot"></span>
+                  </div>
+
+                  {% endif %}
+
+                  </div>
+                </td>
                 <td>
                   <div class="menu-container">
                     <div class="menu-button">. . .</div> 
@@ -188,28 +230,6 @@
                       </form>
                     </div>
                 </td>
-                <td id="price_container">
-                  {% if tracking_infos|get_key:group.id|get_key:'avg_price'%}
-                  {{tracking_infos|get_key:group.id|get_key:'avg_price'}}
-                  <div id="arrow_price" class="circle-container" group_id="{{group.id}}">
-                    
-                  </div>
-                  {% else %}
-                  N/A
-                  {% endif %}
-                </td>
-                <td>
-                  {% if tracking_infos|get_key:group.id|get_key:'avg_health'%}
-                  {{tracking_infos|get_key:group.id|get_key:'avg_health'}}
-                  <div id="arrow_health" class="circle-container" group_id="{{group.id}}">
-                    
-                  </div>
-                  {% else %}
-                  N/A
-                  {% endif %}
-                </td>
-                <td> </td>
-                <td> </td>
               </tr>
             {% endfor %}
           </tbody>   
