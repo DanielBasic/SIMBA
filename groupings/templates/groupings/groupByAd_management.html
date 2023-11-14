@@ -116,17 +116,26 @@
           </div>
       </div>
     </div>
+<div class="row">
+    
+    <div class="col-md">
+        <br>
 
+        <h4>Preço Médio dos Agrupamentos</h4>
+        <canvas id="price_variation" width="250" height="200"></canvas>
+    </div>
+    
+    <div class="col-md">
+        <br>
+        <h4>Saúde Média dos Agrupamentos</h4>
+        <canvas id="health_variation" width="250" height="200"></canvas>
+    </div>
 
+</div>
 
     
-    <div class="margin-table">
-      <div class="container_canvas" style="width: 800px; height: 300px;" >
-        <br>
-        <h4>Vendas: {PRODUTO x }</h4>
-        <canvas id="despesas_mensal" ></canvas>
-        
-      </div>
+
+
     
     <div class="espaçamento">
      
@@ -220,10 +229,12 @@
 
 <!-- importação do JS para o dashboar -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
-<script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+
 
 <script>
-  renderiza_despesas_mensal()
+  window.onload = function(e){
+    showLineCharComparation('{% url "getPriceVariationsGroupByAd" %}', 'price_variation')
+}
 </script>
 
 {{ tracking_infos|json_script:'tracking_infos' }}
