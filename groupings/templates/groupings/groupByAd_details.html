@@ -76,7 +76,7 @@
         <th>
           <div class="variable-table">
           <p>Saúde</p>
-          <i class="icono fas fa-question" title="Saude atual"> </i>
+          <i class="icono fas fa-question" title="A sáude de um produto indica a qualidade geral que ele tem, impacta na visibilidade"> </i>
           </div>
         </th>
         <th>
@@ -88,7 +88,7 @@
         <th>
           <div class="variable-table">
           <p>Opções</p>
-          <i class="icono fas fa-question" title="Opções do produto"> </i>
+          <i class="icono fas fa-question" title="pções do produto"> </i>
           </div>
         </th>
       </tr>
@@ -112,7 +112,7 @@
             <td id="price_container">
 
               <div class="variable-container">
-                <div>
+                <div class="container-price">
 
                   {% if tracking_infos|get_key:product.product_id|get_key:'avg_price'%}
                   
@@ -121,7 +121,7 @@
 
                 </div>
 
-                <div>
+                <div class="container-price" >
                   <div id="arrow_price" class="circle-container" product_id="{{product.product_id}}">
                    
                   </div>
@@ -141,7 +141,7 @@
             <td>
 
               <div class="variable-container">
-              <div>
+              <div class="container-price" >
               {% if tracking_infos|get_key:product.product_id|get_key:'avg_health'%}
               {{tracking_infos|get_key:product.product_id|get_key:'avg_health'}}
               
@@ -168,7 +168,7 @@
             <td>
               <div class="variable-container">
                 {% if product.is_tracking_activated %}
-                  <div>
+                  <div class="container-status">
                     <p>Ativo</p>
                   </div>
                   <div>   
@@ -176,7 +176,7 @@
                   </div>
 
                 {% else %}
-                  <div>
+                <div class="container-status">
                     <p>Pausado</p>
                   </div>
                   <div>

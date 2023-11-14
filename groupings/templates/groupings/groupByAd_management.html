@@ -188,12 +188,12 @@
 
                 <td id="price_container">
                   <div class="variable-container">
-                    <div>
+                    <div class="container-price" >
                       {% if tracking_infos|get_key:group.id|get_key:'avg_price'%}
                       {{tracking_infos|get_key:group.id|get_key:'avg_price'}}
                     </div>
 
-                    <div>
+                    <div class="container-price" >
                       <div id="arrow_price" class="circle-container" group_id="{{group.id}}"></div>
                       
                       {% else %}
@@ -206,7 +206,7 @@
 
                   <td>
                     <div class="variable-container">
-                      <div>
+                      <div class="container-price" >
                       {% if tracking_infos|get_key:group.id|get_key:'avg_health'%}
                       {{tracking_infos|get_key:group.id|get_key:'avg_health'}}
 
@@ -228,7 +228,7 @@
                   <div class="variable-container">
                   
                   {% if group.is_tracking_activated %}
-                    <div>
+                  <div class="container-status">
                       <p>Ativo</p>
                     </div>
                     <div>
@@ -236,7 +236,7 @@
                     </div>
 
                   {% else %}
-                    <div>
+                  <div class="container-status">
                       <p>Pausado</p>    
                     </div>
                     <div>
