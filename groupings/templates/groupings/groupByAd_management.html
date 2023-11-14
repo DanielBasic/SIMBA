@@ -26,7 +26,7 @@
   <main>
     <header>
       <nav style="z-index: 1;">
-        <a class="logo" href="#">Simba</a>
+        <a class="logo" href="{% url 'sobre' %}">Simba</a>
         <div class="mobile-menu">
           <div class="line1"></div>
           <div class="line2"></div>
@@ -140,15 +140,42 @@
     <div class="espaçamento">
      
     </div>
+    <div class="margin-table">
     
         <table class="styled-table" id="my-table">
           <thead class="styled-thead">
             <tr>
-              <th>Agrupamento</th>
-              <th>Preço médio</th>
-              <th>Saúde Média</th>
-              <th>Monitoramento</th>
-              <th>Opções</th>
+              <th >
+                <div class="variable-table">
+                  <p>Agrupamento </p> 
+                  <i id="info-icon" class="icono fas fa-question" title="Agrupamentos dos produtos"></i>
+               </div>
+              </th>
+              <th >
+                <div class="variable-table">
+                <p>Preço médio</p>
+                <i class="icono fas fa-question" title="Soma de todos os valores divido pelo quantidade de produtos"> </i>
+                </div>
+              </th>
+              
+              <th>
+                <div class="variable-table">
+                <p>Saúde Média</p>
+                <i class="icono fas fa-question" title="Media das saudes contidas no agrupameno"> </i>
+                </div>
+              </th>
+              <th>
+                <div class="variable-table">
+                <p>Monitoramento</p>
+                <i class="icono fas fa-question" title="Monitoramento pode estar ativo ou pausado"> </i>
+                </div>
+              </th>
+              <th>
+                <div class="variable-table">
+                <p>Opções</p>
+                <i class="icono fas fa-question" title="opçoes dos agrupamento"> </i>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -161,12 +188,12 @@
 
                 <td id="price_container">
                   <div class="variable-container">
-                    <div>
+                    <div class="container-price" >
                       {% if tracking_infos|get_key:group.id|get_key:'avg_price'%}
                       {{tracking_infos|get_key:group.id|get_key:'avg_price'}}
                     </div>
 
-                    <div>
+                    <div class="container-price" >
                       <div id="arrow_price" class="circle-container" group_id="{{group.id}}"></div>
                       
                       {% else %}
@@ -179,7 +206,7 @@
 
                   <td>
                     <div class="variable-container">
-                      <div>
+                      <div class="container-price" >
                       {% if tracking_infos|get_key:group.id|get_key:'avg_health'%}
                       {{tracking_infos|get_key:group.id|get_key:'avg_health'}}
 
@@ -201,7 +228,7 @@
                   <div class="variable-container">
                   
                   {% if group.is_tracking_activated %}
-                    <div>
+                  <div class="container-status">
                       <p>Ativo</p>
                     </div>
                     <div>
@@ -209,7 +236,7 @@
                     </div>
 
                   {% else %}
-                    <div>
+                  <div class="container-status">
                       <p>Pausado</p>    
                     </div>
                     <div>
@@ -271,7 +298,10 @@
 }
 </script>
 
+
 {{ tracking_infos|json_script:'tracking_infos' }}
+
+
 
 
 

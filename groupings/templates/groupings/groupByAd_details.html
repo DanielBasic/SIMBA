@@ -25,7 +25,7 @@
   <main>
     <header>
       <nav>
-        <a class="logo" href="#">Simba</a>
+        <a class="logo" href="{% url 'sobre' %}">Simba</a>
         <div class="mobile-menu">
           <div class="line1"></div>
           <div class="line2"></div>
@@ -68,11 +68,36 @@
   <table class="styled-table" id="produtos-table">
     <thead class="styled-thead">
       <tr>
-        <th>Produto</th>
-        <th >Preço Médio</th>
-        <th >Saúde média</th>
-        <th>Monitoramento</th>
-        <th>Opções</th>
+        <th>
+          <div class="variable-table">
+          <p>Produto</p>
+          <i class="icono fas fa-question" title="Nome do produto"> </i>
+          </div>
+        </th>
+        <th>
+          <div class="variable-table">
+          <p>Preço</p>
+          <i class="icono fas fa-question" title="Preço atual"> </i>
+          </div>
+        </th>
+        <th>
+          <div class="variable-table">
+          <p>Saúde</p>
+          <i class="icono fas fa-question" title="A sáude de um produto indica a qualidade geral que ele tem, impacta na visibilidade"> </i>
+          </div>
+        </th>
+        <th>
+          <div class="variable-table">
+          <p>Monitoramento</p>
+          <i class="icono fas fa-question" title="Monitoramento pode estar ativo ou pausado"> </i>
+          </div>
+        </th>
+        <th>
+          <div class="variable-table">
+          <p>Opções</p>
+          <i class="icono fas fa-question" title="pções do produto"> </i>
+          </div>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -94,7 +119,7 @@
             <td id="price_container">
 
               <div class="variable-container">
-                <div>
+                <div class="container-price">
 
                   {% if tracking_infos|get_key:product.product_id|get_key:'avg_price'%}
                   
@@ -103,7 +128,7 @@
 
                 </div>
 
-                <div>
+                <div class="container-price" >
                   <div id="arrow_price" class="circle-container" product_id="{{product.product_id}}">
                    
                   </div>
@@ -123,7 +148,7 @@
             <td>
 
               <div class="variable-container">
-              <div>
+              <div class="container-price" >
               {% if tracking_infos|get_key:product.product_id|get_key:'avg_health'%}
               {{tracking_infos|get_key:product.product_id|get_key:'avg_health'}}
               
@@ -150,7 +175,7 @@
             <td>
               <div class="variable-container">
                 {% if product.is_tracking_activated %}
-                  <div>
+                  <div class="container-status">
                     <p>Ativo</p>
                   </div>
                   <div>   
@@ -158,7 +183,7 @@
                   </div>
 
                 {% else %}
-                  <div>
+                <div class="container-status">
                     <p>Pausado</p>
                   </div>
                   <div>

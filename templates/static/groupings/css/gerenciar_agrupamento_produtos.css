@@ -32,14 +32,55 @@ p a {
     color: #1e6dee;
   
     }
-
-.variable-container{
+.variable-title{
   display: flex;
   gap: 10px;
   align-items: center;
   align-content: center;
+  
 
 }
+
+.variable-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  align-content: center;
+  
+}
+
+
+.variable-table{
+  justify-content: space-between;
+  flex-direction: ;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  align-content: center;
+}
+
+.variable-table i {
+ 
+  width: 20px;
+  transition-delay: 0s;
+  
+}
+
+.variable-table i:hover {
+  transition-delay: 0s;
+  
+}
+
+.container-price{
+  width: 50px;
+}
+
+.container-status{
+  width: 70px;
+}
+
+
+
 
 p{
   margin-bottom: 0px;
