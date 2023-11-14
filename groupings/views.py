@@ -15,7 +15,15 @@ from product.tasks import add_geral_infos_product_in_db
 from .utils import add_products_into_group
 from django.core.serializers import serialize
 
-from .utils import add_products_into_group, getMonthPeriodsDates, getAvgDataFromGroupByAd, getAvgDataFromProducts
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from product.models import Product, TrackingProduct
+from django.db.models import Q
+from api_MercadoLivre.getContent import getInfoFromProduct, get_access_token
+from decouple import config
+from django.contrib.auth.decorators import login_required
+
+from .utils import add_products_into_group, getMonthPeriodsDates, getAvgDataFromGroupByAd, getAvgDataFromProducts, priceVariationsOfGroupByAd
 import os
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -64,7 +72,7 @@ def groupByAd_management(request):
     avg_infos = getAvgDataFromGroupByAd(groups, start_old_period, end_old_period, start_actual_period, end_actual_period)
 
     tracking_infos, date_interval = avg_infos['tracking_infos'], avg_infos['date_interval']
-
+    print(priceVariationsOfGroupByAd(groups))
     return render(request, "groupings/groupByAd_management.html", {'groupByAd_all': groupByAd_all , 'groupByAd_form' : form_groupByAd, 'tracking_infos' : tracking_infos, 'date_interval' : date_interval})
 
 
@@ -151,7 +159,7 @@ def groupByAd_details(request):
       avg_infos = getAvgDataFromProducts(products, start_old_period, end_old_period, start_actual_period, end_actual_period)
 
       tracking_infos, date_interval = avg_infos['tracking_infos'], avg_infos['date_interval']
-      print(tracking_infos)
+      print(priceVariationsOfGroupByAd)
     else:
       raise TypeError("The group_id must be a int type")
     return render(request, "groupings/groupByAd_details.html", {'products' : products, 'group_id' : group_id, 'tracking_infos' : tracking_infos, 'date_interval' : date_interval})
@@ -247,6 +255,23 @@ def gerenciar_agrupamentos_seller(request):
       
     return render(request, "groupings/gerenciar_agrupamentos_seller.html", {'agrupamentos':groups})
 
+
+def getPriceVariationsGroupByAd(request):
+  if request.method == 'GET':
+    user = request.user
+    groups = Group_by_ad.objects.filter(user=user)
+    if groups.exists():
+      dataJson = priceVariationsOfGroupByAd(groups)
+      return JsonResponse(dataJson)
+
+def healthVariationsOfGroupByAd(request):
+  if request.method == 'GET':
+    user = request.user
+    groups = Group_by_ad.objects.filter(user=user)
+  if groups.exists():
+    dataJson = healthVariationsOfGroupByAd(groups)
+    return JsonResponse(dataJson)
+
 @login_required
 def toggle_tracking_product(request, object_id):
   if request.method == "POST":
@@ -269,18 +294,6 @@ def more_details(request, product_id):
   if request.method == "POST":
     print(f'ID do produto = {product_id}')
     return redirect(f'/product/?product_id={product_id}')
-  
-
-
-
-
-from django.shortcuts import render
-from django.http import HttpResponse
-from product.models import Product, TrackingProduct
-from django.db.models import Q
-from api_MercadoLivre.getContent import getInfoFromProduct, get_access_token
-from decouple import config
-from django.contrib.auth.decorators import login_required
 
 
 # def index(request, product_id):

@@ -20,6 +20,27 @@ def get_authorization(app_id, client_secret, authorization_code, redirect_url):
     response = requests.post(token_url, headers=headers, data=payload)
     return response.json()
 
+import os
+from django.conf import settings
+def changeNewRefreshToken(refresh_token):
+    from decouple import config, Csv
+
+    # Load existing values from .env file
+    REFRESH_TOKEN = config('REFRESH_TOKEN')
+
+    env_path = os.path.join(settings.BASE_DIR, 'simba', '.env')
+
+    NEW_REFRESH_TOKEN = refresh_token
+    with open(env_path, 'r') as env_file:
+        lines = env_file.readlines()
+
+    with open(env_path, 'w') as env_file:
+        for line in lines:
+            if line.startswith('REFRESH_TOKEN='):
+                env_file.write(f'REFRESH_TOKEN="{NEW_REFRESH_TOKEN}"\n')
+            else:
+                env_file.write(line)
+
 
 # OBTEM O TOKEN DE ACESSO
 def get_access_token(app_id, client_secret, refresh_token):
@@ -32,8 +53,12 @@ def get_access_token(app_id, client_secret, refresh_token):
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
+    if response.status_code == 200:
+        response = response.json()
 
-    return response.json()
+        changeNewRefreshToken(response['refresh_token'])
+        return response
+    return None
 
 
 def getInfoFromProduct(access_token, product_id):
@@ -213,7 +238,6 @@ def get_ad_info_with_att(access_token, products_ids, attributes):
 
     url = 'https://api.mercadolibre.com/items?ids='
 
-    access_token = access_token['access_token']
     payload = {}
     headers = {
         'Authorization': f'bearer {access_token}'

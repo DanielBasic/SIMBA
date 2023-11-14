@@ -87,6 +87,9 @@ def search(request):
     if access_token:
       available_filters = get_availabe_filters(access_token, key_word, filters_to_apply)
       all_products = get_all_products(access_token, key_word, filters_to_apply)
+    else:
+      available_filters = None
+      all_products = None
     if offset:
       filters_to_apply.pop()
 

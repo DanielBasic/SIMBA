@@ -20,9 +20,8 @@ urlpatterns = [
   path('toggle_tracking_product/<int:object_id>/', views.toggle_tracking_product, name='toggle_tracking_product'),
   path('more_details/<str:product_id>/', views.more_details, name='more_details'),
 
-
-
-   
+  path('getPriceVariationsGroupByAd/', views.getPriceVariationsGroupByAd, name='getPriceVariationsGroupByAd'),
+  path('healthVariationsOfGroupByAd/', views.healthVariationsOfGroupByAd, name='healthVariationsOfGroupByAd')
 
 
 ]

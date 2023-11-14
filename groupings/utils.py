@@ -1,8 +1,12 @@
+from django.db.models.functions import TruncDay
 from product.models import Product, TrackingProduct
 from .helpers.image_helpers import get_image
-from django.db.models import Q, Avg
+from django.db.models import Q, Avg, F, ExpressionWrapper, fields
 from django.core.files.base import ContentFile
+from django.db.models.functions import Cast
+from django.db.models.fields import DateField
 from datetime import datetime, timedelta
+import locale
 import os
 
 class Product_Info:
@@ -104,7 +108,7 @@ def getDifferenceBetweenPeriods(old_period_products, actual_period_products):
 
     return {'price_difference_between_periods' : price_difference_between_periods, 'health_difference_between_periods' : health_difference_between_periods}
 
-def getProductsIdsTorGroupByAd(group):
+def getProductsIdsForGroupByAd(group):
     products_ids = TrackingProduct.objects.filter(group=group).values_list('product_id', flat=True)
     products_ids = list(products_ids)
     return products_ids
@@ -140,7 +144,7 @@ def getAvgDataFromGroupByAd(groups, start_old_period, end_old_period, start_actu
     tracking_infos = {}
     date_interval = {}
     for group in groups:
-        avg_info = getProductsAvgInfos(getProductsIdsTorGroupByAd(group), start_old_period, end_old_period, start_actual_period, end_actual_period)
+        avg_info = getProductsAvgInfos(getProductsIdsForGroupByAd(group), start_old_period, end_old_period, start_actual_period, end_actual_period)
         actual_period_products, old_period_products = avg_info['actual_period_products'], avg_info['old_period_products']
         differenceBetweenPeriods = getDifferenceBetweenPeriods(old_period_products, actual_period_products)
         price_difference_between_periods, health_difference_between_periods = differenceBetweenPeriods['price_difference_between_periods'], differenceBetweenPeriods['health_difference_between_periods']
@@ -161,3 +165,65 @@ def getAvgDataFromProducts(products, start_old_period, end_old_period, start_act
         tracking_infos[product.product_id] = {'avg_price' : actual_period_products['avg_price'], 'avg_health' : actual_period_products['avg_health'], 'price_variation_percentage' : price_difference_between_periods, 'health_variation_percentage' : health_difference_between_periods}
         
     return {'tracking_infos' : tracking_infos, 'date_interval' : date_interval}
+
+
+def priceVariationsOfGroupByAd(groups):
+    dates =  getMonthPeriodsDates()
+    start_old_period, end_old_period = dates['start_old_period'], dates['end_old_period']
+    start_actual_period, end_actual_period = dates['start_actual_period'], dates['end_actual_period']
+    locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+    def getDataAndDates(start_period, end_period):
+        dates = []
+        data = []
+        products_ids = TrackingProduct.objects.filter(group__in=groups).values_list('product_id', flat=True)
+        products = Product.objects.filter(id__in=products_ids, date_tracked__range=(start_period, end_period)).exclude(price__isnull=True).annotate(date_only=Cast('date_tracked', DateField()))
+        result = products.values('date_only').annotate(
+        avg_price=ExpressionWrapper(
+            Avg(F('price')),
+            output_field=fields.FloatField()
+        ))
+        
+        for entry in result:
+            date = entry['date_only'].strftime("%A, %d %b. %Y")
+            avg_price = entry['avg_price']
+            dates.append(date)
+            data.append(avg_price)
+        return data, dates
+    
+    old_period_data, dates_old_period = getDataAndDates(start_old_period, end_old_period)
+    actual_period_data, dates_actual_period = getDataAndDates(start_actual_period, end_actual_period)
+    jsonData = {'old_data' : old_period_data, 'old_dates' : dates_old_period,
+                'actual_data' : actual_period_data, 'actual_dates' : dates_actual_period}
+
+    return jsonData
+
+
+def healthVariationsOfGroupByAd(groups):
+    dates =  getMonthPeriodsDates()
+    start_old_period, end_old_period = dates['start_old_period'], dates['end_old_period']
+    start_actual_period, end_actual_period = dates['start_actual_period'], dates['end_actual_period']
+    locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+    def getDataAndDates(start_period, end_period):
+        dates = []
+        data = []
+        products_ids = TrackingProduct.objects.filter(group__in=groups).values_list('product_id', flat=True)
+        products = Product.objects.filter(id__in=products_ids, date_tracked__range=(start_period, end_period)).exclude(health__isnull=True).annotate(date_only=Cast('date_tracked', DateField()))
+        result = products.values('date_only').annotate(
+        avg_health=ExpressionWrapper(
+            Avg(F('health')),
+            output_field=fields.FloatField()
+        ))
+        
+        for entry in result:
+            date = entry['date_only'].strftime("%A, %d %b. %Y")
+            avg_health = entry['avg_health']
+            dates.append(date)
+            data.append(avg_health)
+        return data, dates
+    
+    old_period_data, dates_old_period = getDataAndDates(start_old_period, end_old_period)
+    actual_period_data, dates_actual_period = getDataAndDates(start_actual_period, end_actual_period)
+    jsonData = {'old_data' : old_period_data, 'old_dates' : dates_old_period,
+                'actual_data' : actual_period_data, 'actual_dates' : dates_actual_period}
+
+    return jsonData
