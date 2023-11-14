@@ -214,12 +214,14 @@ def edit_groupByAd(request):
          
 # EXCLUIR UM AGRUPAMENTO
 @login_required
-def exclud_groupByAd(request, group_id):
+def exclude_groupByAd(request, group_id):
   if request.method == "POST":
-    objeto = Group_by_ad.objects.filter(id=group_id)
-    if objeto.exists():
-
-      objeto.delete()
+    group = Group_by_ad.objects.filter(id=group_id).first()
+    if group:
+      tracking_products = TrackingProduct.objects.filter(group=group)
+      for product in tracking_products:
+        product.delete()
+      group.delete()
      
       return redirect(reverse('groupByAd_management'))
   else:
@@ -246,7 +248,7 @@ def gerenciar_agrupamentos_seller(request):
     return render(request, "groupings/gerenciar_agrupamentos_seller.html", {'agrupamentos':groups})
 
 @login_required
-def stop_product(request, object_id):
+def toggle_tracking_product(request, object_id):
   if request.method == "POST":
     objeto = TrackingProduct.objects.filter(object_id=object_id)
     if objeto.exists():

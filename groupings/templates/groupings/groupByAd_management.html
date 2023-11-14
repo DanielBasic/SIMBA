@@ -9,7 +9,7 @@
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
 </head>
 
@@ -192,7 +192,7 @@
                       
                       <button id="openModall" class="edit-button" title="{{group.title}}" image="{{group.image.url}}" group_id="{{group.id}}"> Editar</button>  
 
-                      <form method="POST" id="formulario-exclusao-{{ group.id }}"  action="{% url 'exclud_groupByAd' group.id %}">{% csrf_token %}
+                      <form method="POST" id="formulario-exclusao-{{ group.id }}"  action="{% url 'exclude_groupByAd' group.id %}">{% csrf_token %}
                         <button type="submit" title="{{group.title}}" id="excluir-anuncio-{{ group.id }}" >Excluir</button>
                       </form>
                     </div>

@@ -205,15 +205,17 @@ document.addEventListener("DOMContentLoaded", function () {
             if (value_percentage !== 0) {
                 var arrowClass = value_percentage >= threshold ? 'green' : 'red';
 
-                var arrowIcon = document.createElement('i');
-                arrowIcon.className = 'fas fa-sort-up';
+
                 arrowElement.style.backgroundColor = arrowClass;
-                arrowElement.appendChild(arrowIcon);
+                
             }
 
             var percentageCircle = document.createElement('div');
             percentageCircle.className = 'percentage-circle';
             percentageCircle.innerText = value_percentage + '%';
+            var arrowIcon = document.createElement('i');
+            value_percentage >= threshold ? arrowIcon.className = 'icono fas fa-sort-up': arrowIcon.className = 'icono fas fa-sort-down';
+            percentageCircle.appendChild(arrowIcon);
 
             // Append the percentage circle to the container
             arrowElement.appendChild(percentageCircle);

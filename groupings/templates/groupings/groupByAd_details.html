@@ -10,7 +10,7 @@
     {% load custom_filters %}
     <link rel="stylesheet" href={% static "groupings/css/gerenciar_agrupamento_produtos.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "accounts/css/nav.css" %}>
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     
 </head>
 <body>
@@ -110,7 +110,7 @@
                 <div class="menu-button">...</div> 
                 <div class="hidden-buttons">
 
-                  <form method="POST" action="{% url 'stop_product' product.object_id %}">{% csrf_token %}
+                  <form method="POST" action="{% url 'toggle_tracking_product' product.object_id %}">{% csrf_token %}
                     <input type="hidden" name="group_id" value="{{group_id}}">                
                     {%if product.is_tracking_activated %}
                       <button  id="parar-anuncio">Parar</button>
